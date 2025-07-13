@@ -1,0 +1,173 @@
+AttributeName2: WOString {
+	value = displayNameForRelationshipKey;
+}
+
+AttributeName: WOString {
+	value = displayNameForRelationshipKey;
+}
+
+AttributeValue: WOBrowser {
+	item = browserItem;
+	list = relationshipDisplayGroup.allObjects;
+	multiple = YES;
+	selections = browserSelections;
+	size = 4;
+	displayString = browserStringForItem;
+}
+
+DisplayList: WOConditional {
+	condition = displayList;
+}
+
+DisplayNew: WOConditional {
+	condition = displayNew;
+}
+
+DisplayQuery: WOConditional {
+	condition = displayQuery;
+}
+
+EditingForm2: WOForm {
+}
+
+EditingForm3: WOForm {
+}
+
+EditingForm: WOForm {
+}
+
+EntityName: WOString {
+	_unroll = YES;
+	value = entity.name;
+}
+
+InspectComponent: D2WEdit {
+	action = saveAction;
+	entityName = entity.name;
+	object = newObjectInRelationship;
+}
+
+InspectTable2: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = d2wContext.backgroundColorForTable;
+	border = 1;
+	cellpadding = 2;
+	cellspacing = 1;
+	elementName = "TABLE";
+}
+
+InspectTable: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = d2wContext.backgroundColorForTable;
+	border = 1;
+	cellpadding = 2;
+	cellspacing = 1;
+	elementName = "TABLE";
+}
+
+InspectTableHeaderRow2: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = backgroundColorForHeaderRow;
+	elementName = "TR";
+}
+
+InspectTableHeaderRow: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = backgroundColorForHeaderRow;
+	elementName = "tr";
+}
+
+IsEntityWritable: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+	negate = YES;
+}
+
+IsToMany: WOConditional {
+	condition = isRelationshipToMany;
+}
+
+IsToOne: WOConditional {
+	condition = isRelationshipToMany;
+	negate = YES;
+}
+
+ListComponent: D2WSelect {
+	action = selectAction;
+	dataSource = selectDataSource;
+	entityName = entity.name;
+	selectedObject = objectToAddToRelationship;
+}
+
+NewButton: WOImage {
+	alt = "Creates a new Object to add to the relationship";
+	border = "0";
+	filename = "ButtonNew.gif";
+	framework = "JavaDirectToWeb";
+	height = "48";
+	name = "Creates a new Object to add to the relationship";
+	width = "74";
+}
+
+NewLink: WOHyperlink {
+	action = newObjectAction;
+}
+
+NumberOfEntities: WOString {
+	value = relationshipDisplayGroup.allObjects.count;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = YES;
+	_unroll = YES;
+}
+
+QueryButton: WOImage {
+	alt = "Find new objects to add to the relationship";
+	border = "0";
+	filename = "ButtonBuildQuery.gif";
+	framework = "JavaDirectToWeb";
+	height = "48";
+	name = "Find new objects to add to the relationship";
+	width = "74";
+}
+
+QueryComponent: D2WQuery {
+	action = queryAction;
+	entityName = entity.name;
+	queryDataSource = selectDataSource;
+}
+
+QueryLink: WOHyperlink {
+	action = displayQueryAction;
+}
+
+RemoveButton: WOSubmitButton {
+	action = removeFromToManyRelationshipAction;
+	value = "Remove";
+}
+
+RemoveToOneButton: WOSubmitButton {
+	action = removeFromToOneRelationshipAction;
+	value = "Remove";
+}
+
+ReturnButton: WOImage {
+	alt = "Returns to the inspect page";
+	border = "0";
+	filename = "ReturnButton.gif";
+	framework = "JavaDirectToWeb";
+	height = "48";
+	name = "Returns to the inspect page";
+	width = "66";
+}
+
+ReturnLink: WOHyperlink {
+	action = returnAction;
+}
+
+ToOneValue: WOString {
+	value = toOneDescription;
+}
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="macintosh" standalone="yes"?>
+<wodefinitions>
+	<wo class="D2WInspect" wocomponentcontent="NO">
+		<image path="D2WInspect.tiff"/>
+
+		<binding name="action"/>
+		<binding name="displayKeys"/>
+		<binding name="entityName"/>
+		<binding name="object"/>
+		<binding name="pageConfiguration"/>
+
+		<validation message="&apos;entityName&apos; is a required binding">
+			<unbound name="entityName"/>
+		</validation>
+
+		<validation message="&apos;object&apos; is a required binding">
+			<unbound name="object"/>
+		</validation>
+	</wo>
+</wodefinitions>

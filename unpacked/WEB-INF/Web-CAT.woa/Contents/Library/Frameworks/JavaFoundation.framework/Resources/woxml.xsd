@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!--
+(c) 2002, Apple Computer, Inc. All rights reserved.
+This document and the product to which it pertains are distributed under license
+restricting its use, copying, distribution, and decompilation. This document may
+be reproduced and distributed but may not be changed without prior written 
+authorization of Apple Computer, Inc. (Apple) and its licensors, if any. Any 
+redistribution must retain the above copyright notice and this list of 
+conditions regarding its use. TO THE EXTENT PERMITTED BY LAW, THIS DOCUMENT IS 
+PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS LICENSORS, IF 
+ANY, BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS DOCUMENT, EVEN IF 
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. Apple and WebObjects are trademarks 
+of Apple Computer, Inc. registered in the U.S. and other countries.
+-->
+
+<!--
+This is the schema of WebObjects default XML serialization output.
+-->
+<schema targetNamespace="http://www.apple.com/webobjects/XMLSerialization"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:woxml="http://www.apple.com/webobjects/XMLSerialization"
+        elementFormDefault="qualified">
+
+  <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd" />
+
+  <annotation>
+    <documentation xml:lang="en">
+      Copyright 2002 Apple Computer. All rights reserved.
+    </documentation>
+  </annotation>
+
+  <!--
+  The root element.
+  -->
+  <element name="content">
+    <complexType>
+      <sequence>
+      
+        <!--
+        An unordered list of elements. See "woxml:ContentType" for more details
+        about what is allowed in this list.
+        -->
+        <group ref="woxml:ContentType" minOccurs="0" maxOccurs="unbounded" />
+
+        <!--
+        This type describes the exception that caused the serialization process
+        to terminate. See "woxml:FinalExceptionType" for more information.
+        -->
+        <element name="finalException" type="woxml:FinalExceptionType" minOccurs="0" maxOccurs="1" />
+      </sequence>     
+    </complexType>
+  </element>
+
+  <!--
+  This type defines the unordered list of elements that constitute the root element.
+  It contains eight primitive types and three object types.
+  -->
+  <group name="ContentType">
+    <choice>
+      <element name="boolean" type="woxml:BooleanType" />
+      <element name="byte" type="woxml:ByteType" />
+      <element name="ch" type="woxml:CharType" />
+      <element name="short" type="woxml:ShortType" />
+      <element name="int" type="woxml:IntType" />
+      <element name="long" type="woxml:LongType" />
+      <element name="float" type="woxml:FloatType" />
+      <element name="double" type="woxml:DoubleType" />
+      <element name="string" type="woxml:StringType" />
+      <element name="object" type="woxml:ObjectType" />
+      <element name="array" type="woxml:ArrayType" />
+    </choice>
+  </group>
+
+  <!--
+  /////////////////////////////////////////////////////////////////////////
+  /////////////////// Basic Primitive Types Definition ////////////////////
+  -->
+
+  <!--
+  If an element represents the content of a member that is part of a Java
+  object, it has field attributes.
+  -->
+  <attributeGroup name="FieldAttributes">
+  
+    <!--
+    Name of the field the element represents. 
+    -->
+    <attribute name="field" type="string" />
+    
+    <!--
+    Sometimes a field of the same name and type exists somewhere in the
+    class hierarchy that the object is an instance of; this attribute
+    identifies the field unambiguously. The absence of this attribute means that the
+    field is in the leaf class.
+    -->
+    <attribute name="classId" type="int" />
+
+    <!--
+    This is an internal system attribute used for deserialization using NSXMLInputStream.
+    You can ignore it.
+    -->
+    <attribute name="ignoreEDB" type="int" />
+  </attributeGroup>
+
+  <!--
+  Primitive boolean type.
+  -->
+  <complexType name="BooleanType">
+    <simpleContent>
+      <extension base="boolean">
+      
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  Primitive byte type.
+  -->
+  <complexType name="ByteType">
+    <simpleContent>
+      <extension base="byte">
+
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  Primitive char base type. Note that not all Unicode characters are
+  representable in XML. Notably, \u0000 - \u001f, \u007f, \ufffe and \uffff
+  cannot be written natively as XML data. All illegal characters,
+  including those just mentioned, are written out in the familiar Java
+  notation \uXXXX. For further explanation of illegal XML characters, consult
+  the official XML recommendation from W3C.
+  -->
+  <simpleType name="char">
+    <restriction base="string">
+    
+      <!--
+      Length could be 6 because of illegal XML chars; for example, \u0001.
+      -->
+      <minLength value="1" fixed="true"/>
+      <maxLength value="6" fixed="true"/>
+    </restriction>
+  </simpleType>
+
+  <!--
+  Primitive char type.
+  -->
+  <complexType name="CharType">
+    <simpleContent>
+      <extension base="woxml:char">
+      
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  Primitive short type.
+  -->
+  <complexType name="ShortType">
+    <simpleContent>
+      <extension base="short">
+      
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  Primitive integer type.
+  -->
+  <complexType name="IntType">
+    <simpleContent>
+      <extension base="int">
+
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  Primitive long type.
+  -->
+  <complexType name="LongType">
+    <simpleContent>
+      <extension base="long">
+      
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  Primitive float type.
+  -->
+  <complexType name="FloatType">
+    <simpleContent>
+      <extension base="float">
+      
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  Primitive double type.
+  -->
+  <complexType name="DoubleType">
+    <simpleContent>
+      <extension base="double">
+      
+        <!--
+        A key that can be used in XSLT to become the tag name for this content.
+        -->
+        <attribute name="key" type="string" />
+        <attributeGroup ref="woxml:FieldAttributes" />
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <!--
+  /////////////////////////////////////////////////////////////////////////
+  ///////////////////////// Object Types Definition ///////////////////////
+  -->
+
+  <!--
+  The "id" attribute refers to the identification number of an element
+  representing an object. It is generated the first time the object is
+  encountered during serialization. Subsequent references to the same object use
+  the attribute "idRef" instead of a new element with the complete object
+  description.
+  
+  Both "id" and "idRef" should be declared as type ID and IDREF, respectively.
+  Unfortunately, the current XML specification states that values of those types
+  have to start with a letter or underscore character (_). In the name of clarity,
+  we chose not to use prefixes.
+  
+  For a null object, neither "id" nor "idRef" are required.
+  -->
+  <attributeGroup name="IdAttributes">
+    <attribute name="id" type="long" />
+    <attribute name="idRef" type="long" />
+  </attributeGroup>
+
+  <!--
+  Attributes that belong to an element representing an object.
+  -->
+  <attributeGroup name="ObjectAttributes">
+  
+    <!--
+    A key that can be used in XSLT to become the tag name for this content.
+    -->
+    <attribute name="key" type="string" />
+    <attributeGroup ref="woxml:IdAttributes" />
+    <attributeGroup ref="woxml:FieldAttributes" />
+  </attributeGroup>
+
+  <!--
+  This element represents java.lang.String objects.
+  
+  Whitespaces are preserved using the attribute xml:space="preserve".
+  If the string contains illegal characters, they are represented by the "ch" element
+  with \uXXXX as the text data. See the definition for "char" above for more details.
+  Carriage return has to be encoded as <ch>\u000d</ch> because of reasons given
+  in http://www.w3.org/TR/2000/REC-xml-20001006#sec-line-ends
+
+  Examples:
+  
+  <string id="20" xml:space="preserve">Testing illegal<ch>\u0001</ch>chars</string>
+  
+  <string id="39" xml:space="preserve">Well Done!</string>
+  
+  <string id="42" xml:space="preserve">There is a tab right here: 	</string>
+
+  When you serialize a string using the writeUTF method, the corresponding string
+  element does not have an "id" attribute and, thus, is not referenced by an "idRef"
+  attribute elsewhere in the document. It is essentially "unshared".
+  -->
+  <complexType name="StringType" mixed="true">
+    <sequence>
+      <element name="ch" type="woxml:CharType" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+    <attributeGroup ref="woxml:ObjectAttributes" />
+
+    <!--
+    Because of ambiguity related to whitespaces including \u0009(tab) and \u000a(newline),
+    we need to preserve spaces for strings.
+    http://www.w3.org/TR/2000/REC-xml-20001006#sec-white-space 
+    -->
+    <attribute ref="xml:space" />
+  </complexType>
+
+  <!--
+  An ordinary object, everything that is not a string or an array. If an object
+  is null, it is represented as an empty element. If an object has already
+  been written out before, with a unique "id" attribute, it is
+  represented as an empty element with its "idRef" attribute set to the same value
+  as the "id" of the original object. This eliminates the circular-object-graph problem.
+  -->
+  <complexType name="ObjectType">
+    <sequence>
+    
+      <!--
+      When the element represents an object element, the first child element
+      describes the class structure. The class can be a real class or a
+      proxy class.
+      -->
+      <choice minOccurs="0" maxOccurs="1">
+        <element name="class" type="woxml:ClassType" />
+        <element name="proxy" type="woxml:ProxyType" />
+      </choice>
+      
+      <!--
+      The actual content of the object.
+      -->
+      <group ref="woxml:ContentType" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+    
+    <!--
+    When "type" is present, it refers to two special, degenerated objects, which
+    are instances of java.lang.Class and java.io.ObjectStreamClass. They are
+    degenerated because they are represented in a more concise manner (only
+    their content is written out). Ordinary objects have their class structure
+    written out as well.
+    -->
+    <attribute name="type" type="string" />
+    <attributeGroup ref="woxml:ObjectAttributes" />
+  </complexType>
+
+  <!--
+  This defines the "class" element, which describes the class structure of an
+  object. Multiple references to the same class in a document are handled using
+  the mechanism described in Object Types Definition above.
+  -->
+  <complexType name="ClassType">
+    <sequence>
+    
+      <!--
+      A serializable field of a class.
+      -->
+      <element name="field" type="woxml:FieldType" minOccurs="0" maxOccurs="unbounded" />
+
+      <!--
+      The usual superclass description.
+      -->
+      <element name="super" type="woxml:ClassType" minOccurs="0" />
+    </sequence>
+    <attributeGroup ref="woxml:IdAttributes" />
+        
+    <!--
+    This attribute gives more detail about the class, such as whether it is
+    Serializable or Externalizable, whether it has overridden the writeObject
+    method, and so on.
+    
+    This is an internal system attribute used for deserialization using NSXMLInputStream.
+    You can ignore it.
+    -->
+    <attribute name="flag" type="int" />
+    
+    <!--
+    Name of the class. Even when the "idRef" attribute is present, this attribute
+    is required for clarity (and perhaps ease of transformation using XSLT).
+    -->
+    <attribute name="name" type="string" use="required" />
+    
+    <!--
+    This attribute identifies the unique, original class version of this class. It is
+    used for version control and is tied to the SerialVersionUID
+    in the Java Binary Serialization specification.
+    
+    This is an internal system attribute used for deserialization using NSXMLInputStream.
+    You can ignore it.
+    -->
+    <attribute name="suid" type="long" />
+    
+    <!--
+    This is an internal system attribute used for deserialization using NSXMLInputStream.
+    You can ignore it.
+    -->
+    <attribute name="ignoreEDB" type="int" />
+  </complexType>
+
+  <!--
+  A serializable field of a class.
+  -->
+  <complexType name="FieldType">
+    <attribute name="name" type="string" use="required" />
+    
+    <!--
+    The class type of the field.
+    -->
+    <attribute name="type" type="string" use="required" />
+  </complexType>
+
+
+  <!--
+  Instead of a regular class, the type of an object could be
+  java.lang.reflect.Proxy.
+  -->
+  <complexType name="ProxyType">
+    <sequence>
+      <element name="interface" minOccurs="0" maxOccurs="unbounded">
+        <complexType>
+          <attribute name="name" type="string" use="required"/>
+        </complexType>
+      </element>
+    </sequence>
+    <attributeGroup ref="woxml:IdAttributes" />
+  </complexType>
+
+  <!--
+  This type describes the primitive array object in Java; for example, int[], which
+  is a legitimate Java object. However, as opposed to an ordinary "object"
+  element, there is no need for an elaborate class description. Instead, it is
+  succinctly represented with the "type" attribute.
+  
+  Primitive types in an array are simply represented as text separated by a
+  space (0x0020). If the character 0x0020 is present as part of an array of
+  characters, it is escaped as \u0020.
+
+  Examples:
+  <array id="174" length="2" type="int[]">3 4 </array>
+  <array id="200" length="6" type="char[]">a b \ \u0020 c d </array>
+
+  Multiple references to the same array in a document are handled using
+  the mechanism described in Object Types Definition above.
+  -->
+  <complexType name="ArrayType" mixed="true">
+    <sequence>
+      <group ref="woxml:ObjectComponentType" minOccurs="0" maxOccurs="1" />
+    </sequence>
+    
+    <!--
+    Length of the array.
+    -->
+    <attribute name="length" type="int" />
+    
+    <!--
+    Array type. If the type is "base64", it means that Base64 encoding was used to
+    output an array of bytes.
+    
+    Examples:
+    	int[]				array of ints
+    	char[][]			two-dimensional array of chars
+    	java.lang.String[]		array of Strings
+    -->    
+    <attribute name="type" type="string" />
+    <attributeGroup ref="woxml:ObjectAttributes" />
+  </complexType>
+
+  <!--
+  If the component type of an array object is an object type, each
+  component is represented as a "string", "object" or "array" element.
+  -->
+  <group name="ObjectComponentType">
+    <choice>
+      <element name="string" type="woxml:StringType" minOccurs="0" maxOccurs="unbounded" />
+      <element name="object" type="woxml:ObjectType" minOccurs="0" maxOccurs="unbounded" />
+      <element name="array" type="woxml:ArrayType" minOccurs="0" maxOccurs="unbounded" />
+    </choice>
+  </group>
+
+  <!--
+  This type describes the exception that caused the serialization process
+  to terminate.
+  If the serialization has an exception that causes the process to abort,
+  that exception is considered final and is written out.
+  NSXMLInputStream can actually read in this final exception and make
+  sense of the failure.
+  -->
+  <complexType name="FinalExceptionType">
+    <sequence>
+      <choice minOccurs="0" maxOccurs="1">
+        <element name="class" type="woxml:ClassType" />
+        <element name="proxy" type="woxml:ProxyType" />
+      </choice>
+      <group ref="woxml:ContentType" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+    <attributeGroup ref="woxml:IdAttributes" />
+  </complexType>
+
+</schema>

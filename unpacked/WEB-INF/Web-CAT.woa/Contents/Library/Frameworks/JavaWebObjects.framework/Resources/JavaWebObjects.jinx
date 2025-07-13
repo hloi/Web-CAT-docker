@@ -1,0 +1,26 @@
+/* Pre-loaded interfaces for JavaWebObjects Framework*/
+
+package com.webobjects.appserver;
+
+/** @Metatype WOComponent */
+class WOComponent extends com.webobjects.foundation.NSObject
+{
+}
+
+/** @Metatype WOActionResults */
+class WOActionResults
+{
+}
+
+/** @Metatype DisplayGroup */
+class WODisplayGroup extends com.webobjects.foundation.NSObject
+{
+}
+
+class WOSession extends com.webobjects.foundation.NSObject
+{
+}
+
+class WOApplication extends com.webobjects.foundation.NSObject
+{
+}

@@ -1,0 +1,10 @@
+ToOneRelationship: WOToOneRelationship {
+	destinationDisplayKey = d2wContext.keyWhenRelationship;
+	maxColumns = d2wContext.numCols;
+	relationshipKey = d2wContext.propertyKey;
+	size = d2wContext.size;
+	sourceEntityName = d2wContext.entity.name;
+	sourceObject = displayGroup.queryMatch;
+	uiStyle = d2wContext.toOneUIStyle;
+}
+

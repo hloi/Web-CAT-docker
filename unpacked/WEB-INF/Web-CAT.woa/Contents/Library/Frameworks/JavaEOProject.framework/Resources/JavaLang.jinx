@@ -1,0 +1,15 @@
+/* Pre-loaded interfaces for java.lang */
+
+package java.lang;
+
+class Object
+{
+}
+
+class String extends java.lang.Object
+{
+}
+
+class Number extends java.lang.Object
+{
+}

@@ -1,0 +1,24 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    variables = (
+        "protected EODataSource dataSource;",
+        "/** @TypeInfo $entity.name$ */
+    protected EOEnterpriseObject $generationReplacementForCurrentObject$;"
+    );
+    methods = (
+        "public WOComponent $methodNameInspectArrayAction$() {
+            EODataSource detailDataSource=new EODetailDataSource(dataSource, \"$d2wContext.propertyKey$\");
+            detailDataSource.qualifyWithRelationshipKey(\"$d2wContext.propertyKey$\", $generationReplacementForCurrentObject$);
+            ListPageInterface listPage=D2W.factory().listPageForEntityNamed(\"$d2wContext.relationship.destinationEntity.name$\",session());
+            listPage.setDataSource(detailDataSource);
+            listPage.setNextPage(this);
+            return (WOComponent)listPage;
+    }"
+    );
+}

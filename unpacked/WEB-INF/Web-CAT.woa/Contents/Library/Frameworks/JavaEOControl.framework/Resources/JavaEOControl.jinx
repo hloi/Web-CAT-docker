@@ -1,0 +1,24 @@
+/* Pre-loaded interfaces for JavaEOControl Framework*/
+
+package com.webobjects.eocontrol;
+
+/* EOValidation and EOEnterpriseObject are really interfaces, not classes, and EOCustomObject and EOGenericRecord
+   implement them, and so on, but due to a fuzzy parser bug, this makes everybody's class path come out wrong.
+   The following simplification works and has the OK of jgraz (so it's gotta be good :->).  BCH 9/14/99. */
+
+class EOValidation
+{
+}
+
+class EOEnterpriseObject
+{
+}
+
+class EOCustomObject extends com.webobjects.foundation.NSObject
+{
+}
+
+class EOGenericRecord extends com.webobjects.foundation.NSObject
+{
+}
+

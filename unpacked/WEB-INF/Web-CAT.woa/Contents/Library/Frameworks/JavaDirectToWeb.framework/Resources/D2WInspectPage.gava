@@ -1,0 +1,142 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.foundation.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"$implementedInterface$"
+    );
+    variables = (
+        "/** @TypeInfo $entity.name$ */
+    protected EOEnterpriseObject $generationReplacementForCurrentObject$;",
+        "protected WOComponent theNextPage;",
+        "protected NextPageDelegate nextPageDelegate;",
+        "protected String errorMessage;",
+        "private String _validationExceptionString;",
+        "private EOEditingContext _inspectEditingContext;"
+    );
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+        errorMessage = \"\";
+    }",
+        "public String entity() {
+            // this method is used by the Header and the WebAssistant
+            return \"$entity.name$\";
+    }",
+        "public void setNextPage(WOComponent nextPage) {
+            theNextPage=nextPage;
+    }",
+        "public void setNextPageDelegate(NextPageDelegate delegate) {
+           nextPageDelegate= delegate;
+    }",
+        "public WOComponent nextPage() {
+        return (nextPageDelegate != null) ? nextPageDelegate.nextPage(this) :
+            (theNextPage!=null) ? theNextPage : null;
+    }",
+        "public void setObject(EOEnterpriseObject anObject) {
+    	EOEditingContext _newContext = (anObject != null) ? anObject.editingContext() : null;
+    	setEditingContext(_newContext);
+        $generationReplacementForCurrentObject$ = anObject;
+    }",
+     "public EOEnterpriseObject object()
+    {
+        return $generationReplacementForCurrentObject$;
+    }",
+    "protected void setEditingContext(EOEditingContext newEditingContext) {
+        // do proper unlocking of old context and locking of new context
+        if (newEditingContext != _inspectEditingContext) {
+            if (_inspectEditingContext != null) {
+                _inspectEditingContext.unlock();
+            }
+            _inspectEditingContext = newEditingContext;
+            if (_inspectEditingContext != null) {
+                _inspectEditingContext.lock();
+            }
+        }
+    }",
+    "public void awake() {
+        super.awake();
+    	if (_inspectEditingContext!=null) {
+            _inspectEditingContext.lock();
+        }
+	_validationExceptionString= null;
+    }",
+    "public void sleep() {
+    	if (_inspectEditingContext!=null) {
+            _inspectEditingContext.unlock();
+        }
+        super.sleep();
+    }",
+        "boolean tryToSaveChanges(boolean validateObject) throws Throwable {
+        try {
+            if (validateObject) {
+                if (_validationExceptionString!=null) {
+                    errorMessage = \" Could not save your changes:<BR> \"+_validationExceptionString;
+                    _validationExceptionString = null;
+                    return false;
+                }
+                $generationReplacementForCurrentObject$.validateForSave();
+            }
+            if ($generationReplacementForCurrentObject$!=null) $generationReplacementForCurrentObject$.editingContext().saveChanges();
+        } catch (NSValidation.ValidationException exception) {
+            errorMessage = \" Could not save your changes:<BR> \" + exception.getMessage() + \" \";
+            return false;
+        } catch (RuntimeException exception) {
+            if (NSForwardException._originalThrowable(exception) instanceof EOGeneralAdaptorException) {
+                errorMessage = \" Could not save your changes:<BR> \" + exception.getMessage() + \" \";
+                return false;
+            } else {
+                throw exception;
+            }
+        } 
+        return true;
+    }",
+     "public void validationFailedWithException(Throwable theException, Object theValue, String theKeyPath) {
+                _validationExceptionString = (_validationExceptionString == null ? \"\" : _validationExceptionString) + theException.getMessage() + \" [\"+ theKeyPath+\"=\"+theValue +\"]<BR>\";
+    }",
+        "public WOComponent submitAction() throws Throwable {
+		// release note:
+		// 		this method is only used in Edit pages, it can be removed in
+		// Inspect pages.
+		//
+        // if we're editing a new object, insert before saving
+        if ($generationReplacementForCurrentObject$.editingContext()==null) {
+            session().defaultEditingContext().insertObject($generationReplacementForCurrentObject$);
+            setEditingContext($generationReplacementForCurrentObject$.editingContext());
+
+        }
+        // if save failed return same page with error message 
+        return tryToSaveChanges(true) ? nextPage() : null;
+    }",
+        "public WOComponent editAction() {
+        // release note:
+        // this is only used when generating an inspect page
+        // when generating an edit page, you can remove this method
+	EditPageInterface editPage=D2W.factory().editPageForEntityNamed($generationReplacementForCurrentObject$.entityName(),session());
+	editPage.setObject($generationReplacementForCurrentObject$);
+        editPage.setNextPage(nextPage());    
+	return (WOComponent)editPage;
+    }",
+        "public WOComponent deleteAction() throws Throwable {
+        // do not want to try to delete object that is not in the editingContext
+        if ($generationReplacementForCurrentObject$.editingContext()!=null) {
+            $generationReplacementForCurrentObject$.editingContext().deleteObject($generationReplacementForCurrentObject$);
+            return tryToSaveChanges(false) ? nextPage() : null;
+        }
+        return nextPage();
+    }",
+        "public WOComponent cancelAction() {
+        if ($generationReplacementForCurrentObject$.editingContext()!=null)
+            $generationReplacementForCurrentObject$.editingContext().revert();
+        return nextPage();
+    }",
+    "public boolean showCancel() {
+       return nextPageDelegate!=null || theNextPage!=null;
+     }"
+    );
+}

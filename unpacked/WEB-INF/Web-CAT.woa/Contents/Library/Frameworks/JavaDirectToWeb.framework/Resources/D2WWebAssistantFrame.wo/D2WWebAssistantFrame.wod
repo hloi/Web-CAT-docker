@@ -1,0 +1,56 @@
+ApplicationPortParam: WOParam {
+	name = "WOKey.applicationport";
+	value = applicationPort;
+}
+
+AssistantApplet: WOApplet {
+	archive = "JavaDirectToWeb.jar";
+	code = "com.apple.client.directtoweb.AssistantPageApplet.class";
+	codebase = "/WebObjects/Java";
+	height = "25";
+	width = "500";
+}
+
+AssistantPortParam: WOParam {
+	name = "WOKey.assistantport";
+	value = assistantPort;
+}
+
+CurrentUrlParam: WOParam {
+	name = "WOKey.currenturl";
+	value = session.currentUrl;
+}
+
+DynamicPagesParam: WOParam {
+	name = "WOKey.dynamicPages";
+	value = dynamicPages;
+}
+
+EntitiesParam: WOParam {
+	name = "WOKey.entities";
+	value = allEntities;
+}
+
+Form: WOForm {
+}
+
+ResourcePathURLParam: WOParam {
+	name = "WOKey.resourcepathurl";
+	value = resourcePathURL;
+}
+
+SessionIDParam: WOParam {
+	name = "WOKey.sessionid";
+	value = sessionID;
+}
+
+StartServerAppletViewer: WOSubmitButton {
+	action = startServerAppletViewer;
+	value = "Start AppletViewer on the server";
+}
+
+TasksParam: WOParam {
+	name = "WOKey.tasks";
+	value = tasks;
+}
+

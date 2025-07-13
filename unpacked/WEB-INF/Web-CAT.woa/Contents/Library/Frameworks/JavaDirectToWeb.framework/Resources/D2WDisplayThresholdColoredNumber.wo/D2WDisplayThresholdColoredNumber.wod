@@ -1,0 +1,8 @@
+Number: WOThresholdColoredNumber {
+	highColor = "#00D000";
+	lowColor = "#D00000";
+	numberformat = formatter;
+	threshold = d2wContext.threshold;
+	value = objectPropertyValue;
+}
+

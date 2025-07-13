@@ -1,0 +1,170 @@
+AttributeName: WOString {
+	_unroll = YES;
+	value = d2wContext.displayNameForProperty;
+}
+
+AttributeRepetition: WORepetition {
+	_unroll = YES;
+	item = d2wContext.propertyKey;
+	list = d2wContext.displayPropertyKeys;
+}
+
+AttributeValue: WOSwitchComponent {
+	WOComponentName = d2wContext.componentName;
+	_componentUnroll = YES;
+	_unroll = YES;
+	object = object;
+	localContext = localContext;
+}
+
+BannerConditional: WOConditional {
+	_unroll = YES;
+	condition = showBanner;
+}
+
+CancelButton: WOImage {
+	alt = "Revert your changes";
+	border = "0";
+	filename = "CancelMetalBtn.gif";
+	framework = "JavaDirectToWeb";
+	height = "31";
+	title = "Revert your changes";
+	width = "88";
+}
+
+CancelLink: WOHyperlink {
+	action = cancelAction;
+}
+
+DeleteButton: WOImage {
+	alt = "Delete this object";
+	border = "0";
+	filename = "DeleteMetalBtn.gif";
+	framework = "JavaDirectToWeb";
+	height = "31";
+	title = "Delete this object";
+	width = "88";
+}
+
+DeleteLink: WOHyperlink {
+	action = deleteAction;
+}
+
+EditImage: WOImage {
+	alt = "Edit this object";
+	border = "0";
+	filename = "EditMetalBtn.gif";
+	framework = "JavaDirectToWeb";
+	height = "31";
+	title = "Edit this object";
+	width = "88";
+}
+
+EditLink: WOHyperlink {
+	action = editAction;
+}
+
+EditingForm: WOForm {
+}
+
+EntityName: WOString {
+	_unroll = YES;
+	value = d2wContext.entity.name;
+}
+
+ErrorMessage: WOString {
+	escapeHTML = "NO";
+	value = errorMessage;
+}
+
+ErrorPanel: WOConditional {
+	condition = errorMessage.length;
+}
+
+InspectTable: WOGenericContainer {
+	_unroll = YES;
+	elementName = "table";
+	class = "d2w";
+}
+
+InspectTableHeaderRow: WOGenericContainer {
+	_unroll = YES;
+	elementName = "tr";
+}
+
+IsEditingConditional2: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+}
+
+IsEditingConditional: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+}
+
+IsEntityWritable2: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+	negate = YES;
+}
+
+IsEntityWritable: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+	negate = YES;
+}
+
+IsNotEditingConditional2: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+	negate = YES;
+}
+
+IsNotEditingConditional: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+	negate = YES;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = YES;
+	_unroll = YES;
+    stylesheet           = "Grader.framework/WebServerResources/jscalendar/skins/aqua/theme.css";
+    externalJavascript   = "Grader.framework/WebServerResources/jscalendar/calendar.js,Grader.framework/WebServerResources/jscalendar/lang/calendar-en.js,Grader.framework/WebServerResources/jscalendar/calendar-setup.js";
+}
+
+ReturnButton: WOImage {
+	alt = "Return to the previous page";
+	border = "0";
+	filename = "ReturnMetalBtn.gif";
+	framework = "JavaDirectToWeb";
+	height = "31";
+	title = "Return to the previous page";
+	width = "88";
+}
+
+ReturnLink: WOHyperlink {
+	action = nextPage;
+}
+
+RowContainer: WOGenericContainer {
+	bgcolor = backgroundColorForRow;
+	elementName = "tr";
+}
+
+ShowCancel: WOConditional {
+	condition = showCancel;
+}
+
+SubmitChanges: WOImageButton {
+	action = submitAction;
+	alt = "Save your changes";
+	border = "0";
+	filename = "SaveMetalBtn.gif";
+	framework = "JavaDirectToWeb";
+	height = "31";
+	title = "Save your changes";
+	width = "88";
+}
+

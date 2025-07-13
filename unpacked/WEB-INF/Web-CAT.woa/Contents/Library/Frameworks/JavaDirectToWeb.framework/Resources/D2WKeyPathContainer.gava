@@ -1,0 +1,32 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import com.webobjects.foundation.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    variables = (
+    "public EOEnterpriseObject $ivarNameForRepetition$;"
+    );
+    methods = (
+     "public WOComponent $methodNameForInspect$() {
+        InspectPageInterface inspectPage=D2W.factory().inspectPageForEntityNamed($ivarNameForRepetition$.entityName(),session());
+	inspectPage.setObject($ivarNameForRepetition$);
+        inspectPage.setNextPage(this);
+	return (WOComponent)inspectPage;
+    }",
+    "public NSArray $methodNameForList$() {
+            if ($generationReplacementForCurrentObject$==null) return null;
+            Object value=$generationReplacementForCurrentObject$$partialValueForKeyString$;
+            NSArray _$methodNameForList$=(value ==null) ? null :
+                ((value instanceof NSArray) ? Services.flatten((NSArray)value) : new NSArray(value));
+            return _$methodNameForList$;
+    }",
+    "public String $methodNameListDescription$() {
+        NSArray l=$methodNameForList$();
+        return (l!=null ? \"\"+l.count() : \"0\")+\" element(s)\";
+    }"
+    );
+}

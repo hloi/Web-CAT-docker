@@ -1,0 +1,29 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    variables = (
+        "/** @TypeInfo $entity.name$ */
+    protected EOEnterpriseObject $generationReplacementForCurrentObject$;",
+    "public EOEnterpriseObject $ivarNameForBrowserItem$;"
+    );
+    methods = (
+        "public WOComponent $methodNameForEditValues$() {
+        EditRelationshipPageInterface editRelationshipPage=D2W.factory().editRelationshipPageForEntityNamed(\"$d2wContext.relationship.destinationEntity.name$\",session());
+        editRelationshipPage.setMasterObjectAndRelationshipKey($generationReplacementForCurrentObject$,\"$d2wContext.propertyKey$\");
+        editRelationshipPage.setNextPage(this);
+        return (WOComponent) editRelationshipPage;
+    }",
+    "public String $methodNameBrowserListDescription$ () {
+        NSArray list = ($generationReplacementForCurrentObject$ != null) ? (NSArray) $generationReplacementForCurrentObject$.valueForKeyPath(\"$d2wContext.propertyKey$\") : null;
+        String result = \"N/A\";
+        if (list != null)  
+            result = list.count()+\" \"+ ((list.count() == 1) ? $plurifiedStrings$);
+        return result;
+   }"
+    );
+}

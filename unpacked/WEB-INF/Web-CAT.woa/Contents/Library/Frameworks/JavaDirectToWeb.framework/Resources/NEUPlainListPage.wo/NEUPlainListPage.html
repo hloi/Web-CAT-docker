@@ -1,0 +1,53 @@
+<webobject name="PageWrapper">
+   <webobject name="BannerConditional"><webobject name="Banner"></webobject></webobject>
+   <webobject name="ListNotEmpty">
+      <table width="100%" border="0">
+         <tr>
+            <td align="center"><webobject name="NavBar"></webobject></td>
+         </tr>
+      </table>
+      <br>
+      <webobject name="EntityRepetition">
+         <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+               <td valign="middle" align="left"><webobject name="EntityRepresentation"></webobject></td>
+            </tr>
+            <tr>
+               <td align="center" valign="bottom"><webobject name="IsSelecting"><webobject name="SelectEO"><webobject name="SelectImage"></webobject></webobject></webobject><webobject name="IsListing"><webobject name="IsEntityWritable"><webobject name="EditEO"><webobject name="EditImage"></webobject></webobject><webobject name="DeleteEO"><webobject name="DeleteImage"></webobject></webobject></webobject><webobject name="IsEntityNotWritable"><webobject name="InspectEO"><webobject name="InspectImage"></webobject></webobject></webobject></webobject></td>
+            </tr>
+         </table>
+         <hr width="100%">
+      </webobject>
+      <br>
+      <table width="90%">
+         <tr>
+            <td align="center">
+               <webobject name="ShowCancel">
+                  <webobject name="CancelLink"><webobject name="ReturnButton"></webobject></webobject>
+               </webobject>
+            </td>
+         </tr>
+      </table>
+   </webobject>
+   <webobject name="ListEmpty">
+      <br>
+      <table>
+         <tr>
+            <td>&nbsp;</td>
+         </tr>
+         <tr>
+            <td><webobject name="ExclamationImage"></webobject></td>
+            <td>
+               <center>
+                  <webobject name="FontContainer"><b>No matching
+                     <webobject name="EntityName"></webobject>
+                     records found.</b></webobject>
+               </center>
+            </td>
+         </tr>
+      </table>
+      <br>
+      <br>
+      <webobject name="ShowCancel2"><webobject name="BackLink"><webobject name="ReturnButton2"></webobject></webobject></webobject>
+   </webobject>
+</webobject>

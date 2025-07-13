@@ -1,0 +1,33 @@
+<webobject name="PageWrapper">
+   <br>
+   <webobject name="Banner"></webobject>
+   <table cellpadding="3">
+      <tr>
+         <td>
+            <table cellpadding="10">
+               <tr>
+                  <td align="center" valign="top">
+                     <webobject name="ErrorImage"></webobject>
+                  </td>
+                  <td align="left" valign="middle"> <strong>An error occurred while processing
+                     your request.</strong><br>
+                     <webobject name="CollapseContainer">
+                        <webobject name="ErrorMessage"></webobject>
+                     </webobject>
+                  </td>
+               </tr>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td align="center">
+            <webobject name="HasNextPage">
+               <webobject name="CancelLink"><webobject name="CancelButton"></webobject></webobject>
+            </webobject>
+            <webobject name="NoNextPage">
+               <webobject name="HomeLink"><webobject name="HomeButton"></webobject></webobject>
+            </webobject>
+         </td>
+      </tr>
+   </table>
+</webobject>

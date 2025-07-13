@@ -1,0 +1,91 @@
+<webobject name="PageWrapper">
+   <webobject name="BannerConditional"><webobject name="Banner"></webobject></webobject><webobject name="ListNotEmpty">
+      <center>
+         <webobject name="NavBar"></webobject>
+         <br>
+         <webobject name="ListTable"><webobject name="ListTableHeaderRow">
+               <th></th>
+               <webobject name="ColumnLabelRepetition">
+                  <th nowrap valign="bottom">
+                     <table>
+                        <tr>
+                           <th><webobject name="PropertyName"></webobject></th>
+                           <th><webobject name="IsPropertySortable"><webobject name="AttributeSorter"></webobject></webobject></th>
+                        </tr>
+                     </table>
+                  </th>
+               </webobject>
+               <th></th>
+            </webobject>
+            <webobject name="EntityRepetition"><webobject name="ListTableRow">
+                  <td>
+                     <table>
+                        <tr>
+                           <td>
+                              <webobject name="IsSelecting">
+                                 <webobject name="SelectEO"><webobject name="SelectImage"></webobject></webobject>
+                              </webobject>
+                              <webobject name="IsListing">
+                                 <webobject name="IsEntityWritable">
+                                    <webobject name="EditEO"><webobject name="EditImage"></webobject></webobject>
+                                 </webobject>
+                                 <webobject name="IsEntityNotWritable">
+                                    <webobject name="InspectEO"><webobject name="InspectImage"></webobject></webobject>
+                                 </webobject>
+                              </webobject>
+                           </td>
+                           <td> </td>
+                        </tr>
+                     </table>
+                  </td>
+                  <webobject name="AttributeRepetition">
+                     <webobject name="AttributeCell">
+                        <WEBOBJECT NAME="AttributeDisplay"></webobject>
+                     </webobject>
+                  </webobject>
+                  <td>
+                     <table>
+                        <tr>
+                           <td><webobject name="IsListing2"><WEBOBJECT NAME="IsEntityWritable2">
+                                    <table>
+                                       <tr>
+                                          <td><webobject name="DeleteEO2"><webobject name="DeleteImage2"></webobject></webobject>
+                                       </tr>
+                                    </table>
+                                 </webobject></webobject></td>
+                        </tr>
+                     </table>
+                  </td>
+               </webobject>
+               <tr height="2">
+                  <td colspan="50" bgcolor="#ffffff"><img border="0" height="2" width="1"></td>
+               </tr>
+            </webobject></webobject><br>
+         <webobject name="HideReturnOnSelect1">
+            <webobject name="ShowCancel"><webobject name="BackLink"><webobject name="ReturnButton"></webobject></webobject></webobject>
+         </webobject>
+      </center>
+   </webobject><webobject name="ListEmpty">
+      <br>
+      <table>
+         <tr>
+            <td>&nbsp</td>
+         </tr>
+         <tr>
+            <td><webobject name="ExclamationImage"></webobject></td>
+            <td>
+               <center>
+                  <webobject name="FontContainer"><b>No matching
+                     <webobject name="EntityName"></webobject>
+                     records found.</b></webobject>
+               </center>
+            </td>
+         </tr>
+      </table>
+      <br>
+      <br>
+      <webobject name="HideReturnOnSelect2">
+         <webobject name="ShowCancel2"><webobject name="BackLink2"><webobject name="ReturnButton2"></webobject></webobject></webobject>
+      </webobject>
+   </webobject>
+</webobject>

@@ -1,0 +1,17 @@
+#This file is automatically rewritten by ANT, so all formatting will be trashed.
+#Fri Nov 07 21:29:38 EST 2008
+Reporter.provider=Virginia Tech Computer Science
+Reporter.version.major=1
+Reporter.version.revision=3
+Reporter.version.date=20081107
+reporter.resumeSuspendedJobs=true
+Reporter.requires=BIRTRuntime, Core, Grader
+subsystem.Reporter=net.sf.webcat.reporter.Reporter
+Reporter.history.url=http\://web-cat.cs.vt.edu/WCWiki/ReporterSubsystem/ChangeHistory
+Reporter.description=This subsystem provides all of Web-CAT's data reporting services.
+Reporter.copyright=(c) 2007-2008 Virginia Tech Department of Computer Science
+Reporter.license.url=http\://www.gnu.org/licenses/agpl.html
+Reporter.info.url=http\://web-cat.cs.vt.edu/WCWiki/ReporterSubsystem
+Reporter.provider.url=http\://web-cat.cs.vt.edu/updates
+Reporter.version.minor=0
+Reporter.license=GNU Affero General Public License v.3

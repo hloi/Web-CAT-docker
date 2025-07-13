@@ -1,0 +1,4 @@
+{
+    EOEventGroupName = "WOComponentReference Event";
+    pushComponentInContext = "pushComponentInContext";
+}

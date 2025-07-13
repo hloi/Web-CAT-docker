@@ -1,0 +1,69 @@
+<webobject name="PageWrapper">
+   <webobject name="ListNotEmpty">
+      <table width="100%" border="0">
+         <tr>
+            <td align="center">
+               <webobject name="NavBar"></webobject>
+            </td>
+         </tr>
+      </table>
+      <center>
+         <webobject name="EntityRepetition">
+            <table cellpadding="0" cellspacing="0">
+               <tr>
+                  <td align="center" valign="middle">
+                     <webobject name="IsSelecting">
+                        <webobject name="SelectEO">
+                           <webobject name="SelectImage">
+                           </webobject>
+                        </webobject>
+                     </webobject><webobject name="IsListing">
+                        <webobject name="IsEntityWritable">
+                           <webobject name="EditEO">
+                              <webobject name="EditImage">
+                              </webobject>
+                           </webobject>
+                        </webobject><webobject name="IsEntityNotWritable">
+                           <webobject name="InspectEO">
+                              <webobject name="InspectImage">
+                              </webobject>
+                           </webobject>
+                        </webobject>
+                     </webobject>&nbsp; </td>
+                  <td valign="middle"><webobject name="EntityRepresentation"></webobject></td>
+               </tr>
+            </table>
+         </webobject>
+         <br>
+         <webobject name="ShowCancel">
+            <webobject name="CancelLink"><webobject name="ReturnButton"></webobject></webobject>
+         </webobject>
+      </CENTER>
+   </webobject>
+   <webobject name="ListEmpty">
+      <br>
+      <table>
+         <tr>
+            <td> &nbsp; </td>
+         </tr>
+         <tr>
+            <td><webobject name="ExclamationImage"></webobject></td>
+            <td>
+               <center>
+                  <font color="#ff0000"><b>No matching
+                  <webobject name="EntityName"></webobject>
+                  records found.</b></font>
+               </center>
+            </td>
+         </tr>
+      </table>
+      <br>
+      <br>
+      <webobject name="ShowCancel2">
+         <webobject name="BackLink">
+            <webobject name="ReturnButton2">
+            </webobject>
+         </webobject>
+      </webobject>
+   </webobject>
+</webobject>

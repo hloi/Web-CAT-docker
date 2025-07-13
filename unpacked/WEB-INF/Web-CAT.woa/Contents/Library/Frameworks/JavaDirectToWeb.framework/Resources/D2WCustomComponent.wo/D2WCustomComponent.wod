@@ -1,0 +1,7 @@
+EmbeddedComponent: WOSwitchComponent {
+	WOComponentName = d2wContext.customComponentName;
+	_unroll = YES;
+	object = object;
+	key = d2wContext.propertyKey;
+}
+

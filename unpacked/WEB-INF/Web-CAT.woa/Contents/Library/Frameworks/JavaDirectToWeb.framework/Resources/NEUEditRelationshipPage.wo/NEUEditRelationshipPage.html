@@ -1,0 +1,53 @@
+<webobject name="PageWrapper">
+   <center>
+      <webobject name="InspectTable">
+         <tr>
+            <td><webobject name="Banner"></webobject></td>
+         </tr>
+         <webobject name="HeaderRow">
+            <td align="left" colspan="3"><b><webobject name="AttributeName"></webobject>(s)</b></td>
+            <td height="10"></td>
+         </webobject>
+         <tr>
+            <webobject name="IsToMany">
+               <td align="center">
+                  <webobject name="ToManyForm">
+                     <table>
+                        <tr>
+                           <td valign="middle"><strong><webobject name="NumberOfEntities"></webobject>
+                              <webobject name="EntityName"></webobject>(s)</strong></td>
+                           <td><webobject name="AttributeValue"></webobject></td>
+                           <td valign="middle"><webobject name="RemoveButton"></webobject></td>
+                        </tr>
+                     </table>
+                  </webobject>
+               </td>
+            </webobject>
+            <webobject name="IsToOne">
+               <td valign="middle" align="center"><webobject name="ToOneValue"></webobject></td>
+               <td valign="middle" align="center"><webobject name="ToOneForm"><webobject name="RemoveToOneButton"></webobject>
+                  </webobject></td>
+            </webobject>
+         </tr>
+         <tr>
+            <td>&nbsp;</td>
+         </tr>
+         <tr>
+            <td colspan="3" align="center">
+               <webobject name="ReturnLink"><webobject name="ReturnButton"></webobject></webobject>
+               <webobject name="QueryLink"><webobject name="QueryButton"></webobject></webobject>
+               <webobject name="IsEntityWritable"><webobject name="NewLink"><webobject name="NewButton"></webobject></webobject></webobject>
+            </td>
+         </tr>
+      </webobject>
+      <webobject name="DisplayQuery">
+         <webobject name="QueryComponent"></webobject>
+      </webobject>
+      <webobject name="DisplayList">
+         <webobject name="ListComponent"></webobject>
+      </webobject>
+      <webobject name="DisplayNew">
+         <webobject name="InspectComponent"></webobject>
+      </webobject>
+   </center>
+</webobject>

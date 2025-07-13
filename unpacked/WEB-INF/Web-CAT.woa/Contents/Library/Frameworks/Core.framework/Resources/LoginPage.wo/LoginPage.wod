@@ -1,0 +1,102 @@
+AuthList: WOPopUpButton {
+	list              = domainDisplayGroup.allObjects;
+	selection         = domain;
+	item              = domainItem;
+	displayString     = domainItem.displayableName;
+	noSelectionString = "Choose your institution";
+	name              = "AuthenticationDomain";
+}
+
+BarePage : net.sf.webcat.core.BarePage {
+	title = "Login";
+	bodyClass = "user";
+}
+
+Errors: net.sf.webcat.core.ErrorDictionaryPanel {
+	errorMessages          = errors;
+	shouldShowNewlineAbove = true;
+	shouldShowNewlineBelow = true;
+}
+
+ExtraKey: WOHiddenField {
+	name  = aKey;
+	value = aKeyValue;
+}
+
+ExtraKeys: WORepetition {
+	list = extraKeys.allKeys;
+	item = aKey;
+}
+
+Footer: net.sf.webcat.core.Footer {}
+
+HasSpecificAuthDomain: WOConditional {
+    condition = hasSpecificAuthDomain;
+}
+
+HasLangList: WOConditional {
+    condition = application.properties.graderLangList;
+}
+
+HasMOTD: WOConditional {
+    condition = application.properties.coreMotd;
+}
+
+HiddenAuthDomain: WOHiddenField {
+	name  = "d";
+	value = specificAuthDomainName;
+}
+
+LangList: WOString {
+    value = application.properties.graderLangList;
+    escapeHTML = false;
+}
+
+LoginForm: WOForm {
+    href = application.properties.base.url; // VALID // loginDirectAction;
+}
+
+Logo: WOImage {
+	filename = "images/Web-CAT-big2.gif";
+	width    = "100";
+	height   = "40";
+	alt      = "Web-CAT";
+	border   = "0";
+	align    = "middle";
+}
+
+MOTD: WOString {
+    value = application.properties.coreMotd;
+    escapeHTML = false;
+}
+
+PoweredByWO: WOImage {
+	alt       = "Powered By WebObjects";
+	title     = "Powered By WebObjects";
+	border    = "0";
+	filename  = "PoweredByWebObjects.gif";
+	framework = "JavaWOExtensions";
+	height    = "34";
+	name      = "Powered By WebObjects";
+	width     = "125";
+}
+
+PoweredByWOLink: WOHyperlink {
+    href = "http://www.apple.com/webobjects/";
+}
+
+NeedsAuthList: WOConditional {
+    condition = multipleAuthDomains;
+}
+
+UserName: WOTextField {
+	value = userName;
+	name  = "UserName";
+	?size = "20";
+}
+
+UserPassword: WOPasswordField {
+	value = password;
+	name  = "UserPassword";
+	?size = "20";
+}

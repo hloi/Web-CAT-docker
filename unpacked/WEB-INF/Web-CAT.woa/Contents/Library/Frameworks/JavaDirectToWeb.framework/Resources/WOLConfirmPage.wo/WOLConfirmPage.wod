@@ -1,0 +1,55 @@
+ConfirmBanner: WOImage {
+	alt = "Confirm";
+	filename = "confirm-ban.gif";
+	framework = "JavaDirectToWeb";
+	height = "34";
+	name = "Confirm";
+	width = "550";
+}
+
+Form1: WOForm {
+	multipleSubmit = true;
+}
+
+ImageButton1: WOImageButton {
+	action = confirmAction;
+	alt = "Yes";
+	border = "0";
+	filename = "yes-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "Yes";
+	width = "100";
+}
+
+ImageButton2: WOImageButton {
+	action = cancelAction;
+	alt = "No";
+	border = "0";
+	filename = "no-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "No";
+	width = "100";
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = true;
+	_unroll = true;
+}
+
+String1: WOString {
+	escapeHTML = "NO";
+	value = message;
+}
+
+exclamation: WOImage {
+	alt = "!";
+	filename = "exclamation.gif";
+	framework = "JavaDirectToWeb";
+	height = "32";
+	name = "!";
+	width = "32";
+}
+

@@ -1,0 +1,104 @@
+<webobject name="PageWrapper">
+   <table cellpadding="5" border="0" cellspacing="5">
+      <webobject name="ErrorPanel">
+         <tr valign="top">
+            <td align="center">
+               <table border="2" cellpadding="2" bgcolor="#FF0000">
+                  <tr>
+                     <td><strong><webobject name="ErrorMessage"></webobject></strong></td>
+                  </tr>
+               </table>
+               <br>
+            </td>
+         </tr>
+      </webobject>
+      <tr>
+         <td><webobject name="EditingForm">
+               <table>
+                  <tr valign="top">
+                     <td valign="top" align="right">
+                        <table border="0" cellpadding="0" cellspacing="5">
+                           <webobject name="BannerConditional">
+                              <tr>
+                                 <td align="center" colspan="3">
+                                    <table>
+                                       <tr>
+                                          <td align="center">
+                                             <webobject name="Banner"></webobject>
+                                          </td>
+                                       </tr>
+                                       <webobject name="InspectTableHeaderRow">
+                                          <td align="left" colspan="3"><B><webobject name="EntityName"></webobject></B></td>
+                                       </webobject>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </webobject>
+                           <tr>
+                              <td align="center">
+                                 <table border="0">
+                                    <webobject name="AttributeRepetition2"><webobject name="NoKeyValueConditional">
+                                          <tr>
+                                             <td align="right"><strong><webobject name="AttributeName"></webobject></strong>:</td>
+                                             <td align="left"><webobject name="AttributeValue"></webobject></td>
+                                          </tr>
+                                       </webobject></webobject>
+                                 </table>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td valign="top" align="center"><br>
+                                 <webobject name="TabPanel">
+                                    <table border="0" cellpadding="0" cellspacing="5">
+                                       <tr>
+                                          <td valign="top" align="right"></td>
+                                          <webobject name="RowSpanningCell"><br>
+                                          </webobject>
+                                          <td valign="top" align="center"></td>
+                                       </tr>
+                                       <webobject name="AttributeRepetition"><webobject name="KeyValueConditional">
+                                             <tr>
+                                                <td align="right"><strong><webobject name="AttributeName2"></webobject></strong></td>
+                                                <td><webobject name="AttributeValue2"></webobject></td>
+                                             </tr>
+                                          </webobject></webobject>
+                                    </table>
+                                 </webobject></td>
+                           </tr>
+                        </table>
+                     </td>
+                  <tr>
+                     <td align="center" colspan="3">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                           <tr>
+                              <td align="center">
+                                 <webobject name="IsEditingConditional">
+                                    <webobject name="CancelLink"><webobject name="CancelButton"></webobject></webobject>
+                                 </webobject>
+                                 <webobject name="IsNotEditingConditional">
+                                    <webobject name="ReturnLink"><webobject name="ReturnButton"></webobject></webobject>
+                                 </webobject>
+                              </td>
+                              <webobject name="IsEntityWritable">
+                                 <td align="right">
+                                    <webobject name="DeleteLink"><webobject name="DeleteButton"></webobject></webobject>
+                                 </td>
+                              </webobject>
+                              <td align="left">
+                                 <webobject name="IsEntityWritable2">
+                                    <webobject name="IsNotEditingConditional2">
+                                       <webobject name="EditLink"><webobject name="EditImage"></webobject></webobject>
+                                    </webobject>
+                                 </webobject>
+                                 <webobject name="IsEditingConditional2">
+                                    <webobject name="SubmitChanges"></webobject>
+                                 </webobject>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+            </webobject>
+   </table>
+</webobject>

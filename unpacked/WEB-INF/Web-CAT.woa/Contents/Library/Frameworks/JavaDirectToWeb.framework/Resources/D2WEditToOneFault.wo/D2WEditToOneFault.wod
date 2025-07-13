@@ -1,0 +1,21 @@
+ChangeImage: WOImageButton {
+	action = editRelationship;
+	alt = helpString;
+	border = "0";
+	filename = d2wContext.editIcon;
+	framework = "JavaDirectToWeb";
+	name = helpString;
+	target = target;
+}
+
+ValueDisplay: WOString {
+	value = toOneDescription;
+}
+
+EditObject: WOHyperlink {
+	action = toOneAction;
+	disabled = d2wContext.disabled;
+	string = toOneDescription;
+	target = target;
+}
+

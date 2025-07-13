@@ -1,0 +1,89 @@
+Banner: WOImage {
+	alt = "Find";
+	border = "0";
+	filename = "find-ban.gif";
+	framework = "JavaDirectToWeb";
+	height = "34";
+	name = "Find";
+	width = "550";
+}
+
+BannerConditional: WOConditional {
+	_unroll = true;
+	condition = showBanner;
+}
+
+EntityName: WOString {
+	_unroll = true;
+	value = d2wContext.entity.name;
+}
+
+FetchLimit: WOString {
+	_unroll = true;
+	value = fetchLimit;
+}
+
+FetchLimitConditional: WOConditional {
+	_unroll = true;
+	condition = fetchLimit;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = true;
+	_unroll = true;
+}
+
+QueryForm: WOForm {
+	action = queryAction;
+}
+
+QueryResetButton: WOResetButton {
+	title = "Clear Form";
+	value = "Clear";
+}
+
+QuerySubmitButton: WOActiveImage {
+	action = queryAction;
+	alt = "Find objects matching the query";
+	border = "0";
+	filename = "searchdb-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "Find objects matching the query";
+	width = "100";
+}
+
+QueryTableHeaderRow: WOGenericContainer {
+	_unroll = true;
+	bgcolor = backgroundColorForHeaderRow;
+	elementName = "tr";
+}
+
+ResourceInputRepresentation: WOSwitchComponent {
+	WOComponentName = d2wContext.componentName;
+	_componentUnroll = true;
+	_unroll = true;
+	displayGroup = displayGroup;
+	localContext = localContext;
+}
+
+ResourceLabel: WOString {
+	_unroll = true;
+	value = d2wContext.displayNameForProperty;
+}
+
+ResourceRepetition: WORepetition {
+	_unroll = true;
+	item = d2wContext.propertyKey;
+	list = d2wContext.displayPropertyKeys;
+}
+
+RowSpanningCell: WOGenericContainer {
+	_unroll = true;
+	bgcolor = "#909090";
+	elementName = "td";
+	rowspan = defaultRowspan;
+	width = 1;
+}
+

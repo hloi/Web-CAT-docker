@@ -1,0 +1,18 @@
+CollapseContainer: D2WCollapsibleComponentContent {
+	_unroll = YES;
+	allowCollapsing = d2wContext.allowCollapsing;
+	closedLabel = toManyDescription;
+	submitActionName = "";
+}
+
+EditToManyRelationship: WOToManyRelationship {
+	destinationDisplayKey = keyWhenRelationship;
+	isMandatory = d2wContext.relationship.isMandatory;
+	maxColumns = d2wContext.numCols;
+	relationshipKey = d2wContext.relationship.name;
+	size = d2wContext.size;
+	sourceEntityName = d2wContext.entity.name;
+	sourceObject = object;
+	uiStyle = d2wContext.toManyUIStyle;
+}
+

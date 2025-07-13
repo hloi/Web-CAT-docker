@@ -1,0 +1,56 @@
+<webobject name="PageWrapper">
+   <webobject name="QueryForm">
+      <table border="0" cellpadding="5" cellspacing="5">
+         <tr valign="top">
+            <td valign="top" align="right">
+               <table cellpadding="0" border="0" cellspacing="5">
+                  <webobject name="BannerConditional">
+                     <tr>
+                        <td align="center">
+                           <table>
+                              <tr>
+                                 <td align="center"><webobject name="Banner"></webobject></td>
+                              </tr>
+                              <webobject name="QueryTableHeaderRow">
+                                 <td align="left"><b><webobject name="EntityName"></webobject><webobject name="FetchLimitConditional">
+                                       (<webobject name="FetchLimit"></webobject>
+                                       max)</webobject></B></TD>
+                              </webobject>
+                           </table>
+                        </td>
+                     </tr>
+                  </webobject>
+                  <tr>
+                     <td align="left" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="5">
+                           <tr height="0">
+                              <td valign="top" align="right"><b><font color="#ff0000">
+                                 </font></b></td>
+                              <webobject name="RowSpanningCell"><br>
+                              </webobject>
+                              <td valign="top" align="center"><b><font color="#ff0000">
+                                 </font></b></td>
+                           </tr>
+                           <webobject name="ResourceRepetition">
+                              <tr>
+                                 <td align="right" valign="middle"> <font size="-1">
+                                    <b><webobject name="ResourceLabel"></webobject>
+                                    &nbsp; </b> </font> </td>
+                                 <td align="left" valign="middle">
+                                    <webobject name="ResourceInputRepresentation"></webobject>
+                                 </td>
+                               </tr>
+                           </webobject>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+         <tr>
+            <td align="center">
+               <webobject name="QuerySubmitButton"></webobject>&nbsp; </td>
+         </tr>
+      </table>
+   </webobject>
+</webobject>

@@ -1,0 +1,21 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    methods = (
+     "public WOComponent $methodNameForHyperlink$() {
+        String href = (String)$generationReplacementForCurrentObject$.valueForKeyPath(\"$d2wContext.propertyKey$\");
+        WORedirect result = null;
+        if (href!=null) {
+            href = href.trim();
+            if (!href.startsWith(\"http://\")) {
+                href = \"http://\"+href;
+            }
+            result = new WORedirect(this.context());
+            result.setUrl(href);
+        }
+        return result;
+    }"
+    );
+}

@@ -1,0 +1,9 @@
+{
+    includeSuperClass = {};
+    interfaces = (
+	"ListPageInterface"
+    );
+    variables = (
+        "protected NSArray sortKeyList = NSArray.componentsSeparatedByString(\"$componentsForSortKeyList$\",\" \");"
+    );
+}

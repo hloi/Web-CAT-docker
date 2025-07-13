@@ -1,0 +1,42 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"ConfirmPageInterface"
+    );
+    variables = (
+        "protected NextPageDelegate _confirmPageDelegate;",
+        "protected NextPageDelegate _cancelDelegate;",
+
+        "protected String _messageString = \"Please confirm your last operation\";"
+    );
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+    }",
+        "public void setConfirmDelegate(NextPageDelegate nextPage) {
+		_confirmPageDelegate = nextPage;
+	}",
+        "public void setCancelDelegate(NextPageDelegate nextPage) {
+		_cancelDelegate = nextPage;
+	}",
+        "public void setMessage(String aMessage) {
+		_messageString = aMessage;
+	}",
+     "public String message() {
+           return _messageString;
+     }",
+        "public WOComponent confirmAction() throws Throwable {
+		if (_confirmPageDelegate != null)
+			return _confirmPageDelegate.nextPage(this);
+		return null;
+	}",
+        "public WOComponent cancelAction() throws Throwable {
+		if (_cancelDelegate != null)
+			return _cancelDelegate.nextPage(this);
+		return null;
+	}"
+   );
+}

@@ -1,0 +1,10 @@
+{
+    methods = (
+    "public String $methodNameToOneDescription$() {
+        EOEnterpriseObject anEO = ($generationReplacementForCurrentObject$ != null) ? (EOEnterpriseObject) $generationReplacementForCurrentObject$.valueForKeyPath(\"$d2wContext.propertyKey$\") : null;
+        if (anEO != null)  
+            return (String) anEO.$generatedToOneDescription$;
+        return null;
+    }"
+    );
+}

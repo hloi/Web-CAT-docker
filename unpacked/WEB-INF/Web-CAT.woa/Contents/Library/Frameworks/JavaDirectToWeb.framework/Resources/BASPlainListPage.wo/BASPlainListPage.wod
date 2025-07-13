@@ -1,0 +1,231 @@
+AttributeDisplay: WOSwitchComponent {
+	WOComponentName = d2wContext.componentName;
+	_componentUnroll = YES;
+	_unroll = YES;
+	object = object;
+	localContext = localContext;
+}
+
+AttributeRepetition: WORepetition {
+	_unroll = YES;
+	item = d2wContext.propertyKey;
+	list = d2wContext.displayPropertyKeys;
+}
+
+AttributeSorter: WOSortOrder {
+	displayGroup = displayGroup;
+	displayKey = d2wContext.displayNameForProperty;
+	key = d2wContext.propertyKey;
+}
+
+BackLink: WOHyperlink {
+	action = backAction;
+}
+
+BackgroundColor: WOString {
+	_unroll = YES;
+	value = d2wContext.backgroundColorForTable;
+}
+
+BatchForm: WOForm {
+	_unroll = YES;
+}
+
+CancelLink: WOHyperlink {
+	action = backAction;
+}
+
+ColumnLabelRepetition: WORepetition {
+	_unroll = YES;
+	item = d2wContext.propertyKey;
+	list = d2wContext.displayPropertyKeys;
+}
+
+DeleteEO: WOHyperlink {
+	action = deleteObjectAction;
+}
+
+DeleteImage: WOImage {
+	alt = "Delete that Object";
+	border = "0";
+	filename = "ButtonSmallDelete.gif";
+	framework = "JavaDirectToWeb";
+	height = "13";
+	name = "Delete that Object";
+	width = "42";
+}
+
+EditEO: WOHyperlink {
+	action = editObjectAction;
+}
+
+EditImage: WOImage {
+	alt = "Edit that object";
+	border = "0";
+	filename = "ButtonSmallEdit.gif";
+	framework = "JavaDirectToWeb";
+	height = "13";
+	name = "Edit that object";
+	width = "25";
+}
+
+EntityName: WOString {
+	_unroll = YES;
+	value = d2wContext.entity.name;
+}
+
+EntityRepetition: WOTable {
+	border = d2wContext.border;
+	cellpadding = 3;
+	cellspacing = 0;
+	item = object;
+	list = displayGroup.displayedObjects;
+	maxColumns = d2wContext.columnCount;
+	rowBackgroundColor = backgroundColorForRow;
+}
+
+EntityRepresentation: WOSwitchComponent {
+	WOComponentName = d2wContext.inspectComponentName;
+	_componentUnroll = YES;
+	_unroll = YES;
+	object = object;
+	localContext = localContext;
+}
+
+ExclamationImage: WOImage {
+	alt = "!";
+	border = "0";
+	filename = "exclamation.gif";
+	framework = "JavaDirectToWeb";
+	height = "32";
+	name = "!";
+	width = "32";
+}
+
+InspectEO: WOHyperlink {
+	action = inspectObjectAction;
+}
+
+InspectImage: WOImage {
+	alt = "Inspect that Object";
+	border = "0";
+	filename = "ButtonSmallInspect.gif";
+	framework = "JavaDirectToWeb";
+	height = "13";
+	name = "Inspect that Object";
+	width = "42";
+}
+
+IsEntityNotWritable: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+}
+
+IsEntityWritable: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+	negate = YES;
+}
+
+IsListing: WOConditional {
+	_unroll = YES;
+	condition = isSelecting;
+	negate = YES;
+}
+
+IsPropertySortable: WOConditional {
+	_unroll = YES;
+	condition = isPropertyAnAttribute;
+}
+
+IsSelecting: WOConditional {
+	_unroll = YES;
+	condition = isSelecting;
+}
+
+ListEmpty: WOConditional {
+	condition = isListEmpty;
+}
+
+ListNotEmpty: WOConditional {
+	condition = isListEmpty;
+	negate = YES;
+}
+
+ListTableHeaderRow: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = backgroundColorForHeaderRow;
+	elementName = "tr";
+}
+
+NavBar: WOBatchNavigationBar {
+	displayGroup = displayGroup;
+	objectName = entity.name;
+	sortKeyList = sortKeyList;
+	width = "80%";
+}
+
+NavBarTable: WOGenericContainer {
+	bgcolor = backgroundColorForHeaderRow;
+	border = 1;
+	elementName = "table";
+	width = "90%";
+}
+
+NumberOfItems: WOString {
+	value = listSize;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = YES;
+	_unroll = YES;
+}
+
+PropertyName: WOString {
+	_unroll = YES;
+	value = d2wContext.displayNameForProperty;
+}
+
+ReturnButton2: WOImage {
+	alt = "Returns to the previous page";
+	border = "0";
+	filename = "ReturnButton.gif";
+	framework = "JavaDirectToWeb";
+	height = "48";
+	name = "Returns to the previous page";
+	width = "66";
+}
+
+ReturnButton: WOImage {
+	alt = "Returns to the previous page";
+	border = "0";
+	filename = "ReturnButton.gif";
+	framework = "JavaDirectToWeb";
+	height = "48";
+	name = "Returns to the previous page";
+	width = "66";
+}
+
+SelectEO: WOHyperlink {
+	action = selectObjectAction;
+}
+
+SelectImage: WOImage {
+	alt = "Select that Object";
+	border = "0";
+	filename = "ButtonSmallSelect.gif";
+	framework = "JavaDirectToWeb";
+	height = "13";
+	name = "Select that Object";
+	width = "42";
+}
+
+ShowCancel2: WOConditional {
+	condition = showCancel;
+}
+
+ShowCancel: WOConditional {
+	condition = showCancel;
+}
+

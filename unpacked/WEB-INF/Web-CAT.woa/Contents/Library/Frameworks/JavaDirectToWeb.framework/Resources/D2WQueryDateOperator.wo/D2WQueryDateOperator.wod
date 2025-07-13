@@ -1,0 +1,16 @@
+DateField: WOTextField {
+	dateformat = formatter;
+	size = length;
+	value = value;
+}
+
+DateReadableDescription: WOString {
+	_unroll = YES;
+	value = dateReadableDescription;
+}
+
+OperatorPopUp: WOPopUpButton {
+	list = displayGroup.relationalQualifierOperators;
+	selection = anOperator;
+}
+

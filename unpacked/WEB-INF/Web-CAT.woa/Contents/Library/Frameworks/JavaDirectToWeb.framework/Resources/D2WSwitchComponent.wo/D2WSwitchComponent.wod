@@ -1,0 +1,8 @@
+Switch: WOSwitchComponent {
+	WOComponentName = componentName;
+	_componentUnroll = true;
+	_unroll = true;
+	extraBindings = extraBindings;
+	localContext = subContext;
+}
+

@@ -1,0 +1,47 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"QueryAllPageInterface"
+    );
+    variables = (
+        "protected WODisplayGroup displayGroup; // displayGroup is initialized in the .woo file for the component.",
+        "protected EODatabaseDataSource _queryDataSource;"
+   );
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+    }",
+        "public EODataSource queryDataSource() { return _queryDataSource; }
+    ",
+        "public EOQualifier qualifier() { return displayGroup.qualifierFromQueryValues(); }
+    ",
+        "public WOComponent queryAction(String entityName) {
+        // use the display group to build a query and pass it in a data source to the appropriate list page
+        _queryDataSource =new EODatabaseDataSource(session().defaultEditingContext(), entityName);
+        _queryDataSource.setAuxiliaryQualifier(qualifier());
+
+        ListPageInterface listPage=D2W.factory().listPageForEntityNamed(entityName,session());
+	    listPage.setDataSource(_queryDataSource);
+        listPage.setNextPage(this);
+
+        // clear the display group for the next query
+        displayGroup.queryMatch().removeAllObjects();
+        displayGroup.queryOperator().removeAllObjects();
+
+        return (WOComponent)listPage;
+    }",
+        "public void setNextPageDelegate(NextPageDelegate cp) {
+           // this method is needed to conform to QueryAllPageInterface
+           // use it to implement a callback mechanism if needed 
+    }",
+        "public WOComponent moreOptionsFor(String entityName) {
+            return (WOComponent)D2W.factory().queryPageForEntityNamed(entityName,session());
+        }"
+    );
+}

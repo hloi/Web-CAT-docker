@@ -1,0 +1,52 @@
+<webobject name="PageWrapper">
+   <webobject name="ListNotEmpty">
+      <center>
+         <webobject name="ListTable">
+            <tr class="batchnav"><td></td><webobject name="NavBarTD"><webobject name="NavBarForm"><webobject name="NavBar"/></webobject></webobject><webobject name="IsListing"><td></td></webobject></tr>
+            <tr><th>Edit</th>
+               <webobject name="ColumnLabelRepetition">
+                  <th valign="bottom"><webobject name="PropertyName"/><webobject name="IsPropertySortable"><webobject name="AttributeSorter"/></webobject></th>
+               </webobject>
+               <webobject name="IsListing2"><webobject name="IsEntityWritable2">
+               <th>Delete</th>
+               </webobject></webobject>
+            </tr>
+            <webobject name="EntityRepetition">
+               <webobject name="RowContainer">
+                  <td valign="middle">
+                     <webobject name="IsSelecting">
+                        <webobject name="SelectEO"><webobject name="SelectImage"/></webobject>
+                     </webobject>
+                     <webobject name="IsListing">
+                        <webobject name="IsEntityWritable">
+                           <webobject name="EditEO"><webobject name="EditImage"/></webobject>
+                        </webobject>
+                        <webobject name="IsEntityNotWritable">
+                           <webobject name="InspectEO"><webobject name="InspectImage"/></webobject>
+                        </webobject>
+                     </webobject>
+                  </td>
+                  <webobject name="AttributeRepetition"><webobject name="AttributeCell"><webobject name="AttributeDisplay"/></webobject></webobject>
+                  <webobject name="IsListing2">
+                     <webobject name="IsEntityWritable2">
+                        <td valign="middle"><webobject name="DeleteEO"><webobject name="DeleteImage"/></webobject></td>
+                     </webobject>
+                  </webobject>
+               </webobject>
+            </webobject>
+         </webobject>
+         <br/>
+         <webobject name="HideReturnOnSelect1"><webobject name="ShowCancel"><webobject name="BackLink"><webobject name="ReturnButton"/></webobject></webobject></webobject>
+      </center>
+   </webobject>
+   <webobject name="ListEmpty">
+<div class="NoticePanel error"><b class="top"><b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b></b><div class="boxcontent">
+<ul>
+<li class="warning">No matching <webobject name="EntityName"/>
+records found.</li>
+</ul>
+</div><b class="bottom"><b class="b4b"></b><b class="b3b"></b><b class="b2b"></b><b class="b1b"></b></b></div>
+      <br/>
+      <webobject name="HideReturnOnSelect2"><webobject name="ShowCancel2"><webobject name="BackLink2"><webobject name="ReturnButton2"/></webobject></webobject></webobject>
+   </webobject>
+</webobject>

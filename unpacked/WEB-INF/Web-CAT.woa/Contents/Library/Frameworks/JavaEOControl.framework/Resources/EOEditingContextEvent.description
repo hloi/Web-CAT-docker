@@ -1,0 +1,6 @@
+{
+    EOEventGroupName = "EOEditingContext Event";
+    "saveChanges" = "saveChanges";
+    "objectsWithFS" = "objectsWithFetchSpecification:";
+}
+

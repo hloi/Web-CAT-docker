@@ -1,0 +1,28 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    variables = (
+        "/** @TypeInfo $entity.name$ */
+    protected EOEnterpriseObject $generationReplacementForCurrentObject$;"
+    );
+    methods = (
+     "public WOComponent $methodNameForEditRelationship$() {
+        EditRelationshipPageInterface editRelationshipPage=D2W.factory().editRelationshipPageForEntityNamed(\"$d2wContext.relationship.destinationEntity.name$\",session());
+        editRelationshipPage.setMasterObjectAndRelationshipKey($generationReplacementForCurrentObject$,\"$d2wContext.propertyKey$\");
+        editRelationshipPage.setNextPage(this);
+        return (WOComponent) editRelationshipPage;
+    }",
+        "public WOComponent $methodNameForToOneAction$() {
+        EOEnterpriseObject targetEO=(EOEnterpriseObject)$generationReplacementForCurrentObject$.valueForKeyPath(\"$d2wContext.propertyKey$\");
+        InspectPageInterface inspectPage=D2W.factory().inspectPageForEntityNamed(targetEO.entityName(),session());
+	inspectPage.setObject(targetEO);
+        inspectPage.setNextPage(this);
+	return (WOComponent)inspectPage;
+    }"
+    );
+}

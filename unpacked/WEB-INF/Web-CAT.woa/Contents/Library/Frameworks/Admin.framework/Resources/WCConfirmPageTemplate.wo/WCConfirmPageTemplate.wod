@@ -1,0 +1,35 @@
+Form1: WOForm {
+	multipleSubmit = true;
+	_unroll = true;
+}
+
+Message: WOString {
+	escapeHTML = false;
+	value      = message;
+}
+
+NoButton: WOImageButton {
+	action = cancelAction;
+	alt = "No";
+	title = "No";
+	filename = "NoMetalBtn.gif";
+	framework = "JavaDirectToWeb";
+	height = "31";
+	width = "88";
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName  = pageWrapperName;
+	_componentUnroll = true;
+	_unroll          = true;
+}
+
+YesButton: WOImageButton {
+	action = confirmAction;
+	alt = "Yes";
+	title = "Yes";
+	filename = "YesMetalBtn.gif";
+	framework = "JavaDirectToWeb";
+	height = "31";
+	width = "88";
+}

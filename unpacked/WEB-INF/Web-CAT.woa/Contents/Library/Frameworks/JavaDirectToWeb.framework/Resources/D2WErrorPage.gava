@@ -1,0 +1,80 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"ErrorPageInterface"
+    );
+    variables = (
+        "private String _message;",
+        "private WOComponent _nextPage;"
+    );
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+    }",
+        "public String message() {
+        return _message;
+      }",
+        "public void setMessage(String newValue) {
+        _message=newValue;
+      }",
+        "public String formattedMessage() {
+        return breakDown(_message,60);
+      }",
+        "public String firstLineOfMessage() {
+        return  _message.length()>=41 ?  _message.substring(0,40)+\" ...\" : _message;
+      }","public boolean hasNextPage()  {
+        return (nextPage()!=null || nextPageDelegate()!=null);
+    }",
+     "public boolean hasNextPage() {
+        return (_nextPage!=null);
+    }",
+     "public void setNextPage(WOComponent nextPage) {
+         _nextPage = nextPage;
+      }",
+     "public WOComponent cancelAction() {
+        return _nextPage;
+    }",
+     "public WOComponent homeHref() {	
+        return D2W.factory().defaultPage(session());
+    }",
+        "private String breakDown(String inputString, int cols) {
+        // breaks the error message into lines of a maximum length
+        if (inputString==null) return null;
+        int totalLength=inputString.length();
+        StringBuffer result=new StringBuffer(totalLength);
+        int position=0;
+        while (position<totalLength) {
+            int nextReturn=inputString.indexOf('\\n',position);
+            if (nextReturn==-1) nextReturn=totalLength;
+            int partialLength=nextReturn-position;
+            if (partialLength>1) {
+                if (partialLength > cols) {
+                    int lastSpaceBeforeLine=-1;
+                    int endOfLine=-1;
+                    // the next line is too big, we have to cut it
+                    for (; position<nextReturn ; position=endOfLine+1) {
+                        endOfLine= ((position+cols) < nextReturn) ? (position+cols) : nextReturn ;
+                        if (endOfLine!=nextReturn) {
+                            lastSpaceBeforeLine=position+inputString.substring(position,endOfLine).lastIndexOf(' ');
+                            if (lastSpaceBeforeLine!=-1 && ((endOfLine-lastSpaceBeforeLine)<7))
+                                endOfLine=lastSpaceBeforeLine;
+                        }
+                        result.append(inputString.substring(position,endOfLine));
+                        if (endOfLine+1<nextReturn) result.append(\"\\n\");
+                    }
+                } else {
+                    result.append(inputString.substring(position,position+partialLength));
+                    position+=partialLength+1;
+                }
+            } else {
+                position+=1;
+            }
+            result.append(\"\\n\");
+        }
+        return result.toString();
+    }"
+   );
+}

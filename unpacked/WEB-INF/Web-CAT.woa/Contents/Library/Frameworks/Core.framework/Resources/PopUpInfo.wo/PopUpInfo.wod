@@ -1,0 +1,13 @@
+Link: WOHyperlink {
+    href        = "javascript:void(0);";
+	onclick     = "~\"return overlib('\" + message + \"', STICKY, BELOW, RIGHT, CAPTION, '\" + title + \"');\"";
+    onmouseout  = "return nd();";
+}
+
+InfoImage : WOImage {
+    framework = "Core";
+    filename  = "icons/info.gif";
+    width     = 16;
+    height    = 16;
+    border    = 0;
+}

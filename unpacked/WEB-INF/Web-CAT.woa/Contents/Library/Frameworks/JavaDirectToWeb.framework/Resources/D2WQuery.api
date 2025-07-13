@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="macintosh" standalone="yes"?>
+<wodefinitions>
+	<wo class="D2WQuery" wocomponentcontent="NO">
+		<image path="D2WQuery.tiff"/>
+
+		<binding name="action"/>
+		<binding name="displayKeys"/>
+		<binding name="entityName"/>
+		<binding name="queryDataSource"/>
+		<binding name="pageConfiguration"/>
+
+		<validation message="&apos;entityName&apos; is a required binding">
+			<unbound name="entityName"/>
+		</validation>
+
+		<validation message="&apos;queryDataSource&apos; must be bound to a settable value">
+			<unsettable name="queryDataSource"/>
+		</validation>
+
+		<validation message="&apos;queryDataSource&apos; is a required binding">
+			<unbound name="queryDataSource"/>
+		</validation>
+	</wo>
+</wodefinitions>

@@ -1,0 +1,4 @@
+{
+   	EOEventGroupName = "WOApplication Event";
+    pageWithName = "pageWithName";
+}

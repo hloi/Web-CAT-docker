@@ -1,0 +1,46 @@
+AssignmentDescription: WOString {
+    value = otherAssignmentStep.assignment.shortDescription;
+}
+
+AssignmentInstanceCount: WOString {
+    value = otherAssignmentStep.assignment.offerings.count;
+}
+
+AssignmentName: WOHyperlink {
+	href   = otherAssignmentStep.assignment.url;
+	target = "_new";
+    string = otherAssignmentStep.assignment.name;
+}
+
+Name: WOTextField {
+    value = step.config.name;
+    size  = 60;
+}
+
+OptionEditor: net.sf.webcat.core.OptionSetEditor {
+    options           = step.script.configDescription.options;
+    optionValues      = step.config.configSettings;
+    categories        = step.script.configDescription.optionCategories;
+    verboseOptionsKey = "EditScriptPageNoVerboseOptions";
+    browsePageName    = "EditScriptFilesPage";
+    base              = baseDir;
+}
+
+Page: net.sf.webcat.core.WizardPage {
+    sideStepTitle = "Edit Reusable Options";
+    applyEnabled  = true;
+}
+
+Repetition3: WORepetition {
+    list  = assignmentStepGroup.displayedObjects;
+    item  = otherAssignmentStep;
+    index = index;
+}
+
+ScriptName: WOString {
+    value = step.script.displayableName;
+}
+
+TR: net.sf.webcat.core.TableRow {
+    index = index;
+}

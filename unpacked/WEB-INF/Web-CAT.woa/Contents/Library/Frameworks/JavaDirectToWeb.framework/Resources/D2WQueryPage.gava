@@ -1,0 +1,46 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"QueryPageInterface"
+    );
+    variables = (
+        "protected WODisplayGroup displayGroup; // displayGroup is initialized in the .woo file for the component.",
+        "protected EODatabaseDataSource _queryDataSource;",
+        "protected NextPageDelegate _nextPageDelegate;"
+   );
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+    }",
+        "public String entity() {
+            // this method is used by the Header and the WebAssistant
+            return \"$entity.name$\";
+    }",
+        "public EODataSource queryDataSource() { return _queryDataSource; }
+    ",
+        "public EOQualifier qualifier() { return displayGroup.qualifierFromQueryValues(); }
+    ",
+        "public WOComponent queryAction() {
+        // use the display group to build a query and pass it in a data source to the appropriate list page
+        _queryDataSource =new EODatabaseDataSource(session().defaultEditingContext(), \"$entity.name$\");
+        _queryDataSource.setAuxiliaryQualifier(qualifier());
+        $fetchSpecOptions$
+        if (_nextPageDelegate==null) {
+            ListPageInterface listPage=D2W.factory().listPageForEntityNamed(\"$entity.name$\",session());
+            listPage.setDataSource(_queryDataSource);
+            listPage.setNextPage(this);
+            return (WOComponent)listPage;
+        } else
+            return _nextPageDelegate.nextPage(this);
+    }",
+        "public void setNextPageDelegate(NextPageDelegate delegate) {
+           _nextPageDelegate=delegate;
+    }"
+    );
+}

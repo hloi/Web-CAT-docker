@@ -1,0 +1,27 @@
+CollapseContainer: D2WCollapsibleComponentContent {
+	_unroll = YES;
+	allowCollapsing = d2wContext.allowCollapsing;
+	closedLabel = listDescription;
+	submitActionName = submitActionName;
+}
+
+EditValues: WOHyperlink {
+	action = inspectArrayAction;
+}
+
+InspectImage: WOImage {
+	alt = "Inspect";
+	border = "0";
+	filename = "ButtonSmallInspect.gif";
+	framework = "JavaDirectToWeb";
+	height = "13";
+	name = "Inspect";
+	width = "42";
+}
+
+Values: WOBrowser {
+	item = browserItem;
+	list = list;
+	displayString = browserStringForItem;
+}
+

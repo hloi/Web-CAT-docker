@@ -1,0 +1,83 @@
+/* Pre-loaded interfaces for JavaFoundation */
+
+package com.webobjects.foundation;
+
+class NSObject extends java.lang.Object implements java.lang.Cloneable, java.io.Serializable
+{
+}
+
+/** @Metatype Array */
+class NSArray extends com.webobjects.foundation.NSObject
+{	
+	Object computeSumForKey(String key){}
+	Object computeAvgForKey(String key){}
+	Object computeCountForKey(String key){}
+	Object computeMaxForKey(String key){}
+	Object computeMinForKey(String key){}
+}
+ 
+class NSMutableArray extends com.webobjects.foundation.NSArray
+{
+}
+
+class NSDictionary extends com.webobjects.foundation.NSObject
+{
+    int count(){}
+    com.webobjects.foundation.NSArray allKeys(){}
+    com.webobjects.foundation.NSArray allValues(){}
+}
+
+class NSMutableDictionary extends com.webobjects.foundation.NSDictionary
+{
+}
+
+class NSSet extends com.webobjects.foundation.NSObject
+{
+    int count(){}
+    com.webobjects.foundation.NSArray allObjects(){}
+    java.lang.Object anyObject(){}
+}
+
+class NSMutableSet extends com.webobjects.foundation.NSSet
+{
+}
+
+class NSData extends com.webobjects.foundation.NSObject
+{
+    int length(){}
+}
+
+class NSMutableData extends com.webobjects.foundation.NSData
+{
+}
+
+class NSTimestamp extends java.sql.Timestamp
+{
+    String toString(){}
+}
+
+// additional java classes
+package java.lang;
+
+class Object
+{
+}
+
+class String extends Object
+{
+}
+
+class Number extends Object
+{
+}
+
+class Boolean extends Object
+{
+}
+
+package java.math;
+
+class BigDecimal extends java.lang.Object
+{
+}
+

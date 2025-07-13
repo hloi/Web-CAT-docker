@@ -1,0 +1,5 @@
+{
+	EOEventGroupName = "EODatabaseContext Event";
+	saveChanges = "Save Changes";
+	objectsWithFS = "Objects With Fetch Specification";
+}

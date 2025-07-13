@@ -1,0 +1,12 @@
+LowerBound: WOTextField {
+	numberformat = formatter;
+	size = length;
+	value = minValue;
+}
+
+UpperBound: WOTextField {
+	numberformat = formatter;
+	size = length;
+	value = maxValue;
+}
+

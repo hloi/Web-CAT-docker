@@ -1,0 +1,300 @@
+AddStep: WOImageButton {
+    filename = "images/add-sm-btn.gif";
+	action   = addStep;
+	border   = "0";
+	width    = "46";
+	height   = "17";
+	alt      = "Add a plug-in grading step";
+	titlex    = "Add a plug-in grading step";
+}
+
+CancelSubs: WOSubmitButton {
+    action = cancelSuspendedSubs;
+    value  = "Cancel Them";
+}
+
+ClearGraph: WOSubmitButton {
+    action = clearGraph;
+    value  = "Refresh Cached Graph Data";
+}
+
+CourseName: WOString {
+    value = thisAssignment.courseOffering.deptNumberAndName;
+}
+
+Description: WOTextField {
+	size = 40;
+	value = thisAssignment.assignment.shortDescription;
+}
+
+DescriptionInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Title";
+    message = "Place the title of your assignment here, like &quot;Word Ladder Finder&quot;.  This value is used as a supplementary description when there is space to display more than just the name.";
+}
+
+DueDate: WOTextField {
+	size      = 20;
+    formatter = session.timeFormatter;
+	value     = thisAssignment.dueDate;
+	id        = "DueDate";
+	readonly  = 1;
+}
+
+DueDateSelector: WOImage {
+	filename = "icons/cal.gif";
+	width    = 16;
+	height   = 16;
+	alt      = "Select due date";
+	title    = "Select due date";
+	id       = "DueDateSelector";
+}
+
+EditStep: WOImageButton {
+    filename  = "icons/edit.gif";
+    framework = "Core";
+	action    = editStep;
+	border    = "0";
+	width     = "18";
+	height    = "17";
+	alt       = "Set/edit parameters for this step";
+	title     = "Set/edit parameters for this step";
+}
+
+EditSubmissionProfile: WOImageButton {
+    filename  = "icons/edit.gif";
+    framework = "Core";
+	action    = editSubmissionProfile;
+	border    = "0";
+	width     = "18";
+	height    = "17";
+	alt       = "Edit selected submission rules";
+	title     = "Edit selected submission rules";
+}
+
+Graph: net.sf.webcat.grader.graphs.MiniBarGraph {
+    graphSummary = thisAssignment.graphSummary;
+}
+
+//HasNoSubmissionProfile: WOConditional {
+//    condition = hasSubmissionProfile;
+//    negate    = true;
+//}
+
+//HasSubmissionProfile: WOConditional {
+//    condition = hasSubmissionProfile;
+//}
+
+HasSuspendedSubs: WOConditional {
+    condition = hasSuspendedSubs;
+}
+
+LastTR: net.sf.webcat.core.TableRow {
+	index = scriptDisplayGroup.displayedObjects.count;
+}
+
+MoodleId: WOTextField {
+	size = 8;
+	numberformat = "0";
+	value = thisAssignment.assignment.moodleId;
+}
+
+MoodleIdInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Moodle Id";
+    message = "If you are using our Moodle for your course web site and it has extensions to support uploading CSV gradebook information, place your Moodle course\'s ID in this slot.  Otherwise, leave it blank.";
+}
+
+OverrideMoodleId: WOTextField {
+	size = 8;
+	numberformat = "0";
+	value = thisAssignment.moodleId;
+}
+
+
+MoveStepDown: WOImageButton {
+    filename  = "icons/arrowDown.gif";
+    framework = "Core";
+	action    = moveStepDown;
+	border    = "0";
+	width     = "15";
+	height    = "13";
+	alt       = "Move this step down";
+	title     = "Move this step down";
+}
+
+MoveStepUp: WOImageButton {
+    filename  = "icons/arrowUp.gif";
+    framework = "Core";
+	action    = moveStepUp;
+	border    = "0";
+	width     = "15";
+	height    = "13";
+	alt       = "Move this step up";
+	title     = "Move this step up";
+}
+
+Name: WOTextField {
+	value = thisAssignment.assignment.name;
+	size  = 40;
+}
+
+NameInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Name";
+    message = "Use a short 1-3 word assignment name, like &quot;Program 1&quot; or &quot;Lab 04&quot;.  The name cannot be blank.  This name is used to construct human-readable directory names for the assignment, and is also used as a shorthand for referring to the assignment in student feedback.";
+}
+
+NewSubmissionProfile: WOSubmitButton {
+    action = newSubmissionProfile;
+    value  = "New";
+}
+
+NumSuspended: WOString {
+    value = numSuspendedSubs;
+}
+
+Order: WOString {
+	value = thisStep.order;
+}
+
+Page: net.sf.webcat.core.WizardPage {
+    finishEnabled = true;
+    applyEnabled  = true;
+    stylesheet           = "Grader.framework/WebServerResources/jscalendar/skins/aqua/theme.css";
+    externalJavascript   = "Grader.framework/WebServerResources/jscalendar/calendar.js,Grader.framework/WebServerResources/jscalendar/lang/calendar-en.js,Grader.framework/WebServerResources/jscalendar/calendar-setup.js";
+}
+
+PublishIt: WOCheckBox {
+	checked = thisAssignment.publish;
+}
+
+PublishItInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Publish It";
+    message = "Determines whether or not the assignment is visible and available to students. When this box is unchecked, only course staff can access the assignment.";
+}
+
+RegradeSubs: WOSubmitButton {
+    action = regradeSubs;
+    value  = "Regrade Everyone";
+	alt    = "Regrade everyone's most recent submission";
+}
+
+ReleaseSubs: WOSubmitButton {
+    action = releaseSuspendedSubs;
+    value  = "Re-grade Them";
+}
+
+RemoveStep: WOImageButton {
+    filename  = "icons/trash.gif";
+    framework = "Core";
+	action    = removeStep;
+	border    = "0";
+	width     = "14";
+	height    = "17";
+	alt       = "Delete this step";
+	title     = "Delete this step";
+}
+
+ScriptName: WOString {
+	value = thisStep.script.displayableName;
+}
+
+StepAllowsTimeout: WOConditional {
+    condition = stepAllowsTimeout;
+}
+
+StepRepetition: WORepetition {
+	item  = thisStep;
+	list  = scriptDisplayGroup.displayedObjects;
+	index = index;
+}
+
+SubmissionProfileInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Submission Rules";
+    message = "The <b>submission rules</b> define the policy that governs acceptance of student submissions, including the points available, limits on the number or size of submissions, the applicable late policy, and any penalties for late submissions, etc.  Click the edit icon to edit the selected rules, or click the New button to create a new rule set.";
+}
+
+SubmissionProfileList: WOPopUpButton {
+    list          = submissionProfileDisplayGroup.displayedObjects;
+    item          = submissionProfile;
+    displayString = submissionProfile.name;
+    selection     = thisAssignment.assignment.submissionProfile;
+}
+
+//SubmissionProfileName: WOString {
+//	value = thisAssignment.assignment.submissionProfile.name;
+//}
+
+Suspend: WOCheckBox {
+	checked = isSuspended;
+}
+
+SuspendInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Suspend Grading";
+    message = "Disables processing of any further submissions for an assignment. Any submissions made will be accepted and queued up, but will not be processed. If this box is already checked, when you uncheck it and then click &quot;Apply All&quot; or &quot;Finish&quot;, all submissions that have been queued up will be processed.";
+}
+
+Timeout: WOTextField {
+	numberformat = "0";
+	size = 4;
+	value = stepTimeout;
+}
+
+TimeFormat: WOString {
+    value = session.timeFormatter.pattern;
+}
+
+TR: net.sf.webcat.core.TableRow {
+	index = index;
+}
+
+TR2: net.sf.webcat.core.TableRow {
+	index = index;
+    showCaution = upcomingAssignmentIsLate;
+    showError   = upcomingAssignment.gradingSuspended;
+}
+
+UploadInstructions: WOText {
+	rows  = 8;
+	cols  = 60;
+ 	value = thisAssignment.assignment.fileUploadMessage;
+}
+
+UploadInstructionsInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Upload Instructions";
+    message = "Optionally, enter any assignment-specific instructions that you want students to see when they upload submissions through Web-CAT\'s web interface. Any content you insert here will be included in the HTML page where users select files to upload and submit. You can use full HTML markup in your instructions, which will be inserted unfiltered in the page students see. Note that these instructions will only be available to students who submit using their web browser--they will not be seen by students who submit from an IDE, such as BlueJ or Eclipse.";
+}
+
+UpcomingAssignmentName: WOHyperlink {
+    string = upcomingAssignment.titleString;
+    href   = upcomingAssignment.assignment.url;
+}
+
+UpcomingAssignmentRepetition: WORepetition {
+	item  = upcomingAssignment;
+	list  = upcomingAssignments;
+	index = index;
+}
+
+UpcomingAssignments: WOCollapsibleComponentContent {
+	openedLabel = "Hide upcoming assignment deadlines";
+	closedLabel = "Show upcoming assignment deadlines";
+}
+
+UpcomingDueDate: WOString {
+    formatter = session.timeFormatter;
+    value     = upcomingAssignment.dueDate;
+}
+
+UpcomingIsUnpublished: WOConditional {
+    condition = upcomingAssignment.publish;
+    negate = true;
+}
+
+URL: WOTextField {
+	size = 40;
+	value = thisAssignment.assignment.url;
+}
+
+URLInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "URL";
+    message = "Place a URL to use for the assignment writeup.  If this optional value is set, the assignment name will be shown to students as an active hyperlink that targets this URL.";
+}

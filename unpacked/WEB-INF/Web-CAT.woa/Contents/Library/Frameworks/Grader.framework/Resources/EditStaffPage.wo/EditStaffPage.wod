@@ -1,0 +1,110 @@
+CompactName: WOString {
+    value = courseOffering.compactName;
+}
+
+CourseName: WOString {
+    value = courseOffering.course.name;
+}
+
+UserRole: WOString {
+    value = userRole;
+}
+
+Repetition2: WORepetition {
+	item = aUser;
+	list = staffDisplayGroup.displayedObjects;
+	index = index;
+}
+
+Remove: WOImageButton {
+    filename = "images/remv-sm-btn.gif";
+	action   = removeStaff;
+	border   = "0";
+	width    = "46";
+	height   = "17";
+}
+
+UserID: WOString {
+	value = aUser.userName;
+}
+
+Name: WOHyperlink {
+    href = aUser.url;
+    string = aUser.name_LF;
+}
+
+Email: WOHyperlink {
+    href = aUser.emailHref;
+    string = aUser.email;
+}
+
+WCSortOrder3: net.sf.webcat.core.WCSortOrder {
+	displayGroup = staffDisplayGroup;
+	displayKey = "Name";
+	key = "name_LF";
+}
+
+WCSortOrder4: net.sf.webcat.core.WCSortOrder {
+	displayGroup = staffDisplayGroup;
+	displayKey = "User Name";
+	key = "userName";
+}
+
+Repetition1: WORepetition {
+	item  = aUser;
+	list  = potentialDisplayGroup.displayedObjects;
+	index = index;
+}
+
+BatchNavigator1: net.sf.webcat.core.WCBatchNavigator {
+    displayGroup = potentialDisplayGroup;
+    persistentKey = "EditStaffPage.batchSize";
+}
+
+Add: WOImageButton {
+    filename = "images/add-sm-btn.gif";
+	action   = addStaff;
+	border   = "0";
+	width    = "46";
+	height   = "17";
+}
+
+TR: net.sf.webcat.core.TableRow {
+	index = index;
+}
+
+WCSortOrder1: net.sf.webcat.core.WCSortOrder {
+	displayGroup = potentialDisplayGroup;
+	displayKey = "Name";
+	key = "name_LF";
+}
+
+WCSortOrder2: net.sf.webcat.core.WCSortOrder {
+	displayGroup = potentialDisplayGroup;
+	displayKey = "User Name";
+	key = "userName";
+}
+
+IsStaff: WOConditional {
+	condition = isStaff;
+}
+
+IsNotStaff: WOConditional {
+	condition = isStaff;
+	negate    = true;
+}
+
+Page: net.sf.webcat.core.WizardPage {
+    sideStepTitle = sideStepTitle;
+    applyEnabled = true;
+}
+
+NoStaff: WOConditional {
+	condition = staffDisplayGroup.displayedObjects.count;
+	negate    = true;
+}
+
+NoPotentialStaff: WOConditional {
+	condition = potentialDisplayGroup.displayedObjects.count;
+	negate    = true;
+}

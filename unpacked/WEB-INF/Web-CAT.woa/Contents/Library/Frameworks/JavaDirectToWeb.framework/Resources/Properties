@@ -1,0 +1,3 @@
+# JavaDirectToWeb framework default properties
+# DO NOT CHANGE
+NSPrincipalClass=com.webobjects.directtoweb.D2W

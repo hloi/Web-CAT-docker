@@ -1,0 +1,7 @@
+/* Pre-loaded interfaces for java.math */
+
+package java.math;
+
+class BigDecimal extends java.lang.Number
+{
+}

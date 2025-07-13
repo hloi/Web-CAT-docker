@@ -1,0 +1,16 @@
+{
+    includeSuperClass = {};
+    variables = (
+        "public EOEnterpriseObject $ivarNameForBrowserItem$;"
+    );
+    methods = (
+    "public WOComponent $methodNameInspectAction$() {
+        if ($ivarNameForBrowserItem$==null) return null;
+        InspectPageInterface inspectPage=D2W.factory().inspectPageForEntityNamed($ivarNameForBrowserItem$.entityName(),session());
+        inspectPage.setObject($ivarNameForBrowserItem$);
+        inspectPage.setNextPage(context().page());
+        return (WOComponent)inspectPage;
+    }"
+
+    );
+}

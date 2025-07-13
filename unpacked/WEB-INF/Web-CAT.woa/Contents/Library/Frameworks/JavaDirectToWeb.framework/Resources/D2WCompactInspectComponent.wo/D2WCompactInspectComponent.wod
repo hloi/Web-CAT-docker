@@ -1,0 +1,19 @@
+AttributeDisplay: WOSwitchComponent {
+	WOComponentName = d2wContext.componentName;
+	_componentUnroll = YES;
+	_unroll = YES;
+	object = object;
+	localContext = localContext;
+}
+
+AttributeName: WOString {
+	_unroll = YES;
+	value = d2wContext.displayNameForProperty;
+}
+
+AttributeRepetition: WORepetition {
+	_unroll = YES;
+	item = d2wContext.propertyKey;
+	list = d2wContext.displayPropertyKeys;
+}
+

@@ -1,0 +1,40 @@
+<webobject name="Page"><webobject name="Somebody">For: <span class="hl"><webobject name="AssignmentName"/></span>
+    <p><b>Score Summary:</b>
+    High: <span class="hl"><webobject name="HighScore"/></span>
+    Mean: <span class="hl"><webobject name="AvgScore"/></span>
+    Low:  <span class="hl"><webobject name="LowScore"/></span></p>
+    <p>Student submissions for you to grade
+      (only students with submissions are shown):<br>
+    <div class="shadow"><table><tbody>
+    <tr class="batchnav"><td colspan="7"><webobject name="BatchNavigator"/></td>
+        <webobject name="UsesToolCheckScore"><td></td></webobject>
+        <webobject name="UsesBonusesOrPenalties"><td></td></webobject>
+    </tr>
+    <tr><th class="sm">Done?<webobject name="WCSortOrder3"/></th>
+        <th>Name<webobject name="WCSortOrder1"/></th>
+        <th class="sm">Sub No.</th>
+        <th>Time<webobject name="WCSortOrder4"/></th>
+        <th class="sm">Testing</th>
+        <webobject name="UsesToolCheckScore"><th class="sm">Tool Checks</th></webobject>
+        <th>TA</th>
+        <webobject name="UsesBonusesOrPenalties"><th class="sm">Early/Late</th></webobject>
+        <th class="sm">Score<webobject name="WCSortOrder5"/></th>
+    </tr>
+    <webobject name="Repetition1"><webobject name="TR">
+	    <td><webobject name="Status"/></td>
+        <td><webobject name="Name"/><webobject name="HasPartners"><webobject name="PartnerRepetition"><webobject name="IsAPartner"><webobject name="MorePartners">,<br/></webobject><webobject name="LastPartner"><webobject name="HasMultiplePartners">,</webobject><br/>and</webobject>
+<webobject name="PartnerName"/></webobject></webobject></webobject></td>
+        <td class="n"><webobject name="SubmitNumber"/><webobject name="NotMostRecent">
+        (of <webobject name="MostRecentSubmitNumber"/>)</webobject></td>
+        <td class="sm"><webobject name="SubmitTime"/></td>
+        <td class="n"><webobject name="TestingScore"/></td>
+        <webobject name="UsesToolCheckScore"><td class="n"><webobject name="ToolScore"/></td></webobject>
+        <td class="n"><webobject name="EditScore"><webobject name="HasTAScore"><webobject name="TAScore"/></webobject><webobject name="NoTAScore">&lt;edit&gt;</webobject></webobject></td>
+        <webobject name="UsesBonusesOrPenalties"><td class="n"><webobject name="ScoreAdjustment"/></td></webobject>
+        <td class="n"><webobject name="FinalScore"/></td>
+    </webobject></webobject>
+    </tbody></table></div>
+    <webobject name="MarkAsComplete"/>
+</webobject><webobject name="Nobody">
+<p>No submissions matching your criteria have been found.</p>
+</webobject></webobject>

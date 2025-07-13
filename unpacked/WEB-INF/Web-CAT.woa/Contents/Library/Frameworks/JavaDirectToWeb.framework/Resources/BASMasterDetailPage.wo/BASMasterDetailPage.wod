@@ -1,0 +1,62 @@
+BackLink: WOHyperlink {
+	action = listReturnAction;
+}
+
+EditDetail: D2WEdit {
+	_unroll = YES;
+	actionPageDelegate = masterDetailPageDelegate;
+	entityName = entity.name;
+	object = selectedObject;
+}
+
+InspectDetail: D2WInspect {
+	_unroll = YES;
+	actionPageDelegate = masterDetailPageDelegate;
+	entityName = entity.name;
+	object = selectedObject;
+}
+
+MasterComponent: D2WSelect {
+	_unroll = YES;
+	actionPageDelegate = selectPageDelegate;
+	dataSource = dataSource;
+	entityName = entity.name;
+	nextPage = nextPage;
+	selectedObject = selectedObject;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = YES;
+	_unroll = YES;
+}
+
+ReturnButton: WOImage {
+	alt = "Returns to the previous page";
+	border = "0";
+	filename = "ReturnButton.gif";
+	framework = "JavaDirectToWeb";
+	height = "48";
+	name = "Returns to the previous page";
+	width = "66";
+}
+
+ShowCancel: WOConditional {
+	condition = showCancel;
+}
+
+ShowDetail: WOConditional {
+	condition = isObjectSelected;
+}
+
+ShowEdit: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+	negate = YES;
+}
+
+ShowInspect: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+}
+

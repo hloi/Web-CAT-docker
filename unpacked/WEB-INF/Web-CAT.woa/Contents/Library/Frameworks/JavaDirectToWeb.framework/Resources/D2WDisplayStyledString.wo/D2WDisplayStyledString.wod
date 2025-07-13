@@ -1,0 +1,24 @@
+BoldContainer: WOGenericContainer {
+	_unroll = YES;
+	elementName = "b";
+	omitTags = isNotBoldAsBoolean;
+}
+
+ColorContainer: WOGenericContainer {
+	_unroll = YES;
+	color = d2wContext.color;
+	elementName = "font";
+	omitTags = hasNoColor;
+}
+
+ItalicContainer: WOGenericContainer {
+	_unroll = YES;
+	elementName = "i";
+	omitTags = isNotItalicAsBoolean;
+}
+
+String: WOString {
+    valueWhenEmpty="&nbsp;";
+    value = objectPropertyValue;
+}
+

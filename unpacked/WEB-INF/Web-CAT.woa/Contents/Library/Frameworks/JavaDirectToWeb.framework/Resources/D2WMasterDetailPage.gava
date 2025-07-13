@@ -1,0 +1,51 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"ListPageInterface"
+    );
+    variables = ();
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+    }",
+   "public WOComponent listReturnAction() {
+        // revert any unsaved changes before returning
+        EOEnterpriseObject selectedEO = (EOEnterpriseObject) displayGroup.selectedObject();
+        if (null != selectedEO) {
+            EOEditingContext ec;
+
+            ec = selectedEO.editingContext();
+
+            if (null != ec) {
+                ec.lock();
+
+                try {
+                    ec.revert();
+                }
+                finally {
+                    ec.unlock();
+                }
+
+            }
+
+        }
+        return (_nextPageDelegate !=null) ?
+                    _nextPageDelegate.nextPage(this) :
+                    (nextPage() !=null) ?
+                        nextPage() :
+                        null;
+    }",
+	"public boolean isObjectSelected() {
+        	return (displayGroup.selectedObjects().count() != 0);
+        }",
+    "public boolean showCancel() {
+        return _nextPageDelegate!=null || theNextPage!=null;
+        }"
+    );
+}

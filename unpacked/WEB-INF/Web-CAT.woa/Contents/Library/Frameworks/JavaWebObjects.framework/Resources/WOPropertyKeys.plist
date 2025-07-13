@@ -1,0 +1,55 @@
+{
+    "WOLOADFRAMEWORKS" = "WOLoadFrameworks";
+    "WOFRAMEWORKSBASEURL" = "WOFrameworksBaseURL";
+    "WODEBUGGINGENABLED" = "WODebuggingEnabled";
+    "WORECORDINGPATH" = "WORecordingPath";
+    "WOBROWSER" = "WOAutoOpenInBrowser";
+    "WOCLIENTAPPLICATION" = "WOAutoOpenClientApplication";
+    "WODIRECTCONNECT" = "WODirectConnectEnabled";
+    "WOCGIADAPTORURL" = "WOAdaptorURL";
+    "WOCACHINGENABLED" = "WOCachingEnabled";
+    "WOAPPLICATIONBASEURL" = "WOApplicationBaseURL";
+    "NSPROJECTSEARCHPATH" = "NSProjectSearchPath";
+    "WOSESSIONSTORECLASSNAME" = "WOSessionStoreClassName";
+    "WOCONTEXTCLASSNAME" = "WOContextClassName";
+    "WOSTATISTICSTOREPASSWORD" = "WOStatisticsPassword";
+    "WOSMTPHOST" = "WOSMTPHost";
+    "WOPORT" = "WOPort";
+    "WOHOST" = "WOHost";
+    "WOLISTENQUEUESIZE" = "WOListenQueueSize";
+    "WOSOCKETCACHESIZE" = "WOSocketCacheSize";
+    "WOSOCKETMONITORSLEEPTIME" = "WOSocketMonitorSleepTime";
+    "WOMAXSOCKETIDLETIME" = "WOMaxSocketIdleTime";
+    "WOWORKERTHREADCOUNT" = "WOWorkerThreadCount";
+    "WOWORKERTHREADCOUNTMIN" = "WOWorkerThreadCountMin";
+    "WOWORKERTHREADCOUNTMAX" = "WOWorkerThreadCountMax";
+    "WOADAPTORARGUMENTFORMAT" = "WOAdaptorArgumentFormat";
+    "WOADAPTOR" = "WOAdaptor";
+    "WOADDITIONALADAPTORS" = "WOAdditionalAdaptors";
+    "WOSESSIONTIMEOUT" = "WOSessionTimeOut";
+    "WOTOLERATEMALFORMEDCOOKIES" = "WOAcceptMalformedCookies";
+    "WOGENERATEWSDL" = "WOGenerateWSDL";
+
+    "WOLIFEBEATDESTINATIONPORT" = "WOLifebeatDestinationPort";
+    "WOLIFEBEATENABLED" = "WOLifebeatEnabled";
+    "WOLIFEBEATINTERVAL" = "WOLifebeatInterval";
+    "WOMONITORENABLED" = "WOMonitorEnabled";
+    "WOAPPLICATIONNAME" = "WOApplicationName";
+    "WOOUTPUTPATH" = "WOOutputPath";
+    "WODEFAULTUNDOSTACKLIMIT" = "WODefaultUndoStackLimit";
+
+    "WOALLOWSCACHECONTROLHEADER" = "WOAllowsCacheControlHeader";
+
+    "WOCOMPONENTREQUESTHANDLERKEY" = "_ComponentRequestHandlerKey";
+    "WODIRECTACTIONREQUESTHANDLERKEY" = "_DirectActionRequestHandlerKey";
+    "WORESOURCEREQUESTHANDLERKEY" = "_ResourceRequestHandlerKey";
+    "WOWEBSERVICEREQUESTHANDLERKEY" = "_WebServiceRequestHandlerKey";
+
+    "WOINCLUDECOMMENTSINRESPONSE" = "WOIncludeCommentsInResponse";
+    "WOALLOWSCONCURRENTREQUESTHANDLING" = "WOAllowsConcurrentRequestHandling";
+    "WOGARBAGECOLLECTIONREPEATCOUNT" =  "WOGarbageCollectionRepeatCount";
+    "WOLOCKDEFAULTEDITINGCONTEXT" ="_LockDefaultEditingContextKey";
+
+    "WOHTMLPARSERCLASSNAME" = "_WOHTMLParserClassName";
+    "WOSTATISTICSSTORESESSIONMAX" = "WOStatisticsStoreSessionMax";
+}

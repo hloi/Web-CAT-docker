@@ -1,0 +1,18 @@
+CancelButton: AjaxSubmitButton {
+    value = "Cancel";
+    id = "longResponseCancelButton";
+    disabled = cannotCancel;
+    onClick = "$('longResponseCancelButton').disable(); $('longResponseCancelButton').value = 'Canceling...';";
+    action = cancelJob;
+}
+
+PeriodicUpdater: AjaxUpdateContainer {
+    id = "periodicUpdater";
+    frequency = 3;
+    decay = 1;
+}
+
+ProgressBar: net.sf.webcat.reporter.WCProgressBar {
+    fractionDone = fractionOfWorkDone;
+    taskDescription = workDescription;
+}

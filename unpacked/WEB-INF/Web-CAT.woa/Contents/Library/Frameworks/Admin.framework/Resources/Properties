@@ -1,0 +1,16 @@
+#This file is automatically rewritten by ANT, so all formatting will be trashed.
+#Thu Nov 06 23:08:56 EST 2008
+Admin.provider=Virginia Tech Computer Science
+Admin.copyright=(c) 2006-2008 Virginia Tech Department of Computer Science
+Admin.version.revision=16
+Admin.history.url=http\://web-cat.cs.vt.edu/WCWiki/AdminSubsystem/ChangeHistory
+Admin.requires=Core
+Admin.version.date=20081106
+Admin.version.minor=1
+Admin.description=This subsystem provides tools for Web-CAT administrators to use, including configuration support and direct database browse and edit capabilities.
+Admin.version.major=1
+Admin.license.url=http\://www.gnu.org/licenses/agpl.html
+Admin.license=GNU Affero General Public License v.3
+Admin.info.url=http\://web-cat.cs.vt.edu/WCWiki/AdminSubsystem
+subsystem.Admin=net.sf.webcat.admin.Admin
+Admin.provider.url=http\://web-cat.cs.vt.edu/updates

@@ -1,0 +1,9 @@
+{
+    EOEventGroupName = "WOComponent Event";
+    takeValuesFromRequest = "takeValuesFromRequest";
+    invokeActionForRequest = "invokeAction";
+    appendToResponse = "appendToResponse";
+    awake = "awake";
+    sleep = "sleep";
+    init = "init";
+}

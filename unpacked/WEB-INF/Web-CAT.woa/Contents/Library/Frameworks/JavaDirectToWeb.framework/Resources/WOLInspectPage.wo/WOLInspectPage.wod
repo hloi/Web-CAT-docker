@@ -1,0 +1,185 @@
+AttributeName: WOString {
+	_unroll = YES;
+	value = d2wContext.displayNameForProperty;
+}
+
+AttributeRepetition: WORepetition {
+	_unroll = YES;
+	item = d2wContext.propertyKey;
+	list = d2wContext.displayPropertyKeys;
+}
+
+AttributeValue: WOSwitchComponent {
+	WOComponentName = d2wContext.componentName;
+	_componentUnroll = YES;
+	_unroll = YES;
+	localContext = localContext;
+	object = object;
+}
+
+Banner: WOImage {
+	border = "0";
+	filename = d2wContext.bannerFileName;
+	framework = "JavaDirectToWeb";
+	height = "34";
+	width = "550";
+}
+
+BannerConditional: WOConditional {
+	_unroll = YES;
+	condition = showBanner;
+}
+
+CancelButton: WOImage {
+	alt = "Reverts your changes";
+	border = "0";
+	filename = "cancel-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "Reverts your changes";
+	width = "100";
+}
+
+CancelLink: WOHyperlink {
+	action = cancelAction;
+}
+
+DeleteButton: WOImage {
+	alt = "Deletes this object";
+	border = "0";
+	filename = "delete-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "Deletes this object";
+	width = "100";
+}
+
+DeleteLink: WOHyperlink {
+	action = deleteAction;
+}
+
+EditImage: WOImage {
+	alt = "Edits this object";
+	border = "0";
+	filename = "edit-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "Edits this object";
+	width = "100";
+}
+
+EditLink: WOHyperlink {
+	action = editAction;
+}
+
+EditingForm: WOForm {
+}
+
+EntityName: WOString {
+	_unroll = YES;
+	value = d2wContext.entity.name;
+}
+
+ErrorMessage: WOString {
+	escapeHTML = "NO";
+	value = errorMessage;
+}
+
+ErrorPanel: WOConditional {
+	condition = errorMessage.length;
+}
+
+InspectTableHeaderRow: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = backgroundColorForHeaderRow;
+	elementName = "tr";
+}
+
+IsEditingConditional2: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+}
+
+IsEditingConditional3: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+}
+
+IsEditingConditional: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+}
+
+IsEntityWritable2: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+	negate = YES;
+}
+
+IsEntityWritable: WOConditional {
+	_unroll = YES;
+	condition = isEntityReadOnly;
+	negate = YES;
+}
+
+IsNotEditingConditional2: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+	negate = YES;
+}
+
+IsNotEditingConditional3: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+	negate = YES;
+}
+
+IsNotEditingConditional: WOConditional {
+	_unroll = YES;
+	condition = isEditing;
+	negate = YES;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = YES;
+	_unroll = YES;
+}
+
+ReturnButton: WOImage {
+	alt = "Returns to the previous page";
+	border = "0";
+	filename = "return-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "Returns to the previous page";
+	width = "100";
+}
+
+ReturnLink: WOHyperlink {
+	action = nextPage;
+}
+
+RowSpanningCell: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = "#909090";
+	elementName = "td";
+	rowspan = defaultRowspan;
+	width = 1;
+}
+
+ShowCancel: WOConditional {
+	condition = showCancel;
+}
+
+SubmitChanges: WOImageButton {
+	action = submitAction;
+	alt = "Saves your changes";
+	border = "0";
+	filename = "save-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "27";
+	name = "Saves your changes";
+	width = "100";
+}
+

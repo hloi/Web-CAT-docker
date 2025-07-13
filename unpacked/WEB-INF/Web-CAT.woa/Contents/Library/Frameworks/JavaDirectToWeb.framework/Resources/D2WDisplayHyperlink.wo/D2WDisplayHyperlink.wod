@@ -1,0 +1,9 @@
+Hyperlink1: WOHyperlink {
+	action = hyperlinkAction;
+}
+
+String1: WOString {
+	value = objectPropertyValue;
+	valueWhenEmpty = "";
+}
+

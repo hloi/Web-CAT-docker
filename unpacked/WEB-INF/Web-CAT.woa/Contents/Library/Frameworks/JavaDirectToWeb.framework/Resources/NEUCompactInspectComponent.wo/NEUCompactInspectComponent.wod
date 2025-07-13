@@ -1,0 +1,25 @@
+AttributeDisplay: WOSwitchComponent {
+	WOComponentName = d2wContext.componentName;
+	_componentUnroll = YES;
+	_unroll = YES;
+	localContext = localContext;
+	object = object;
+}
+
+AttributeName: WOString {
+	_unroll = YES;
+	value = d2wContext.displayNameForProperty;
+}
+
+AttributeRepetition: WORepetition {
+	_unroll = YES;
+	item = d2wContext.propertyKey;
+	list = d2wContext.displayPropertyKeys;
+}
+
+InspectTable: WOGenericContainer {
+	cellpadding = 0;
+	cellspacing = 0;
+	elementName = "table";
+}
+

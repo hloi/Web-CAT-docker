@@ -1,0 +1,52 @@
+<webobject name="PageWrapper">
+    <webobject name="QueryTable">
+        <webobject name="BannerConditional">
+            <tr>
+                <td align="center">
+                    <table border="0">
+                        <tr>
+                            <td align="left" colspan="3"><webobject name="Banner"></webobject></td>
+                        </tr>
+                        <webobject name="QueryTableHeaderRow">
+                            <td align="left" colspan="3"><b>
+                                <webobject name="FontContainer">Entities</webobject></b></td>
+                        </webobject>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </webobject>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="left" valign="top">
+                <table border="0" cellspacing="0" cellpadding="1">
+                    <webobject name="EntitiesRepetition">
+                        <webobject name="QueryRow">
+                            <!WOB-Tokenizer Allow-Marker="FORM" As-Child-Of="TR">
+                            <webobject name="QueryForm">
+                                <!WOB-Tokenizer Allow-Marker="TD" As-Child-Of="FORM">
+                                <td align="right"><strong><webobject name="EntityName"></webobject></strong>&nbsp;</td>
+                                <td bgcolor="#ffffff"><img border="0" height="1" width="1"></td>
+                                <td align="right">&nbsp;<webobject name="QueryAnyField"></webobject></td>
+                                <td valign="center"><webobject name="SearchButtonImage"></webobject></td>
+                                <td valign="center"><webobject name="RegularQueryHyperlink"><webobject name="MoreOptionsImage"></webobject></webobject></td>
+                            </webobject>
+                            <!WOB-Tokenizer Restore-Original-Grammar>
+                        </webobject>
+                        <tr>
+                            <td bgcolor="#ffffff"><img border="0" height="1" width="1"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </webobject>
+                </table>
+            </td>
+        </tr>
+    </webobject>
+</webobject>

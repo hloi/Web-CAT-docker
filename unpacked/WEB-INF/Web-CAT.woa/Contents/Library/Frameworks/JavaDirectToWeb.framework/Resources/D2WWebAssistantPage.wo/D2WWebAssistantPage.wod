@@ -1,0 +1,10 @@
+D2WWebAssistantFrame: WOFrame {
+	name = "D2WWebAssistantFrame";
+	pageName = "D2WWebAssistantFrame";
+}
+
+MainFrame: WOFrame {
+	name = "MainFrame";
+	src = lastUrl;
+}
+

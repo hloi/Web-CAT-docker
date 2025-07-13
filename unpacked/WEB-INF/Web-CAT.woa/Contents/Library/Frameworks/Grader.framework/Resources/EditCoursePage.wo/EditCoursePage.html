@@ -1,0 +1,52 @@
+<webobject name="Page"><table style="border: none;">
+<wo:if condition="~!courseOffering.isNewObject && courseOffering.canDelete">
+<tr><td align="right"><wo:submit action="$delete" value="Delete"/></td>
+    <td>You may delete this course offering.   It cannot be deleted if
+    it has any assignments (remove them first, but only if no students have
+    made submissions yet).</td></tr>
+</wo:if>
+<tr><td class="R">Semester:</td><td><wo name="SemesterList"/> <wo name="SemesterInfo"/></td></tr>
+<tr><td class="R">Course:</td><td><wo name="CourseList"/> <wo name="CourseInfo"/></td></tr>
+<tr><td class="R">CRN:</td><td><wo name="CRN"/> <wo name="CRNInfo"/></td></tr>
+<tr><td class="R">Label:</td><td><webobject name="Label"/> <wo name="LabelInfo"/></td></tr>
+<tr><td class="R">URL:</td><td><wo name="URL"/> <wo name="URLInfo"/></td></tr>
+<tr><td class="R">Moodle Id:</td><td><wo name="MoodleId"/>
+<wo name="MoodleIdInfo"/>&nbsp; Group Id:&nbsp;<wo name="MoodleId"/>
+<wo name="MoodleGroupIdInfo"/></td></tr>
+<tr><td></td><td><wo:if condition="$earliestAndLatestComputed">
+<wo:if condition="$earliest">
+Submission date range:
+<wo:str value="$earliest" formatter="$session.timeFormatter"/>
+-
+<wo:str value="$latest" formatter="$session.timeFormatter"/>
+</wo:if><wo:else>
+No submissions found for any assignment in this course offering.
+</wo:else></wo:if><wo:else>
+<wo:submit value="Show Submission Date Range" action="$computeSubmissionDateRange"/>
+<wo name="DateRangeInfo"/></wo:else></td></tr>
+</table><div class="spacer">&nbsp;</div>
+<div class="shadow"><table>
+  <tr><th>User ID</th><th>Instructor(s)</th><th>E-Mail</th><th>Action</th></tr>
+  <webobject name="InstructorRepetition"><webobject name="TR">
+    <td><webobject name="UserID"/></td><td><webobject name="Name"/></td>
+    <td><webobject name="Email"/></td>
+    <td><webobject name="NotThisUser"><webobject name="RemoveInstructor"/>
+        </webobject><webobject name="IsThisUser">&nbsp;</webobject></td>
+  </webobject></webobject>
+  <webobject name="LastInstrTR">
+	<td colspan="4"><webobject name="AddInstructor"/> Add another instructor</td>
+  </webobject>
+</table></div><div class="spacer">&nbsp;</div>
+<div class="shadow"><table>
+  <tr><th>User ID</th><th>Graders/Teaching Assistant(s)</th><th>E-Mail</th><th>Action</th></tr>
+  <webobject name="TARepetition"><webobject name="TR">
+    <td><webobject name="UserID"/></td><td><webobject name="Name"/></td>
+    <td><webobject name="Email"/></td>
+    <td><webobject name="NotThisUser"><webobject name="RemoveTA"/>
+        </webobject><webobject name="IsThisUser">&nbsp;</webobject></td>
+  </webobject></webobject>
+  <webobject name="LastTATR">
+	<td colspan="4"><webobject name="AddTA"/> Add another grader/TA</td>
+  </webobject>
+</table></div><div class="spacer">&nbsp;</div>
+</webobject>

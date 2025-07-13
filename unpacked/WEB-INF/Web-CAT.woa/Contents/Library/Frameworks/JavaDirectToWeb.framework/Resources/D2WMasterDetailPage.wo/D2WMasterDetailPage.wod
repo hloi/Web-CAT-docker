@@ -1,0 +1,24 @@
+InspectComponent: D2WSwitchComponent {
+	_entityName = entity.name;
+	_task = "edit";
+	_unroll = YES;
+	nextPageDelegate = masterDetailPageDelegate;
+	object = selectedObject;
+}
+
+ListComponent: D2WSwitchComponent {
+	_entityName = entity.name;
+	_task = "select";
+	_unroll = YES;
+	dataSource = dataSource;
+	nextPage = nextPage;
+	nextPageDelegate = selectPageDelegate;
+	selectedObject = selectedObject;
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = YES;
+	_unroll = YES;
+}
+

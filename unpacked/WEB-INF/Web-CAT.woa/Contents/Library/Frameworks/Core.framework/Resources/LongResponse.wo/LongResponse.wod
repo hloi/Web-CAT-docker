@@ -1,0 +1,4 @@
+ProgressBar: net.sf.webcat.core.ProgressBar {
+    value = task.stepsCompletedSoFar;	// VALID
+    valueMax = task.totalNumberOfSteps; // VALID
+}

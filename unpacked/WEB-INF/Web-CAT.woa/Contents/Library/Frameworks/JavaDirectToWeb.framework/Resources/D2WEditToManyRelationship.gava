@@ -1,0 +1,11 @@
+{
+    methods = (
+    "public String $methodNameToManyDescription$() {
+        NSArray list = ($generationReplacementForCurrentObject$ != null) ? (NSArray) $generationReplacementForCurrentObject$.valueForKeyPath(\"$d2wContext.propertyKey$\") : null;
+        String result = \"N/A\";
+        if (list != null)  
+            result = list.count()+\" \"+ ((list.count() == 1) ? $plurifiedStrings$);
+        return result;
+   }"
+    );
+}

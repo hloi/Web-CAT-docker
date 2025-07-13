@@ -1,0 +1,7 @@
+String: WOText {
+	cols = d2wContext.length;
+	disabled = YES;
+	rows = d2wContext.rows;
+	value = objectPropertyValue;
+}
+

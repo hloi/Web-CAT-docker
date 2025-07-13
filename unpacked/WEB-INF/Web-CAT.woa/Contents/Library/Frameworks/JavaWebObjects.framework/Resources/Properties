@@ -1,0 +1,81 @@
+# These are the values which are loaded into the Java system properties for everything that uses JavaWebObjects.framework.
+# These values may be overridden at the command-line or within the Properties file for an individual WebObjects application.
+# Commented-out properties indicate programmatic default values.
+
+WOAutoOpenInBrowser=true
+WOAutoOpenClientApplication=true
+
+#WOFrameworksBaseURL=/WebObjects/Frameworks
+WODebuggingEnabled=true
+WODirectConnectEnabled=true
+WOCachingEnabled=false
+#WOApplicationBaseURL=/WebObjects
+NSProjectSearchPath=("..")
+#WOSMTPHost=smtp
+WOIncludeCommentsInResponse=true
+WOAllowRapidTurnaround=true
+WOMissingResourceSearchEnabled=true
+WODisplayExceptionPages=true
+
+# This will be the primary adaptor which is created (using all the defaults).
+# Note: the default adaptor is the multithreaded adaptor.
+#WOAdaptor=WODefaultAdaptor
+
+# This can be used to override the port number for the primary adaptor.
+#WOPort=-1
+#WOMaxSocketIdleTime=180000
+#WOListenQueueSize=128
+#WOWorkerThreadCountMin=16
+#WOWorkerThreadCountMax=256
+
+# Deprecated WODefaultAdaptor values
+#WOWorkerThreadCount=8
+#WOSocketCacheSize=100
+#WOSocketMonitorSleepTime=50
+
+# This is a list of adaptor definitions (empty by default).
+#WOAdditionalAdaptors=()
+
+# Request Handler Keys
+#_ComponentRequestHandlerKey=wo
+#_DirectActionRequestHandlerKey=wa
+#_ResourceRequestHandlerKey=wr
+#_WebServiceRequestHandlerKey=ws
+#_StreamActionRequestHandlerKey=wis
+
+# Default is 1 hour.
+#WOSessionTimeOut=3600
+
+# Default undo stack size is 10.
+#WODefaultUndoStackLimit=10
+
+# Whether to be multithreaded or not
+#WOAllowsConcurrentRequestHandling=false
+
+# Default is the server session store
+#WOSessionStoreClassName=WOServerSessionStore
+
+
+# Deployment-related defaults
+
+# Whether lifebeats should be sent at all
+#WOLifebeatEnabled=true
+# The port to which lifebeats should be send; the wotaskd port
+#WOLifebeatDestinationPort=1085
+# The interval to send lifebeats (in seconds)
+#WOLifebeatInterval=30
+# Monitor will set this if it starts the application
+#WOMonitorEnabled=false
+# WOApplicationName isn't set here, because it's set only by Monitor.
+# WOOutputPath isn't set here, because it's only set by Monitor.
+
+# These properties control the maximum number of headers and size of input buffer for security reasons.
+# Do not remove!
+#WOMaxHeaders=100
+#WOMaxIOBufferSize=8196
+
+# This property was added to work around a bug in Internet Explorer when using a proxy server.
+#WOAllowsCacheControlHeader=true
+
+# WOHTML parser class
+#_WOHTMLParserClassName=WOHTMLTemplateParser

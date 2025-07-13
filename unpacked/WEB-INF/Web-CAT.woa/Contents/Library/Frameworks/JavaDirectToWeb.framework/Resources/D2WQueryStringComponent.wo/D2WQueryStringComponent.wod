@@ -1,0 +1,5 @@
+TextField: WOTextField {
+	size = length;
+	value = value;
+}
+

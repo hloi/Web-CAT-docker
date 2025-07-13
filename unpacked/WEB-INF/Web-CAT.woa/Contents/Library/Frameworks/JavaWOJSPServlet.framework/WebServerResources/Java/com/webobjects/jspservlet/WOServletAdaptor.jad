@@ -1,0 +1,613 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   WOServletAdaptor.java
+
+package com.webobjects.jspservlet;
+
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
+import javax.naming.InitialContext;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.jsp.PageContext;
+
+// Referenced classes of package com.webobjects.jspservlet:
+//            _WOServletAppInterface
+
+public class WOServletAdaptor extends HttpServlet
+{
+    public static class JavaArchiveFilter
+        implements FilenameFilter
+    {
+
+        public boolean accept(File dir, String aName)
+        {
+            if(aName != null)
+            {
+                String lowerName = aName.toLowerCase();
+                if(lowerName.endsWith(".jar") || lowerName.endsWith(".zip"))
+                    return true;
+            }
+            return false;
+        }
+
+        private static final String JAR = ".jar";
+        private static final String ZIP = ".zip";
+
+        public JavaArchiveFilter()
+        {
+        }
+    }
+
+
+    public static void initStatics(ServletContext servletContext)
+        throws UnavailableException
+    {
+        if(woApplicationWrapper == null)
+            _applicationInit(servletContext);
+    }
+
+    private static _WOServletAppInterface appInstance(ServletContext servletContext)
+    {
+        try
+        {
+            initStatics(servletContext);
+        }
+        catch(UnavailableException ue)
+        {
+            throw new RuntimeException(ue.getMessage());
+        }
+        return woApplicationWrapper;
+    }
+
+    public static Object woApplicationObject()
+    {
+        return woApplicationWrapper.applicationObject();
+    }
+
+    private static String getRealPath(String path)
+    {
+        StringBuffer realPath = null;
+        int index;
+        if((index = path.indexOf("WOROOT")) != -1)
+        {
+            realPath = new StringBuffer();
+            realPath.append(woRoot);
+            realPath.append(path.substring(index + "WOROOT".length()));
+        } else
+        if((index = path.indexOf("LOCALROOT")) != -1)
+        {
+            realPath = new StringBuffer();
+            realPath.append(localRoot);
+            realPath.append(path.substring(index + "LOCALROOT".length()));
+        } else
+        if((index = path.indexOf("WOAINSTALLROOT")) != -1)
+        {
+            realPath = new StringBuffer();
+            realPath.append(woaInstallRoot);
+            realPath.append(path.substring(index + "WOAINSTALLROOT".length()));
+        } else
+        if((index = path.indexOf("WEBINFROOT")) != -1)
+        {
+            realPath = new StringBuffer();
+            realPath.append(webInfRoot);
+            realPath.append(path.substring(index + "WEBINFROOT".length()));
+        } else
+        {
+            return path;
+        }
+        return realPath.toString();
+    }
+
+    private static String[] tokenizeClasspath(String classpath)
+    {
+        if(tokenizedClasspath == null)
+        {
+            StringTokenizer tokenizer = new StringTokenizer(classpath, "\r\n");
+            ArrayList al = new ArrayList();
+            do
+            {
+                if(!tokenizer.hasMoreTokens())
+                    break;
+                String realPath = getRealPath(tokenizer.nextToken().trim());
+                if(realPath != null)
+                {
+                    al.add(realPath);
+                    if(mainBundlePath == null)
+                    {
+                        File aFile = new File(realPath);
+                        if(aFile.isFile())
+                        {
+                            int bundleIndex = realPath.indexOf(".woa/");
+                            if(bundleIndex > 0)
+                            {
+                                String bundlePath = realPath.substring(0, bundleIndex + 4);
+                                mainBundlePath = bundlePath;
+                                System.out.println("Found MainBundle at: " + bundlePath);
+                            }
+                        }
+                    }
+                }
+            } while(true);
+            addArchivesToList(new File(webInfRoot + "/Extensions/"), al);
+            addArchivesToList(new File(localRoot + "/Library/WebObjects/Extensions/"), al);
+            tokenizedClasspath = (String[])(String[])al.toArray(new String[0]);
+        }
+        return tokenizedClasspath;
+    }
+
+    private static void addArchivesToList(File archiveDir, ArrayList al)
+    {
+        if(archiveDir != null && archiveDir.exists() && archiveDir.isDirectory())
+        {
+            File archiveDirFiles[] = archiveDir.listFiles(jaf);
+            for(int i = 0; i < archiveDirFiles.length; i++)
+                try
+                {
+                    al.add(archiveDirFiles[i].getCanonicalPath());
+                }
+                catch(IOException ioe) { }
+
+            try
+            {
+                al.add(archiveDir.getCanonicalPath().concat(File.separator));
+            }
+            catch(IOException ioe) { }
+        }
+    }
+
+    private static URL[] mangleClasspathForClassLoader(String classpath)
+    {
+        String fileURLPrefix = File.pathSeparatorChar != ';' ? "file://" : "file:///";
+        String classpathElements[] = tokenizeClasspath(classpath);
+        URL urls[] = new URL[classpathElements.length];
+        for(int i = 0; i < classpathElements.length; i++)
+            try
+            {
+                urls[i] = new URL(fileURLPrefix.concat(classpathElements[i]));
+            }
+            catch(Throwable ex)
+            {
+                throw new RuntimeException("Error creating URL " + ex);
+            }
+
+        return urls;
+    }
+
+    private static String mangleClasspathForBundle(String classpath)
+    {
+        String classpathElements[] = tokenizeClasspath(classpath);
+        StringBuffer cpbuff = new StringBuffer(classpath.length() + classpathElements.length);
+        cpbuff.append(classpathElements[0]);
+        for(int i = 1; i < classpathElements.length; i++)
+        {
+            cpbuff.append(File.pathSeparator);
+            cpbuff.append(classpathElements[i]);
+        }
+
+        return cpbuff.toString();
+    }
+
+    private static _WOServletAppInterface getAppWrapper(Object app)
+    {
+        _WOServletAppInterface appWrapper = null;
+        try
+        {
+            Class woApplicationWrapperClass = classLoader.loadClass("com.webobjects.jspservlet._WOApplicationWrapper");
+            appWrapper = (_WOServletAppInterface)(_WOServletAppInterface)woApplicationWrapperClass.newInstance();
+            Class cl = java.lang.Object.class;
+            Class paramTypes[] = {
+                cl
+            };
+            Object params[] = {
+                app
+            };
+            Method setter = woApplicationWrapperClass.getMethod("setApplication", paramTypes);
+            setter.invoke(appWrapper, params);
+        }
+        catch(Throwable ex)
+        {
+            ex.printStackTrace();
+            throw new RuntimeException("Unable to create an instance of class com.webobjects.jspservlet._WOApplicationWrapper. javawojspservlet.jar must be in WOClasspath in your web.xml");
+        }
+        return appWrapper;
+    }
+
+    public static synchronized void _applicationInit(ServletContext servletContext)
+        throws UnavailableException
+    {
+        if(woApplicationWrapper == null)
+            try
+            {
+                _servletContext = servletContext;
+                String adaptorURL = null;
+                Method setpropertyMethod = null;
+                Class woappInitParamTypes[] = null;
+                Object woappInitParams[] = null;
+                if("YES".equalsIgnoreCase(servletContext.getInitParameter("WOJarBundle")) || "true".equalsIgnoreCase(servletContext.getInitParameter("WOJarBundle")))
+                {
+                    mainclassname = servletContext.getInitParameter("WOApplicationClass");
+                    if(mainclassname == null || mainclassname.equals(""))
+                        throw new UnavailableException("WOApplicationClass must be defined.");
+                    mainBundleName = servletContext.getInitParameter("WOMainBundle");
+                    classLoader = (com.webobjects.jspservlet.WOServletAdaptor.class).getClassLoader();
+                    Class nspropertiesClass = classLoader.loadClass("com.webobjects.foundation.NSProperties");
+                    setpropertyMethod = nspropertiesClass.getMethod("_setProperty", new Class[] {
+                        java.lang.String.class, java.lang.String.class
+                    });
+                    System.out.println("Classes and frameworks will be loaded out of the WEB-INF/lib and WEB-INF/classes directories.");
+                    String applicationName = null;
+                    if(mainBundleName != null && !mainBundleName.equals(""))
+                    {
+                        Method setMainBundleMethod = nspropertiesClass.getMethod("_setMainBundleName", new Class[] {
+                            java.lang.String.class
+                        });
+                        if(setMainBundleMethod != null)
+                        {
+                            setMainBundleMethod.invoke(null, new Object[] {
+                                mainBundleName
+                            });
+                            System.out.println("MainBundle will be set to " + mainBundleName);
+                        }
+                        applicationName = mainBundleName;
+                    } else
+                    {
+                        String realPath = _servletContext.getRealPath("WEB-INF");
+                        int indexOfWoa = realPath.indexOf(".woa");
+                        int indexOfName = realPath.lastIndexOf('/', indexOfWoa);
+                        applicationName = realPath.substring(indexOfName, indexOfWoa);
+                    }
+                    adaptorURL = "http://localhost/".concat(applicationName).concat("/WebObjects");
+                    woappInitParamTypes = woappInitParamTypesNew;
+                    woappInitParams = (new Object[] {
+                        mainBundleName, null, mainclassname
+                    });
+                } else
+                {
+                    woRoot = System.getProperty("WOROOT", servletContext.getInitParameter("WOROOT"));
+                    localRoot = System.getProperty("LOCALROOT", servletContext.getInitParameter("LOCALROOT"));
+                    woaInstallRoot = System.getProperty("WOAINSTALLROOT", servletContext.getInitParameter("WOAINSTALLROOT"));
+                    webInfRoot = _servletContext.getRealPath("WEB-INF");
+                    classpath = servletContext.getInitParameter("WOClasspath");
+                    mainclassname = servletContext.getInitParameter("WOApplicationClass");
+                    if(classpath == null || classpath.equals("") || mainclassname == null || mainclassname.equals(""))
+                        throw new UnavailableException("Both WOClasspath and WOApplicationClass must be defined.");
+                    if(classpath.indexOf("WOROOT") != -1 && (woRoot == null || woRoot.equals("")))
+                        throw new UnavailableException("WOROOT was referenced in the classpath, but not defined. (WOROOT='" + woRoot + "'. " + "You can either define WOROOT, LOCALROOT and WOAINSTALLROOT as Java system properties (e.g. in your application server's launch script as command line arguments) or in the application Deployment Descriptor file (web.xml).");
+                    if(classpath.indexOf("LOCALROOT") != -1 && (localRoot == null || localRoot.equals("")))
+                        throw new UnavailableException("LOCALROOT was referenced in the classpath, but not defined. (LOCALROOT='" + localRoot + "'. " + "You can either define WOROOT, LOCALROOT and WOAINSTALLROOT as Java system properties (e.g. in your application server's launch script as command line arguments) or in the application Deployment Descriptor file (web.xml).");
+                    if(classpath.indexOf("WOAINSTALLROOT") != -1 && (woaInstallRoot == null || woaInstallRoot.equals("")))
+                        throw new UnavailableException("WOAINSTALLROOT was referenced in the classpath, but not defined. (WOAINSTALLROOT='" + woaInstallRoot + "'. " + "You can either define WOROOT, LOCALROOT and WOAINSTALLROOT as Java system properties (e.g. in your application server's launch script as command line arguments) or in the application Deployment Descriptor file (web.xml).");
+                    if(classpath.indexOf("WEBINFROOT") != -1 && (webInfRoot == null || webInfRoot.equals("")))
+                        throw new UnavailableException("WEBINFROOT was referenced in the classpath, but not defined. (WEBINFROOT='" + webInfRoot + "'. " + "WEBINFROOT can only be used if the application is being deployed in a directory (Servlet Single Directory Deployment). It cannot be used if you are deploying the application in a WAR file.");
+                    classLoader = new URLClassLoader(mangleClasspathForClassLoader(classpath), (com.webobjects.jspservlet.WOServletAdaptor.class).getClassLoader());
+                    Class nspropertiesClass = classLoader.loadClass("com.webobjects.foundation.NSProperties");
+                    setpropertyMethod = nspropertiesClass.getMethod("_setProperty", new Class[] {
+                        java.lang.String.class, java.lang.String.class
+                    });
+                    String cp = mangleClasspathForBundle(classpath);
+                    setpropertyMethod.invoke(null, new Object[] {
+                        "com.webobjects.classpath", cp
+                    });
+                    System.out.println("Classpath for WebObjects classloader is " + cp);
+                    if(mainBundlePath != null)
+                        setpropertyMethod.invoke(null, new Object[] {
+                            "webobjects.user.dir", mainBundlePath
+                        });
+                    else
+                        throw new UnavailableException("Can't find application bundle. You can either define WOROOT, LOCALROOT and WOAINSTALLROOT as Java system properties (e.g. in your application server's launch script as command line arguments) or in the application Deployment Descriptor file (web.xml).");
+                    int indexOfWoa = mainBundlePath.indexOf(".woa");
+                    int indexOfName = mainBundlePath.lastIndexOf('/', indexOfWoa);
+                    adaptorURL = "http://localhost/".concat(mainBundlePath.substring(indexOfName, indexOfWoa)).concat("/WebObjects");
+                    woappInitParamTypes = woappInitParamTypesOld;
+                    woappInitParams = (new Object[] {
+                        mainBundlePath, mainclassname
+                    });
+                }
+                setpropertyMethod.invoke(null, new Object[] {
+                    "WOAdaptorURL", adaptorURL
+                });
+                setpropertyMethod.invoke(null, new Object[] {
+                    "WOContextClassName", "com.webobjects.jspservlet.WOServletContext"
+                });
+                setpropertyMethod.invoke(null, new Object[] {
+                    "WOSessionStoreClassName", "com.webobjects.jspservlet.WOServletSessionStore"
+                });
+                setpropertyMethod.invoke(null, new Object[] {
+                    "WOAutoOpenInBrowser", "false"
+                });
+                setpropertyMethod.invoke(null, new Object[] {
+                    "WOAutoOpenClientApplication", "false"
+                });
+                setpropertyMethod.invoke(null, new Object[] {
+                    "WOLifebeatEnabled", "false"
+                });
+                if(_isDeployed(_servletContext))
+                    setpropertyMethod.invoke(null, new Object[] {
+                        "WOAllowRapidTurnaround", "false"
+                    });
+                Class woApplicationClass = classLoader.loadClass("com.webobjects.appserver.WOApplication");
+                Boolean useLog4j = Boolean.FALSE;
+                InitialContext ctx = null;
+                try
+                {
+                    ctx = new InitialContext();
+                    useLog4j = (Boolean)ctx.lookup("java:comp/env/wo/NSUseLog4jLogging");
+                }
+                catch(Exception e) { }
+                if(useLog4j.booleanValue())
+                {
+                    Class logClass = classLoader.loadClass("com.webobjects.foundation.NSLog");
+                    Class log4jLogClass = classLoader.loadClass("com.webobjects.foundation.NSLog$Log4JLogger");
+                    Class nsLogLoggerClass = classLoader.loadClass("com.webobjects.foundation.NSLog$Logger");
+                    Class apacheLoggerClass = classLoader.loadClass("org.apache.log4j.Logger");
+                    Constructor log4jLogConstructor = log4jLogClass.getConstructor(new Class[] {
+                        apacheLoggerClass, Integer.TYPE
+                    });
+                    Method getLoggerMethod = apacheLoggerClass.getMethod("getLogger", new Class[] {
+                        java.lang.String.class
+                    });
+                    String applicationName = null;
+                    try
+                    {
+                        applicationName = (String)ctx.lookup("java:comp/env/wo/NSLog4jLoggerName");
+                    }
+                    catch(Exception e)
+                    {
+                        applicationName = "WebObjectsApp";
+                    }
+                    Object apacheLogger = getLoggerMethod.invoke(null, new Object[] {
+                        applicationName
+                    });
+                    Method nslogSetOutMethod = logClass.getMethod("setOut", new Class[] {
+                        nsLogLoggerClass
+                    });
+                    Method nslogSetErrMethod = logClass.getMethod("setErr", new Class[] {
+                        nsLogLoggerClass
+                    });
+                    Method nslogSetDebugMethod = logClass.getMethod("setDebug", new Class[] {
+                        nsLogLoggerClass
+                    });
+                    Object log4jLogInstance = log4jLogConstructor.newInstance(new Object[] {
+                        apacheLogger, new Integer(2)
+                    });
+                    nslogSetOutMethod.invoke(null, new Object[] {
+                        log4jLogInstance
+                    });
+                    log4jLogInstance = log4jLogConstructor.newInstance(new Object[] {
+                        apacheLogger, new Integer(1)
+                    });
+                    nslogSetErrMethod.invoke(null, new Object[] {
+                        log4jLogInstance
+                    });
+                    log4jLogInstance = log4jLogConstructor.newInstance(new Object[] {
+                        apacheLogger, new Integer(3)
+                    });
+                    nslogSetDebugMethod.invoke(null, new Object[] {
+                        log4jLogInstance
+                    });
+                }
+                Object woApplicationInstance = null;
+                if(woApplicationClass != null)
+                {
+                    Method getwoApplicationInstance = woApplicationClass.getMethod("application", null);
+                    Object woapplicationInstance = null;
+                    if(getwoApplicationInstance != null)
+                        woApplicationInstance = getwoApplicationInstance.invoke(woApplicationClass, null);
+                    else
+                        throw new UnavailableException("Unable to find WOApplication.application().");
+                    if(woApplicationInstance == null)
+                    {
+                        Method primeapp = woApplicationClass.getMethod("primeApplication", woappInitParamTypes);
+                        if(primeapp != null)
+                        {
+                            primeapp.invoke(woApplicationClass, woappInitParams);
+                            woApplicationInstance = getwoApplicationInstance.invoke(woApplicationClass, null);
+                            if(woApplicationInstance == null)
+                                throw new UnavailableException("WOApplication.primeApplication() failed to initialize WOApplication.");
+                            woApplicationWrapper = getAppWrapper(woApplicationInstance);
+                        } else
+                        {
+                            throw new UnavailableException("Unable to find WOApplication.primeApplication().");
+                        }
+                    }
+                } else
+                {
+                    throw new UnavailableException("Unable to find class com.webobjects.appserver.WOApplication. The JavaWebObjects framework must either be in WOClasspath in your web.xml or in the WEB-INF/lib directory.");
+                }
+            }
+            catch(UnavailableException ue)
+            {
+                throw ue;
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+                throw new UnavailableException("Error initializing servlet adaptor: " + ex.getMessage());
+            }
+    }
+
+    protected static String embeddedComponentResponse(String name, HashMap bindings, HashMap extraHeaders, PageContext pageContext, boolean bodyContentOnly, boolean mergeResponseHeaders)
+    {
+        _servletContext = pageContext.getServletContext();
+        HashMap userInfo = new HashMap(6);
+        userInfo.put("PageContext", pageContext);
+        userInfo.put("HttpServletRequest", pageContext.getRequest());
+        userInfo.put("HttpServletResponse", pageContext.getResponse());
+        userInfo.put("ServletConfig", pageContext.getServletConfig());
+        userInfo.put("ServletContext", _servletContext);
+        return _embeddedComponentResponse(name, bindings, extraHeaders, userInfo, null, null, bodyContentOnly, mergeResponseHeaders);
+    }
+
+    public static String embeddedComponentResponse(String name, HashMap bindings, HashMap extraHeaders, HttpServletRequest servletRequest, HttpServletResponse servletResponse, HttpServlet servlet, boolean bodyContentOnly, boolean mergeResponseHeaders)
+    {
+        _servletContext = servlet.getServletContext();
+        HashMap userInfo = new HashMap(5);
+        userInfo.put("HttpServletRequest", servletRequest);
+        userInfo.put("HttpServletResponse", servletResponse);
+        userInfo.put("ServletConfig", servlet.getServletConfig());
+        userInfo.put("ServletContext", _servletContext);
+        return _embeddedComponentResponse(name, bindings, extraHeaders, userInfo, null, null, bodyContentOnly, mergeResponseHeaders);
+    }
+
+    private static String _embeddedComponentResponse(String name, HashMap bindings, HashMap extraHeaders, HashMap userInfo, String urlPrefix, String appName, boolean bodyContentOnly, boolean mergeResponseHeaders)
+    {
+        _WOServletAppInterface appWrapper = appInstance(_servletContext);
+        if(urlPrefix == null)
+            urlPrefix = ((HttpServletRequest)userInfo.get("HttpServletRequest")).getContextPath().concat("/WebObjects");
+        if(appName == null)
+            appName = appWrapper.applicationName().concat(".woa");
+        boolean isDeployed = _isDeployed(_servletContext);
+        String contentString = appWrapper.servletResponseForComponentWithName(name, bindings, extraHeaders, userInfo, urlPrefix, appName, mergeResponseHeaders, isDeployed);
+        if(bodyContentOnly)
+            contentString = extractBodyFromContent(contentString);
+        return contentString;
+    }
+
+    protected static String embeddedDirectActionResponse(String actionName, String className, HashMap formValues, InputStream contentStream, HashMap extraHeaders, PageContext pageContext, boolean bodyContentOnly, boolean mergeResponseHeaders)
+    {
+        _servletContext = pageContext.getServletContext();
+        HashMap userInfo = new HashMap(6);
+        userInfo.put("PageContext", pageContext);
+        userInfo.put("HttpServletRequest", pageContext.getRequest());
+        userInfo.put("HttpServletResponse", pageContext.getResponse());
+        userInfo.put("ServletConfig", pageContext.getServletConfig());
+        userInfo.put("ServletContext", _servletContext);
+        return _embeddedDirectActionResponse(actionName, className, formValues, contentStream, extraHeaders, userInfo, null, null, bodyContentOnly, mergeResponseHeaders);
+    }
+
+    public static String embeddedDirectActionResponse(String actionName, String className, HashMap formValues, InputStream contentStream, HashMap extraHeaders, HttpServletRequest servletRequest, HttpServletResponse servletResponse, HttpServlet servlet, 
+            boolean bodyContentOnly, boolean mergeResponseHeaders)
+    {
+        _servletContext = servlet.getServletContext();
+        HashMap userInfo = new HashMap(5);
+        userInfo.put("HttpServletRequest", servletRequest);
+        userInfo.put("HttpServletResponse", servletResponse);
+        userInfo.put("ServletConfig", servlet.getServletConfig());
+        userInfo.put("ServletContext", _servletContext);
+        return _embeddedDirectActionResponse(actionName, className, formValues, contentStream, extraHeaders, userInfo, null, null, bodyContentOnly, mergeResponseHeaders);
+    }
+
+    private static String _embeddedDirectActionResponse(String actionName, String className, HashMap formValues, InputStream contentStream, HashMap extraHeaders, HashMap userInfo, String urlPrefix, String appName, 
+            boolean bodyContentOnly, boolean mergeResponseHeaders)
+    {
+        _WOServletAppInterface appWrapper = appInstance(_servletContext);
+        if(urlPrefix == null)
+            urlPrefix = ((HttpServletRequest)userInfo.get("HttpServletRequest")).getContextPath().concat("/WebObjects");
+        if(appName == null)
+            appName = appWrapper.applicationName().concat(".woa");
+        boolean isDeployed = _isDeployed(_servletContext);
+        String contentString = appWrapper.servletResponseForDirectActionWithNameAndClass(actionName, className, formValues, contentStream, extraHeaders, userInfo, urlPrefix, appName, mergeResponseHeaders, isDeployed);
+        if(bodyContentOnly)
+            contentString = extractBodyFromContent(contentString);
+        return contentString;
+    }
+
+    private static String extractBodyFromContent(String contentString)
+    {
+        String lowercaseContentString = contentString.toLowerCase();
+        int bodyStart = 0;
+        int bodyTagStart = lowercaseContentString.indexOf("<body");
+        if(bodyTagStart != -1)
+            bodyStart = lowercaseContentString.indexOf(">", bodyTagStart) + 1;
+        else
+            bodyStart = 0;
+        int bodyStop = lowercaseContentString.lastIndexOf("</body>");
+        if(bodyStop == -1)
+            bodyStop = contentString.length();
+        return contentString.substring(bodyStart, bodyStop);
+    }
+
+    public WOServletAdaptor()
+        throws ServletException
+    {
+    }
+
+    public void init()
+        throws ServletException
+    {
+        initStatics(getServletContext());
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException
+    {
+        _handleRequest(request, response);
+    }
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException
+    {
+        _handleRequest(request, response);
+    }
+
+    private void _handleRequest(HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException
+    {
+        HashMap userInfo = new HashMap(4);
+        userInfo.put("HttpServletRequest", request);
+        userInfo.put("HttpServletResponse", response);
+        userInfo.put("ServletConfig", getServletConfig());
+        userInfo.put("ServletContext", getServletContext());
+        boolean isDeployed = _isDeployed(getServletContext());
+        woApplicationWrapper.servletDispatchRequest(userInfo, isDeployed);
+    }
+
+    private static boolean _isDeployed(ServletContext servletContext)
+    {
+        boolean isDeployed = false;
+        if(servletContext != null)
+        {
+            String resourceMode = servletContext.getInitParameter("WOAppMode");
+            if(resourceMode != null && resourceMode.equalsIgnoreCase("Deployment"))
+                isDeployed = true;
+        }
+        return isDeployed;
+    }
+
+    public String toString()
+    {
+        return "<WOServletAdaptor> classpath: " + classpath + ", mainBundlePath: " + mainBundlePath + ", mainclassname: " + mainclassname + ", ServletConfig: " + getServletConfig() + ", ServletContext: " + getServletContext();
+    }
+
+    private static final String WOROOT = "WOROOT";
+    private static final String LOCALROOT = "LOCALROOT";
+    private static final String WOAINSTALLROOT = "WOAINSTALLROOT";
+    private static final String WEBINFROOT = "WEBINFROOT";
+    private static final String LAUNCH_ROOT_ERR_MSG = "You can either define WOROOT, LOCALROOT and WOAINSTALLROOT as Java system properties (e.g. in your application server's launch script as command line arguments) or in the application Deployment Descriptor file (web.xml).";
+    private static final String WEBINF_ROOT_ERR_MSG = "WEBINFROOT can only be used if the application is being deployed in a directory (Servlet Single Directory Deployment). It cannot be used if you are deploying the application in a WAR file.";
+    private static Class stringParamType;
+    private static Class urlParamType;
+    private static Class woappInitParamTypesOld[];
+    private static Class woappInitParamTypesNew[];
+    private static _WOServletAppInterface woApplicationWrapper = null;
+    private static ClassLoader classLoader;
+    private static String woRoot;
+    private static String localRoot;
+    private static String woaInstallRoot;
+    private static String webInfRoot;
+    private static String classpath;
+    private static String tokenizedClasspath[];
+    private static String mainBundlePath;
+    private static String mainclassname;
+    private static String mainBundleName;
+    private static JavaArchiveFilter jaf = new JavaArchiveFilter();
+    private static volatile ServletContext _servletContext;
+
+    static 
+    {
+        stringParamType = java.lang.String.class;
+        urlParamType = java.net.URL.class;
+        woappInitParamTypesOld = (new Class[] {
+            stringParamType, stringParamType
+        });
+        woappInitParamTypesNew = (new Class[] {
+            stringParamType, urlParamType, stringParamType
+        });
+    }
+}

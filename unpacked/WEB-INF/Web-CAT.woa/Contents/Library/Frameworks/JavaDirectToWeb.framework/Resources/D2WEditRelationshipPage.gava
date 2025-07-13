@@ -1,0 +1,160 @@
+{
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import com.webobjects.foundation.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"EditRelationshipPageInterface"
+    );
+    variables = (
+        "protected EOEnterpriseObject $generationReplacementForCurrentObject$;",
+        "/** @TypeInfo $entity.name$ */
+    protected EOEnterpriseObject objectToAddToRelationship;",
+        "/** @TypeInfo $entity.name$ */
+    protected EOEnterpriseObject newObjectInRelationship;",
+        "protected String relationshipKey;",
+        "protected WOComponent theNextPage;",
+        "protected NextPageDelegate nextPageDelegate;",
+        "protected EODetailDataSource relationshipDataSource;",
+        "protected EOEditingContext editingContext;",
+        "protected WODisplayGroup relationshipDisplayGroup;",
+        "public final static int QUERY=0;",
+        "public final static int LIST=1;",
+        "public final static int NEW=2;",
+        "protected int _state=QUERY;",
+        "protected EOEnterpriseObject browserItem; // for repetitions",
+        "protected NSArray browserSelections; // for repetitions",
+        "protected boolean isRelationshipToMany=false;",
+        "protected EODataSource selectDataSource=null;"
+
+    );
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+    }",
+        "public String entity() {
+            // this method is used by the Header and the WebAssistant
+            return \"$entity.name$\";
+    }",
+        "public void setNextPage(WOComponent nextPage) {
+            theNextPage=nextPage;
+    }",
+        "public void setNextPageDelegate(NextPageDelegate delegate) {
+           nextPageDelegate=delegate;
+    }",
+        "public WOComponent returnAction () {
+        editingContext.saveChanges();
+        WOComponent result=nextPageDelegate != null ? nextPageDelegate.nextPage(this) :
+            (theNextPage !=null) ? theNextPage : null;
+        if (result!=null)
+            return result;
+        result=(WOComponent)D2W.factory().editPageForEntityNamed(currentObject.entityName(),session());
+        ((EditPageInterface)result).setObject(currentObject);
+        return result;
+    }",
+        "public void setMasterObjectAndRelationshipKey(EOEnterpriseObject eo, String key) {
+        setEditingContext(new EOEditingContext(eo.editingContext()));
+        editingContext.setDelegate(this); // so that we disable validation
+        $generationReplacementForCurrentObject$=(EOEnterpriseObject)EOUtilities.localInstanceOfObject(editingContext,eo);
+        relationshipKey=key;
+        if ($generationReplacementForCurrentObject$.isToManyKey(relationshipKey)) {
+            isRelationshipToMany=true;
+        } else {
+            relationshipDisplayGroup.setSelectsFirstObjectAfterFetch(true);
+        }
+        relationshipDataSource=new EODetailDataSource($generationReplacementForCurrentObject$.classDescription(),relationshipKey);
+        relationshipDataSource.qualifyWithRelationshipKey(relationshipKey, $generationReplacementForCurrentObject$);
+        relationshipDisplayGroup.setDataSource(relationshipDataSource);
+        relationshipDisplayGroup.fetch();
+    }",
+    "protected void setEditingContext(EOEditingContext newEditingContext) {
+        // do proper unlocking of old context and locking of new context
+        if (newEditingContext != editingContext) {
+            if (editingContext != null) {
+                editingContext.unlock();
+            }
+            editingContext = newEditingContext;
+            if (editingContext != null) {
+                editingContext.lock();
+            }
+        }
+    }",
+    "public void awake() {
+        super.awake();
+    	if (editingContext!=null) {
+            editingContext.lock();
+        }
+    }",
+    "public void sleep() {
+    	if (editingContext!=null) {
+            editingContext.unlock();
+        }
+        super.sleep();
+    }",
+    "public boolean displayQuery()
+      {
+        return _state==QUERY;
+      }",
+    "public boolean displayList()
+      {
+        return _state==LIST;
+      }",
+    "public boolean displayNew()
+      {
+        return _state==NEW;
+      }",
+    "boolean editingContextShouldValidateChanges(EOEditingContext editingContext) {
+        return false; // turn off validation in the nested editing context
+    }",
+    "public WOComponent queryAction () {
+        _state=LIST;
+        return null;
+    }",
+    "public WOComponent selectAction() {
+        EOEnterpriseObject localEoToAddToRelationship=objectToAddToRelationship !=null ?
+        EOUtilities.localInstanceOfObject(editingContext,objectToAddToRelationship):null;
+        if (localEoToAddToRelationship!=null) {
+            relationshipDataSource.insertObject(localEoToAddToRelationship);
+            relationshipDisplayGroup.fetch();
+        } else // no object was selected
+            _state=QUERY;
+        return null;
+    }",
+    "public WOComponent saveAction() {
+        relationshipDisplayGroup.fetch();
+        _state=QUERY;
+        return null;
+    }",
+    "public WOComponent newObjectAction() {
+            _state=NEW;
+            newObjectInRelationship=(EOEnterpriseObject) relationshipDataSource.createObject();
+            editingContext.insertObject(newObjectInRelationship);
+            relationshipDataSource.insertObject(newObjectInRelationship);
+            return null;
+    }",
+    "public WOComponent removeFromToManyRelationshipAction()
+      {
+	if (browserSelections!=null) {
+	        for (Enumeration e=browserSelections.objectEnumerator(); e.hasMoreElements();)
+       	     		relationshipDataSource.deleteObject(e.nextElement());
+       		relationshipDisplayGroup.fetch();
+	}
+        return null;
+      }",
+    "public WOComponent removeFromToOneRelationshipAction()
+      {
+        relationshipDataSource.deleteObject((EOEnterpriseObject)$generationReplacementForCurrentObject$.valueForKeyPath(relationshipKey));
+        relationshipDisplayGroup.fetch();
+        return null;
+      }",
+    "public WOComponent displayQueryAction() {
+        _state=QUERY;
+        return null;
+      }"
+
+    );
+}

@@ -1,0 +1,54 @@
+AssignmentOptionEditor: net.sf.webcat.core.OptionSetEditor {
+    options           = step.script.configDescription.assignmentOptions;
+    optionValues      = step.configSettings;
+    categories        = step.script.configDescription.assignmentOptionCategories;
+    verboseOptionsKey = "EditScriptPageNoVerboseOptions";
+    browsePageName    = "EditScriptFilesPage";
+    base              = baseDir;
+}
+
+EditReusableConfig: WOImageButton {
+    filename  = "icons/edit.gif";
+    framework = "Core";
+	action    = editReusableConfig;
+	border    = "0";
+	width     = "18";
+	height    = "17";
+	alt       = "Edit selected option set";
+	title     = "Edit selected option set";
+}
+
+ForAssignmentName: WOString {
+    value = step.assignment.titleString;
+}
+
+HasNoOptions: WOConditional {
+    condition = step.script.configDescription.options.count;
+    negate    = true;
+}
+
+HasOptions: WOConditional {
+    condition = step.script.configDescription.options.count;
+}
+
+NewReusableConfig: WOSubmitButton {
+    action = newReusableConfig;
+    value  = "New";
+}
+
+Page: net.sf.webcat.core.WizardPage {
+    sideStepTitle = "Configure Plug-in";
+    applyEnabled  = true;
+}
+
+ReusableList: WOPopUpButton {
+    list          = stepConfigList;
+    item          = stepConfig;
+    displayString = stepConfig.name;
+    selection     = step.config;
+    noSelectionString = "(plug-in defaults only)";
+}
+
+ScriptName: WOString {
+    value = step.script.displayableName;
+}

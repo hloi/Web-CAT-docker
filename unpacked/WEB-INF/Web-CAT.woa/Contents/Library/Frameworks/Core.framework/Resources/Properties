@@ -1,0 +1,30 @@
+#This file is automatically rewritten by ANT, so all formatting will be trashed.
+#Fri Nov 07 21:25:24 EST 2008
+ognl.helperFunctions=true
+log4j.logger.net.sf.webcat.core.Application.requests=WARN
+ognl.active=true
+Core.info.url=http\://web-cat.cs.vt.edu/WCWiki/CoreSubsystem
+Core.archive.handler.list=(net.sf.webcat.archives.internal.ZipArchiveHandler,   net.sf.webcat.archives.internal.TarGzArchiveHandler, net.sf.webcat.archives.internal.TarArchiveHandler)
+Core.version.revision=5
+Core.version.major=1
+bootstrap.project.version=1.5
+subsystem.Core=
+Core.description=This is the principal subsystem for Web-CAT, and provides all the capabilities necessary for loading and operating all other subsystems.  It also provides authentication services, and common UI elements used system-wide.
+er.extensions.ERXEC.defaultAutomaticLockUnlock=true
+Core.history.url=http\://web-cat.cs.vt.edu/WCWiki/CoreSubsystem/ChangeHistory
+log4j.logger.net.sf.webcat.core.install=INFO
+log4j.logger.net.sf.webcat.core.Application=INFO
+er.extensions.ERXApplication.useEditingContextUnlocker=true
+Core.license=GNU Affero General Public License v.3
+Core.version.date=20081107
+Core.provider=Virginia Tech Computer Science
+Core.version.minor=5
+help.baseURL=http\://web-cat.cs.vt.edu/Web-CAT.help/
+Core.copyright=(c) 2006-2008 Virginia Tech Department of Computer Science
+er.extensions.ERXNSLogLog4jBridge.ignoreNSLogSettings=true
+er.extensions.ERXEC.defaultCoalesceAutoLocks=true
+Core.license.url=http\://www.gnu.org/licenses/agpl.html
+Core.requires=ExternalJars, WebObjectsUpdater, WonderUpdater, DBUpdateEngine, EOJDBCPrototypes
+Core.provider.url=http\://web-cat.cs.vt.edu/updates
+ognl.inlineBindings=true
+log4j.logger.NSLog=WARN

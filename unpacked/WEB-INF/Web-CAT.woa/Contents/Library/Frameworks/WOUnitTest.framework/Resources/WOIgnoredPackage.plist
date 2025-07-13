@@ -1,0 +1,7 @@
+{
+    ignoredPackages = ( "junit.framework",
+                        "java.lang",
+		        "sun.reflect",
+		        "com.codefab.wounittest"
+		      );
+}

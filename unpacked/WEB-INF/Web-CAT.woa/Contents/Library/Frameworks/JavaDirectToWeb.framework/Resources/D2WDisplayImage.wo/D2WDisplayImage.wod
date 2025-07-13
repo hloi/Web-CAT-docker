@@ -1,0 +1,4 @@
+Image: WOImage {
+    data=objectPropertyValue;
+    mimeType="";
+}

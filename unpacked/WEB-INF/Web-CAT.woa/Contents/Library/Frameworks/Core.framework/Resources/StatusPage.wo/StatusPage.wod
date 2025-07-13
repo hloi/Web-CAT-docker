@@ -1,0 +1,23 @@
+Announcements: WOString {
+    value = application.properties.coreAnnouncements;
+    escapeHTML = false;
+}
+
+CanSeeStatus: WOConditional {
+    condition = true; // user.accessLevel;
+}
+
+HasAnnouncements: WOConditional {
+    condition = application.properties.coreAnnouncements;
+}
+
+Page : net.sf.webcat.core.PageWithNavigation {
+	title     = "Your Web-CAT Status";
+}
+
+SubsystemHomeStatus: net.sf.webcat.core.SubsystemFragmentCollector {
+    fragmentKey = "homeStatus";
+}
+
+SystemStatus: net.sf.webcat.core.SystemStatusBlock {
+}

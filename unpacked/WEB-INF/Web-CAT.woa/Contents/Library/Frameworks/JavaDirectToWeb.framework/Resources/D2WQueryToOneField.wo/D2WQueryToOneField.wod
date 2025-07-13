@@ -1,0 +1,10 @@
+KeyToQueryWith: WOString {
+	_unroll = YES;
+	value = displayNameForKeyWhenRelationship;
+}
+
+ToOneTextField: WOTextField {
+	size = 25;
+	value = value;
+}
+

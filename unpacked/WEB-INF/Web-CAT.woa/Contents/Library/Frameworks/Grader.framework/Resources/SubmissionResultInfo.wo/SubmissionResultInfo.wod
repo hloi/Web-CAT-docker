@@ -1,0 +1,81 @@
+AllowPartnerEdit: WOConditional {
+    condition = allowPartnerEdit;
+}
+
+AssignmentName: WOString {
+    value = submission.assignmentOffering.assignment.name;
+}
+
+DeptNumber: WOString {
+    value = submission.assignmentOffering.courseOffering.compactName;
+}
+
+EditPartners: WOSubmitButton {
+	action = editPartners;
+	value  = " Partners ";
+}
+
+FileName: WOString {
+    value = submissionFileStats.sourceFileName;
+}
+
+IncludeSeparator: WOConditional {
+    condition = includeSeparator;
+}
+
+IsAPartner: WOConditional {
+    condition = isAPartner;
+}
+
+PartnerName: WOString {
+    value = partnerSubmission.user.nameAndUid;
+}
+
+PartnerRepetition: WORepetition {
+    list = partnerDisplayGroup.displayedObjects;
+    item = partnerSubmission;
+}
+
+ShowFileInfo: WOConditional {
+    condition = showFileInfo;
+}
+
+String1: WOString {
+	numberformat = "0.0";
+	value = submissionFileStats.deductions;
+}
+
+String3: WOString {
+	value = submission.assignmentOffering.assignment.submissionProfile.availablePoints;
+}
+
+String7: WOString {
+	numberformat = "0.0";
+	value        = submission.result.finalScore;
+}
+
+String12: WOString {
+    formatter = session.timeFormatter;
+	value     = submission.submitTime;
+}
+
+String18: WOString {
+	value = submission.result.earlyLateStatus;
+}
+
+String19: WOString {
+	value = submission.result.scoreModifiers;
+}
+
+StudentName: WOString {
+    value = submission.user.nameAndUid;
+}
+
+SubmitNumber: WOString {
+    value = submission.submitNumber;
+}
+
+TR: net.sf.webcat.core.TableRow {
+    index = rowNumber;
+    increment = true;
+}

@@ -1,0 +1,63 @@
+
+FROM tomcat:9.0-jdk8-openjdk
+# Copy MySQL driver
+COPY mysql-connector-java-5.1.49.jar /usr/local/tomcat/lib/
+
+# Copy BIRT libs
+# COPY birt-lib/*.jar /usr/local/tomcat/webapps/Web-CAT-Server/WEB-INF/lib/
+# COPY birt-lib/*.jar /usr/local/tomcat/lib/
+
+# Set environment
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH
+
+# Deploy WAR
+# COPY Web-CAT-Server.war $CATALINA_HOME/webapps/
+COPY Web-CAT-Server1.war /usr/local/tomcat/webapps
+
+
+# Add PostgreSQL JDBC driver
+# COPY postgresql-9.4.1209.jre7.jar $CATALINA_HOME/lib/
+
+# Optional: expose volume for Web-CAT data
+VOLUME ["/usr/share/Web-CAT"]
+
+# ------------------------------
+# ENVIRONMENT CONFIGURATION
+# ------------------------------
+ENV KEYSTORE_PASSWORD=changeit \
+    KEYSTORE_PATH=/usr/local/tomcat/conf/keystore.p12 \
+    CERT_ALIAS=tomcat
+
+# ------------------------------
+# GENERATE SELF-SIGNED CERT
+# ------------------------------
+RUN bash -c 'keytool -genkeypair \
+    -alias "$CERT_ALIAS" \
+    -keyalg RSA \
+    -keysize 2048 \
+    -validity 365 \
+    -storetype PKCS12 \
+    -keystore "$KEYSTORE_PATH" \
+    -storepass "$KEYSTORE_PASSWORD" \
+    -dname "CN=localhost, OU=IT, O=MyOrg, L=City, S=State, C=US"'
+
+
+# ------------------------------
+# CONFIGURE HTTPS CONNECTOR IN TOMCAT
+# ------------------------------
+RUN bash -c 'sed -i "/<\/Service>/i \
+<Connector port=\"8443\" protocol=\"org.apache.coyote.http11.Http11NioProtocol\" \\\n\
+           SSLEnabled=\"true\" \\\n\
+           keystoreFile=\"$KEYSTORE_PATH\" \\\n\
+           keystorePass=\"$KEYSTORE_PASSWORD\" \\\n\
+           keystoreType=\"PKCS12\" \\\n\
+           clientAuth=\"false\" \\\n\
+           sslProtocol=\"TLS\" />" \
+    /usr/local/tomcat/conf/server.xml'
+
+# ------------------------------
+# EXPOSE PORTS
+# ------------------------------
+EXPOSE 8080 8443
+

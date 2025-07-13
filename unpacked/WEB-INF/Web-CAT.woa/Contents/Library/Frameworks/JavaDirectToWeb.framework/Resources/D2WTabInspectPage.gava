@@ -1,0 +1,7 @@
+{
+    includeSuperClass = {};
+    variables = (
+        "protected NSArray tabs = NSArray.componentsSeparatedByString(\"$tabsAsString$\",\",\");",
+        "protected String displayedTabName;"
+    );
+}

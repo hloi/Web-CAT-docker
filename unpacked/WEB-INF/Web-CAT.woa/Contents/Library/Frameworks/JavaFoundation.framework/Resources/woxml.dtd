@@ -1,0 +1,387 @@
+<!--
+(c) 2002, Apple Computer, Inc. All rights reserved.
+This document and the product to which it pertains are distributed under license
+restricting its use, copying, distribution, and decompilation. This document may
+be reproduced and distributed but may not be changed without prior written 
+authorization of Apple Computer, Inc. (Apple) and its licensors, if any. Any 
+redistribution must retain the above copyright notice and this list of 
+conditions regarding its use. TO THE EXTENT PERMITTED BY LAW, THIS DOCUMENT IS 
+PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS LICENSORS, IF 
+ANY, BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS DOCUMENT, EVEN IF 
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. Apple and WebObjects are trademarks 
+of Apple Computer, Inc. registered in the U.S. and other countries.
+-->
+
+<!--
+This is the DTD of WebObjects default XML serialization output. There is an equivalent
+XML Schema file (woxml.xsd) that is semantically tighter due to use of namespaces and
+type definitions. You should use the XML Schema file whenever possible.
+
+<!DOCTYPE content PUBLIC "-//Apple Computer//DTD WebObjects XML Serialization 1.0//EN"
+                         "http://www.apple.com/webobjects/5.2/DTDs/woxml.dtd">
+
+-->
+
+<!--
+/////////////////////////////////////////////////////////////////////////
+////////////////////////// Entity Definition ////////////////////////////
+-->
+
+<!--
+This entity defines the unordered list of elements that constitute the
+root element. It contains eight primitive types and three object types.
+-->
+<!ENTITY % ContentType "(boolean | byte | ch | short | int | long | float | double | string | object | array)" >
+
+<!--
+/////////////////////////////////////////////////////////////////////////
+//////////////////////////// The Root Element ///////////////////////////
+-->
+
+<!ELEMENT content ((%ContentType;)*, finalException?)>
+
+<!--
+The root element has a few XML Schema attributes. We are faking them here.
+-->
+<!ATTLIST content
+    xmlns  CDATA #FIXED "http://www.apple.com/webobjects/XMLSerialization"
+    xmlns:xsi CDATA #FIXED "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation CDATA #FIXED "http://www.apple.com/webobjects/XMLSerialization
+http://www.apple.com/webobjects/5.2/schemas/woxml.xsd">
+
+<!--
+/////////////////////////////////////////////////////////////////////////
+/////////////////// Basic primitive types definition ////////////////////
+-->
+
+<!--
+Primitive boolean type.
+-->
+<!ELEMENT boolean (#PCDATA)>
+
+<!--
+key:
+  A key that can be used in XSLT to become the tag name for this content.
+
+field:
+  Name of the field the element represents.
+
+classId:
+  Sometimes a field of the same name and type exists somewhere in the
+  class hierarchy that the object is an instance of. The "classId" attribute
+  identifies the field unambiguously. The absence of this attribute means that the
+  field is in the leaf class.
+
+ignoreEDB:
+  This is an internal system attribute used for deserialization
+  using NSXMLInputStream. You can ignore it.
+
+-->
+<!ATTLIST boolean
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+Primitive byte type.
+-->
+<!ELEMENT byte (#PCDATA)>
+<!ATTLIST byte
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+Primitive char type.
+-->
+<!ELEMENT ch (#PCDATA)>
+<!ATTLIST ch
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+Primitive short type.
+-->
+<!ELEMENT short (#PCDATA)>
+<!ATTLIST short
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+Primitive integer type.
+-->
+<!ELEMENT int (#PCDATA)>
+<!ATTLIST int
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+Primitive long type.
+-->
+<!ELEMENT long (#PCDATA)>
+<!ATTLIST long
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+Primitive float type.
+-->
+<!ELEMENT float (#PCDATA)>
+<!ATTLIST float
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+Primitive double type.
+-->
+<!ELEMENT double (#PCDATA)>
+<!ATTLIST double
+    key CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+/////////////////////////////////////////////////////////////////////////
+///////////////////////// Object Types Definition ///////////////////////
+-->
+
+<!--
+This element represents java.lang.String objects.
+
+Whitespaces are preserved using the attribute xml:space="preserve".
+If the string contains illegal characters, they are represented by the "ch" element
+with \uXXXX as the text data. See the definition for "char" above for more details.
+Carriage return has to be encoded as <ch>\u000d</ch> because of reasons given
+in http://www.w3.org/TR/2000/REC-xml-20001006#sec-line-ends
+
+Examples:
+
+<string id="20" xml:space="preserve">Testing illegal<ch>\u0001</ch>chars</string>
+  
+<string id="39" xml:space="preserve">Well Done!</string>
+  
+<string id="42" xml:space="preserve">There is a tab right here: 	</string>
+
+When you serialize a string using the writeUTF method, the corresponding string
+element does not have an "id" attribute and, thus, is not referenced by an "idRef"
+attribute elsewhere in the document. It is essentially "unshared".
+-->
+<!ELEMENT string (#PCDATA | ch)*>
+
+<!--
+key:
+  A key that can be used in XSLT to become the tag name for this content.
+
+id, idRef:
+  The "id" attribute refers to the identification number of an element
+  representing an object. It is generated when the object is encountered the
+  first time during serialization. Subsequent references to the same object use
+  the attribute "idRef" instead of a new element with the complete object
+  description.
+  
+  Both "id" and "idRef" should be declared as type ID and IDREF respectively.
+  Unfortunately, the current XML specification insists that values of those types
+  have to start with a letter or an underscore character (_). In the name of clarity,
+  we chose not to use prefixes.
+  
+  For a null object, neither "id" nor "idRef" are required.
+  
+field:
+  Name of the field the element represents.
+
+classId:
+  Sometimes a field of the same name and type exists somewhere in the
+  class hierarchy that the object is an instance of. The "classId" attribute
+  identifies the field unambiguously. The absence of this attribute means that the
+  field is in the leaf class.
+
+ignoreEDB:
+  This is an internal system attribute used for deserialization
+  using NSXMLInputStream. You can ignore it.
+-->
+<!ATTLIST string
+    key CDATA #IMPLIED
+    id CDATA #IMPLIED
+    idRef CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    xml:space (default|preserve) 'preserve'
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+An ordinary object, everything that is not a string or an array. If an object
+is null, it will be represented as an empty element. If an object has already
+been written out before, with a unique "id" attribute, it is
+represented as an empty element with its "idRef" attribute set to
+the same value as the "id" of the original object. This eliminates the
+circular-object-graph problem.
+
+When the element represents an object element, the first child element
+describes the class structure. The class can be a real class or a
+proxy class.
+-->
+<!ELEMENT object ((class | proxy)?, (%ContentType;)*)>
+
+<!--
+type:
+   When type is present, it refers to two special, degenerated objects, which
+   are instances of java.lang.Class and java.io.ObjectStreamClass. They are
+   degenerated because they are represented in a more concise manner (only
+   their content is written out). Ordinary objects have their class structure
+   written out as well.
+-->
+<!ATTLIST object
+    type CDATA #IMPLIED
+    key CDATA #IMPLIED
+    id CDATA #IMPLIED
+    idRef CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+This defines the "class" element, which describes the class structure of an
+object. Multiple references to the same class in a document are handled using
+the mechanism described in Object Types Definition above.
+-->
+<!ELEMENT class (field*, super?)>
+
+<!--
+flag:
+   This attribute gives more detail about the class, such as whether it is
+   Serializable or Externalizable, whether it has overridden the writeObject
+   method, and so on.
+    
+  This is an internal system attribute used for deserialization using NSXMLInputStream.
+  You can ignore it.
+
+name:
+   Name of the class. Even if the "idRef" attribute is present, this
+   attribute is required for clarity (and perhaps ease of transformation using
+   XSLT).
+
+suid:
+   This attribute identifies the unique, original class version of this class.
+   It is used for version control and is tied to the SerialVersionUID
+   in the Java Binary Serialization specification.
+    
+  This is an internal system attribute used for deserialization using NSXMLInputStream.
+  You can ignore it.
+-->
+<!ATTLIST class
+    id CDATA #IMPLIED
+    idRef CDATA #IMPLIED
+    flag CDATA #IMPLIED
+    name CDATA #IMPLIED
+    suid CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+A serializable field of a class.
+-->
+<!ELEMENT field EMPTY>
+
+<!--
+type:
+   The class type of the field.
+-->
+<!ATTLIST field
+    name CDATA #REQUIRED
+    type CDATA #REQUIRED>
+
+<!--
+The usual superclass description.
+-->
+<!ELEMENT super (field*, super?)>
+<!ATTLIST super
+    id CDATA #IMPLIED
+    idRef CDATA #IMPLIED
+    flag CDATA #IMPLIED
+    name CDATA #IMPLIED
+    suid CDATA #IMPLIED>
+
+<!--
+Instead of a regular class, the type of an object could be java.lang.reflect.Proxy.
+-->
+<!ELEMENT proxy (interface*)>
+<!ATTLIST proxy
+    id CDATA #IMPLIED
+    idRef CDATA #IMPLIED>
+
+<!ELEMENT interface EMPTY>
+<!ATTLIST interface
+    name CDATA #REQUIRED>
+
+<!--
+This element describes the primitive array object in Java; for example, int[], which is
+a legitimate Java object. However, as opposed to an ordinary "object"
+element, there is no need for an elaborate class description. Instead, it is
+succinctly represented with the "type" attribute.
+  
+Primitive types in an array are simply represented as text separated by a
+space (0x0020). If the character 0x0020 is present as part of an array of
+characters, it is escaped as \u0020.
+
+Examples:
+<array id="174" length="2" type="int[]">3 4 </array>
+<array id="200" length="6" type="char[]">a b \ \u0020 c d </array>
+
+Multiple references to the same array in a document are handled using
+the mechanism described in Object Types Definition above.
+-->
+<!ELEMENT array (#PCDATA | string | object | array)*>
+
+<!--
+length:
+   Length of the array.
+
+type:
+  Array type. If the type is "base64", it means that Base64 encoding was used to
+  output an array of bytes.
+    
+  Examples:
+  	int[]				array of ints
+   	char[][]			two-dimensional array of chars
+   	java.lang.String[]	array of Strings
+--> 
+<!ATTLIST array
+    key CDATA #IMPLIED
+    id CDATA #IMPLIED
+    idRef CDATA #IMPLIED
+    field CDATA #IMPLIED
+    classId CDATA #IMPLIED
+    length CDATA #IMPLIED
+    type CDATA #IMPLIED
+    ignoreEDB CDATA #IMPLIED>
+
+<!--
+This type describes the exception that caused the serialization process
+to terminate.
+If the serialization has an exception that causes the process to abort,
+that exception is considered final and is written out.
+NSXMLInputStream can actually read in this final exception and make
+sense of the failure.
+-->
+<!ELEMENT finalException ((class | proxy)?, (%ContentType;)*)>
+<!ATTLIST finalException
+    id CDATA #IMPLIED
+    idRef CDATA #IMPLIED>

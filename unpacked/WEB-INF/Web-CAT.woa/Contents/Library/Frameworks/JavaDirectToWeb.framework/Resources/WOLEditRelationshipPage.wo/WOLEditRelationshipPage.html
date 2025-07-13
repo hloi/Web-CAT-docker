@@ -1,0 +1,68 @@
+<webobject name="PageWrapper">
+   <div align="center">
+      <table width="550" cellpadding="0" cellspacing="3" border="0">
+         <tr>
+            <td>
+               <table>
+                  <tr>
+                     <td align="center"><webobject name="Banner"></webobject></td>
+                  </tr>
+                  <webobject name="HeaderRow">
+                     <td align="left" colspan="3"><b><webobject name="AttributeName"></webobject>(s)</b></td>
+                  </webobject>
+               </table>
+            </td>
+         </tr>
+         <tr>
+            <td height="10"></td>
+         </tr>
+         <tr>
+            <webobject name="IsToMany">
+               <td align="center">
+                  <webobject name="ToManyForm">
+                     <table>
+                        <tr>
+                           <td valign="middle"><font size="-1"><strong><webobject name="NumberOfEntities"></webobject>
+                              <webobject name="EntityName"></webobject>(s)</strong></font></td>
+                           <td><webobject name="AttributeValue"></webobject></td>
+                           <td valign="middle"><webobject name="RemoveButton"></webobject></td>
+                        </tr>
+                     </table>
+                  </webobject>
+               </td>
+            </webobject>
+            <webobject name="IsToOne">
+               <td align="center">
+                  <webobject name="ToOneForm">
+                     <table>
+                        <tr>
+                           <td valign="middle" align="center"><webobject name="ToOneValue"></webobject></td>
+                           <td valign="middle" align="center"><webobject name="RemoveToOneButton"></webobject></td>
+                        </tr>
+                     </table>
+                  </webobject>
+               </td>
+            </webobject>
+         </tr>
+         <tr>
+            <td>&nbsp;</td>
+         </tr>
+         <tr>
+            <td colspan="3" align="center">
+               <webobject name="ReturnLink"><webobject name="ReturnButton"></webobject></webobject>
+               <webobject name="QueryLink"><webobject name="QueryButton"></webobject></webobject>
+               <webobject name="IsEntityWritable"><webobject name="NewLink"><webobject name="NewButton"></webobject></webobject></webobject>
+            </td>
+         </tr>
+      </table>
+      <webobject name="DisplayQuery">
+         <webobject name="QueryComponent"></webobject>
+      </webobject>
+      <webobject name="DisplayList">
+         <webobject name="ListComponent"></webobject>
+      </webobject>
+      <webobject name="DisplayNew">
+         <webobject name="InspectComponent"></webobject>
+      </webobject>
+   </center>
+</webobject>

@@ -1,0 +1,173 @@
+{
+    imports = (
+		"import com.webobjects.foundation.*;",
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.directtoweb.*;"
+    );
+    interfaces = (
+	"ListPageInterface"
+    );
+    variables = (
+        "protected WODisplayGroup displayGroup; // displayGroup is initialized in the .woo file for the component.",
+        "private boolean _rowFlip; // used to alternate colors",
+        "private boolean _hasToUpdate=false; // when set to true, the list is refreshed before the page is rendered",
+        "protected EODataSource dataSource;",
+        "/** @TypeInfo $entity.name$ */
+    protected EOEnterpriseObject $generationReplacementForCurrentObject$;",
+        "protected WOComponent theNextPage;",
+        "protected NextPageDelegate _nextPageDelegate;"
+    );
+    methods = (
+        "public ClassConstructor(WOContext aContext) {
+        super(aContext);
+        // ensures we have a public default constructor
+        Class[] args= { com.webobjects.foundation.NSNotification.class };
+        //register for change notifications to know when to refresh list
+        NSNotificationCenter.defaultCenter().addObserver(this,
+                                                         new NSSelector(\"editingContextDidSaveChanges\",args),
+                                                         EOEditingContext.EditingContextDidSaveChangesNotification,
+                                                         null);
+        displayGroup.setNumberOfObjectsPerBatch($numberOfObjectsPerBatch$);
+        displayGroup.setSelectsFirstObjectAfterFetch(false);
+        $_generateSortStatementForConstructor$
+    }",
+     "public void finalize() throws Throwable {
+        NSNotificationCenter.defaultCenter().removeObserver(this);
+        super.finalize();
+    }",
+        "public String entity() {
+            // this method is used by the Header and the WebAssistant
+            return \"$entity.name$\";
+    }",
+    "public void setDataSource(EODataSource ds) {
+        dataSource = ds;
+        displayGroup.setDataSource(dataSource);
+        displayGroup.fetch();
+    }",
+    "public boolean isListEmpty()
+    {
+        return (listSize()==0);    
+    }",
+    "public int listSize()
+    {
+        return displayGroup.allObjects().count();
+    }",
+    "public WOComponent inspectObjectAction() {
+        InspectPageInterface inspectPage=D2W.factory().inspectPageForEntityNamed($generationReplacementForCurrentObject$.entityName(),session());
+        inspectPage.setObject($generationReplacementForCurrentObject$);
+        inspectPage.setNextPage(context().page());
+	return (WOComponent)inspectPage;
+    }",
+    "public WOComponent editObjectAction() {
+        EditPageInterface editPage=D2W.factory().editPageForEntityNamed($generationReplacementForCurrentObject$.entityName(),session());
+        editPage.setObject($generationReplacementForCurrentObject$);
+        editPage.setNextPage(context().page());
+        return (WOComponent)editPage;
+    }"
+	,
+	"public WOComponent deleteObjectAction() { 
+		ConfirmPageInterface nextPage = (ConfirmPageInterface)D2W.factory(). confirmPageForEntityNamed(\"$entity.name$\", session());
+
+                nextPage.setConfirmDelegate(new DeletionDelegate($generationReplacementForCurrentObject$,dataSource,context().page()));
+
+                nextPage.setCancelDelegate(new DeletionDelegate(null,null,context().page()));
+
+		nextPage.setMessage(\"Are you sure you want to delete <BR>\"+$generationReplacementForCurrentObject$.entityName()+\"<BR>\"+$generationReplacementForCurrentObject$.userPresentableDescription()+ \" ?\");
+		return (WOComponent) nextPage;
+	}",
+    "class DeletionDelegate  implements NextPageDelegate {
+        private EOEnterpriseObject _object;
+        private EODataSource _dataSource;
+        private WOComponent _nextPage;
+        public DeletionDelegate(EOEnterpriseObject object, EODataSource dataSource,WOComponent nextPage) {
+            _object=object; _dataSource=dataSource; _nextPage=nextPage;
+        }
+        public WOComponent nextPage(WOComponent sender) {
+
+            if (null != _object) {
+                EOEditingContext ec = _object.editingContext();
+
+                if (null != ec) {
+                    ec.lock();
+
+                    try {
+                        RuntimeException ex;
+
+                        ex = null;
+                        @@componentName@@.this._hasToUpdate = true;
+                        _dataSource.deleteObject(_object);
+
+                        ec.deleteObject(_object);
+
+                        try {
+                            ec.saveChanges();
+
+                            _object = null;
+                        }
+                        catch (NSValidation.ValidationException e) {
+                            ex = e;
+                        }
+                        catch (RuntimeException e) {
+                            ex = e;
+                        }
+
+                        if (null != ex) {
+
+                            if (ex instanceof NSValidation.ValidationException ||
+                                NSForwardException._originalThrowable(ex) instanceof EOGeneralAdaptorException) {
+                                ErrorPageInterface epf;
+
+                                ec.revert();
+
+                                epf = D2W.factory().errorPage(sender.session());
+                                epf.setMessage(\" Could not save your changes:<BR> \" + ex.getMessage() + \" \");
+                                epf.setNextPage(_nextPage);
+                                return (WOComponent) epf;
+                            }
+                            else {
+                                throw ex;
+                            }
+
+                        }
+
+                    }
+                    finally {
+                        ec.unlock();
+                    }
+
+                }
+
+            }
+
+            return _nextPage;
+        }
+    }",
+
+    "public void setNextPage(WOComponent nextPage) {
+       theNextPage=nextPage;
+     }",
+    "public WOComponent backAction() {
+        return _nextPageDelegate!=null ? (_nextPageDelegate.nextPage(this)) : (theNextPage!=null ?
+            theNextPage : (WOComponent)D2W.factory().queryPageForEntityNamed(\"$entity.name$\",session()));
+    }",
+    "public String backgroundColorForRow() {
+        $backgroundColorForRowMethod$
+        };",
+    "public void setNextPageDelegate(NextPageDelegate delegate) {
+           _nextPageDelegate=delegate;
+    }",
+	"public void editingContextDidSaveChanges(NSNotification notif) {
+        _hasToUpdate=true;
+    }",
+    "public void appendToResponse(WOResponse r, WOContext c) {
+        if (_hasToUpdate) {
+            displayGroup.fetch();
+            _hasToUpdate=false;            
+        }
+        super.appendToResponse(r,c);
+    }"
+    );
+}

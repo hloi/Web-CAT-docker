@@ -1,0 +1,36 @@
+CanRestart: WOConditional {
+    condition = canRestart;
+}
+
+CannotRestart: WOConditional {
+    condition = canRestart;
+    negate    = true;
+}
+
+DieNow: WOSubmitButton {
+    action = dieNow;
+    value = " Die! Die! Die! ";
+}
+
+Form: WOForm {
+    multipleSubmit = true;
+    enctype="multipart/form-data";
+}
+
+GracefulShutdown: WOSubmitButton {
+    action = gracefulShutdown;
+    value = " Graceful Shutdown ";
+}
+
+Page : net.sf.webcat.core.PageWithNavigation {
+	title     = "System Status";
+}
+
+SystemStatus: SystemStatusBlock {
+    includeSeparator = true;
+}
+
+ThrowException: WOSubmitButton {
+    action = throwException;   // VALID
+    value = " Force Exception ";
+}

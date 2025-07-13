@@ -1,0 +1,11 @@
+NumberField: WOTextField {
+	numberformat = formatter;
+	size = length;
+	value = value;
+}
+
+OperatorPopUp: WOPopUpButton {
+	list = displayGroup.relationalQualifierOperators;
+	selection = anOperator;
+}
+

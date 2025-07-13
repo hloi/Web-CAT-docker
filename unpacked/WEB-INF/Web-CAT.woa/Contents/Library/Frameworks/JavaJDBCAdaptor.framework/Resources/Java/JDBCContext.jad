@@ -1,0 +1,768 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) braces space lnc 
+// Source File Name:   JDBCContext.java
+
+package com.webobjects.jdbcadaptor;
+
+import com.webobjects.eoaccess.*;
+import com.webobjects.foundation.*;
+import java.sql.*;
+import java.util.Enumeration;
+import javax.naming.*;
+import javax.sql.DataSource;
+
+// Referenced classes of package com.webobjects.jdbcadaptor:
+//            JDBCAdaptorException, JDBCAdaptor, JDBCChannel, JDBCPlugIn
+
+public class JDBCContext extends EOAdaptorContext
+{
+
+            private void _appendSQLExceptionToBuffer(StringBuffer stringbuffer, SQLException sqlexception)
+            {
+/* 103*/        if (stringbuffer.length() > 0)
+                {
+/* 104*/            stringbuffer.append("\n    Next exception:");
+                }
+/* 105*/        if (sqlexception instanceof SQLWarning)
+                {
+/* 106*/            stringbuffer.append("SQL Warning:");
+                } else
+                {
+/* 107*/            stringbuffer.append("SQL State:");
+                }
+/* 108*/        stringbuffer.append(sqlexception.getSQLState());
+/* 109*/        stringbuffer.append(" -- error code: " + sqlexception.getErrorCode());
+/* 110*/        stringbuffer.append(" -- msg: " + sqlexception.getMessage());
+            }
+
+            void _jdbcErrorWithChannel(JDBCChannel jdbcchannel, SQLException sqlexception, boolean flag, String s)
+            {
+/* 114*/        StringBuffer stringbuffer = new StringBuffer(1024);
+/* 115*/        stringbuffer.append(s);
+/* 116*/        stringbuffer.append(':');
+/* 117*/        if (sqlexception != null)
+                {
+/* 119*/            _appendSQLExceptionToBuffer(stringbuffer, sqlexception);
+/* 121*/            for (SQLException sqlexception1 = sqlexception.getNextException(); sqlexception1 != null; sqlexception1 = sqlexception1.getNextException())
+                    {
+/* 123*/                _appendSQLExceptionToBuffer(stringbuffer, sqlexception1);
+                    }
+
+                }
+                SQLWarning sqlwarning;
+/* 129*/        try
+                {
+/* 129*/            sqlwarning = _jdbcConnection == null ? null : _jdbcConnection.getWarnings();
+                }
+/* 130*/        catch (SQLException sqlexception2)
+                {
+/* 131*/            sqlwarning = null;
+                }
+/* 133*/        for (; sqlwarning != null; sqlwarning = sqlwarning.getNextWarning())
+                {
+/* 134*/            _appendSQLExceptionToBuffer(stringbuffer, sqlwarning);
+                }
+
+/* 137*/        if (flag)
+                {
+/* 138*/            throw new JDBCAdaptorException(new String(stringbuffer), sqlexception);
+                }
+/* 140*/        if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                {
+/* 141*/            NSLog.debug.appendln(new String(stringbuffer));
+                }
+            }
+
+            public JDBCContext(EOAdaptor eoadaptor)
+            {
+/* 146*/        super(eoadaptor);
+/*  60*/        _fetchesInProgress = 0;
+/*  61*/        _openChannelCount = 0;
+            }
+
+            protected void _setAutoCommit(boolean flag)
+            {
+/* 150*/        if (_connectionSupportTransaction)
+                {
+/* 152*/            try
+                    {
+/* 152*/                if (!_jdbcConnection.getAutoCommit())
+                        {
+/* 153*/                    _jdbcConnection.rollback();
+                        }
+/* 155*/                _jdbcConnection.setAutoCommit(flag);
+                    }
+/* 156*/            catch (SQLException sqlexception)
+                    {
+/* 157*/                throw new JDBCAdaptorException(sqlexception);
+                    }
+                }
+            }
+
+            public boolean connect()
+                throws JDBCAdaptorException
+            {
+/* 163*/        JDBCAdaptor jdbcadaptor = (JDBCAdaptor)adaptor();
+/* 165*/        setupJndiConfiguration();
+/* 169*/        try
+                {
+/* 169*/            if (_dataSourceJndiName != null)
+                    {
+/* 172*/                DataSource datasource = (DataSource)(new InitialContext()).lookup(_dataSourceJndiName);
+/* 173*/                if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                        {
+/* 174*/                    NSLog.debug.appendln(" connecting to data source " + datasource + " at " + _dataSourceJndiName);
+                        }
+/* 176*/                _jdbcConnection = datasource.getConnection();
+                    } else
+                    {
+/* 179*/                String s = jdbcadaptor.driverName();
+/* 180*/                if (s != null && s.length() > 0)
+                        {
+/* 184*/                    Class class1 = _NSUtilities.classWithName(s);
+/* 193*/                    if (class1 == null)
+                            {
+/* 194*/                        throw new JDBCAdaptorException("JDBC connection failed for driver :'" + jdbcadaptor.driverName() + "'. Driver not found in Java Runtime! Please verify your CLASSPATH environment variable. The current CLASSPATH for your application is : " + System.getProperty("java.class.path"), null);
+                            }
+                        }
+/* 197*/                String s1 = jdbcadaptor.connectionURL();
+/* 198*/                if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                        {
+/* 200*/                    NSMutableDictionary nsmutabledictionary = new NSMutableDictionary(jdbcadaptor.connectionDictionary());
+/* 201*/                    nsmutabledictionary.setObjectForKey(s1, "URL");
+/* 202*/                    nsmutabledictionary.setObjectForKey("<password deleted for log>", "password");
+/* 203*/                    nsmutabledictionary.removeObjectForKey("jdbc2Info");
+/* 204*/                    NSLog.debug.appendln(" connecting with dictionary: " + nsmutabledictionary);
+                        }
+/* 206*/                java.util.Properties properties = jdbcadaptor.connectionProperties();
+/* 207*/                _jdbcConnection = DriverManager.getConnection(s1, properties);
+                    }
+/* 212*/            _connectionSupportTransaction = _jdbcConnection.getTransactionIsolation() != 0;
+/* 213*/            _setAutoCommit(false);
+/* 214*/            if (_statementsToExecute != null)
+                    {
+/* 222*/                Statement statement = _jdbcConnection.createStatement();
+/* 223*/                for (Enumeration enumeration = _statementsToExecute.objectEnumerator(); enumeration.hasMoreElements(); statement.clearWarnings())
+                        {
+/* 225*/                    String s2 = (String)enumeration.nextElement();
+/* 226*/                    if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                            {
+/* 227*/                        NSLog.debug.appendln("configure JDBC connection with statement <\"" + s2 + "\">");
+                            }
+/* 229*/                    ResultSet resultset = statement.executeQuery(s2);
+/* 230*/                    if (resultset == null)
+                            {
+/* 231*/                        continue;
+                            }
+/* 231*/                    while (resultset.next()) ;
+/* 232*/                    resultset.close();
+                        }
+
+/* 236*/                statement.close();
+/* 237*/                statement = null;
+/* 238*/                Object obj = null;
+/* 239*/                if (_connectionSupportTransaction)
+                        {
+/* 239*/                    _jdbcConnection.commit();
+                        }
+/* 240*/                _jdbcConnection.clearWarnings();
+                    }
+                }
+/* 242*/        catch (SQLException sqlexception)
+                {
+/* 243*/            if (!jdbcadaptor.plugIn()._couldIgnoreException(sqlexception))
+                    {
+/* 244*/                throw new JDBCAdaptorException(sqlexception);
+                    }
+                }
+/* 247*/        catch (NamingException namingexception)
+                {
+/* 248*/            throw new JDBCAdaptorException("Data source getConnection() failed for " + _dataSourceJndiName + ":" + namingexception.getMessage(), null);
+                }
+/* 251*/        return true;
+            }
+
+            public void setupJndiConfiguration()
+                throws JDBCAdaptorException
+            {
+/* 256*/        JDBCAdaptor jdbcadaptor = (JDBCAdaptor)adaptor();
+/* 258*/        InitialContext initialcontext = null;
+/* 260*/        try
+                {
+/* 260*/            initialcontext = new InitialContext();
+/* 261*/            initialcontext.lookup("java:comp");
+                }
+/* 262*/        catch (NamingException namingexception)
+                {
+/* 263*/            initialcontext = null;
+                }
+/* 265*/        if (initialcontext != null)
+                {
+/* 267*/            try
+                    {
+/* 267*/                String s = (String)jdbcadaptor.connectionDictionary().objectForKey("DataSourceJndiName");
+/* 268*/                s = "java:comp/env/wo/dsmapping/" + s;
+/* 269*/                if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                        {
+/* 270*/                    NSLog.debug.appendln("Trying mapping at " + s);
+                        }
+/* 272*/                _dataSourceJndiName = (String)initialcontext.lookup(s);
+/* 273*/                if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                        {
+/* 274*/                    NSLog.debug.appendln("Using data source at " + _dataSourceJndiName);
+                        }
+                    }
+/* 276*/            catch (NamingException namingexception1)
+                    {
+/* 279*/                try
+                        {
+/* 279*/                    NamingEnumeration namingenumeration = initialcontext.list("java:comp/env/jdbc");
+/* 282*/                    do
+                            {
+/* 282*/                        if (!namingenumeration.hasMore())
+                                {
+/* 283*/                            break;
+                                }
+/* 283*/                        NameClassPair nameclasspair = (NameClassPair)namingenumeration.next();
+/* 284*/                        String s1 = nameclasspair.isRelative() ? "java:comp/env/jdbc/" + nameclasspair.getName() : nameclasspair.getName();
+/* 285*/                        Object obj = initialcontext.lookup(s1);
+/* 286*/                        if (obj instanceof DataSource)
+                                {
+/* 287*/                            if (_dataSourceJndiName != null && !initialcontext.lookup(s1).equals(initialcontext.lookup(_dataSourceJndiName)))
+                                    {
+/* 288*/                                NSLog.debug.appendln("Found multiple data sources. Please map the EOModels to a data source explicitly!");
+/* 289*/                                throw new JDBCAdaptorException("Found multiple data sources. Please map the EOModels to a data source explicitly!", null);
+                                    }
+/* 291*/                            _dataSourceJndiName = s1;
+/* 292*/                            if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                                    {
+/* 293*/                                NSLog.debug.appendln("Found data source " + _dataSourceJndiName);
+                                    }
+                                }
+                            } while (true);
+                        }
+/* 297*/                catch (NamingException namingexception2)
+                        {
+/* 298*/                    NSLog.debug.appendln(namingexception2);
+                        }
+                    }
+                }
+/* 303*/        if (NSLog.debugLoggingAllowedForLevelAndGroups(3, 0x10000L))
+                {
+/* 304*/            if (_dataSourceJndiName == null)
+                    {
+/* 305*/                NSLog.debug.appendln("Didn't find any JNDI data source.");
+                    } else
+                    {
+/* 307*/                NSLog.debug.appendln("Setting JNDI DS to " + _dataSourceJndiName);
+                    }
+                }
+            }
+
+            void _tryConnect()
+                throws JDBCAdaptorException
+            {
+/* 319*/        try
+                {
+/* 319*/            if (_jdbcConnection != null && !_jdbcConnection.isClosed())
+                    {
+/* 320*/                return;
+                    }
+                }
+/* 322*/        catch (SQLException sqlexception)
+                {
+/* 323*/            throw new JDBCAdaptorException(sqlexception);
+                }
+/* 326*/        if (_delegateRespondsTo_shouldConnect && !_delegate.booleanPerform("adaptorContextShouldConnect", this))
+                {
+/* 327*/            return;
+                } else
+                {
+/* 331*/            connect();
+/* 332*/            return;
+                }
+            }
+
+            public void disconnect()
+                throws JDBCAdaptorException
+            {
+/* 339*/        try
+                {
+/* 339*/            if (_jdbcConnection == null || _jdbcConnection.isClosed())
+                    {
+/* 340*/                return;
+                    }
+                }
+/* 342*/        catch (SQLException sqlexception)
+                {
+/* 343*/            throw new JDBCAdaptorException(sqlexception);
+                }
+/* 347*/        try
+                {
+/* 347*/            _jdbcConnection.close();
+                }
+/* 348*/        catch (SQLException sqlexception1)
+                {
+/* 349*/            throw new JDBCAdaptorException(sqlexception1);
+                }
+/* 351*/        _jdbcConnection = null;
+/* 351*/        break MISSING_BLOCK_LABEL_68;
+                Exception exception;
+/* 351*/        exception;
+/* 351*/        _jdbcConnection = null;
+/* 352*/        throw exception;
+/* 353*/        if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                {
+/* 354*/            NSLog.debug.appendln("connection disconnected.");
+                }
+/* 356*/        return;
+            }
+
+            protected JDBCChannel _cachedAdaptorChannel()
+            {
+/* 359*/        if (_cachedChannel == null)
+                {
+/* 360*/            _cachedChannel = new JDBCChannel(this);
+                }
+/* 362*/        return _cachedChannel;
+            }
+
+            public EOAdaptorChannel createAdaptorChannel()
+            {
+/* 366*/        if (_cachedChannel != null)
+                {
+/* 367*/            JDBCChannel jdbcchannel = _cachedChannel;
+/* 368*/            _cachedChannel = null;
+/* 369*/            return jdbcchannel;
+                } else
+                {
+/* 371*/            return new JDBCChannel(this);
+                }
+            }
+
+            public void beginTransaction()
+            {
+/* 377*/        try
+                {
+/* 377*/            if (_jdbcConnection != null && _jdbcConnection.isClosed())
+                    {
+/* 378*/                throw new JDBCAdaptorException(new SQLException("Apparent disconnection", "08003"));
+                    }
+                }
+/* 380*/        catch (SQLException sqlexception)
+                {
+/* 381*/            throw new JDBCAdaptorException(sqlexception);
+                }
+/* 383*/        if (hasOpenTransaction())
+                {
+/* 385*/            return;
+                }
+/* 388*/        if (_delegateRespondsTo_shouldBegin && !_delegate.booleanPerform("adaptorContextShouldBegin", this))
+                {
+/* 390*/            return;
+                }
+/* 393*/        transactionDidBegin();
+/* 396*/        if (_delegateRespondsTo_didBegin)
+                {
+/* 397*/            _delegate.perform("adaptorContextDidBegin", this);
+                }
+            }
+
+            public void commitTransaction()
+            {
+/* 402*/        if (!hasOpenTransaction())
+                {
+/* 404*/            return;
+                }
+/* 406*/        if (_fetchesInProgress > 0)
+                {
+/* 407*/            throw new JDBCAdaptorException("Attempted to commit a transaction while a fetch was in progress", null);
+                }
+/* 411*/        if (_delegateRespondsTo_shouldCommit && !_delegate.booleanPerform("adaptorContextShouldCommit", this))
+                {
+/* 412*/            return;
+                }
+/* 417*/        try
+                {
+/* 417*/            if (_connectionSupportTransaction)
+                    {
+/* 417*/                _jdbcConnection.commit();
+                    }
+                }
+/* 418*/        catch (SQLException sqlexception)
+                {
+/* 419*/            if (!((JDBCAdaptor)adaptor()).plugIn()._couldIgnoreException(sqlexception))
+                    {
+/* 420*/                throw new JDBCAdaptorException(sqlexception);
+                    }
+                }
+/* 422*/        transactionDidCommit();
+/* 425*/        if (_delegateRespondsTo_didCommit)
+                {
+/* 426*/            _delegate.perform("adaptorContextDidCommit", this);
+                }
+            }
+
+            public void rollbackTransaction()
+            {
+/* 432*/        if (!hasOpenTransaction())
+                {
+/* 434*/            return;
+                }
+/* 436*/        if (_fetchesInProgress > 0)
+                {
+/* 437*/            throw new JDBCAdaptorException("Cannot rollbackTransaction() while a fetch is in progress", null);
+                }
+/* 444*/        if (_delegateRespondsTo_shouldRollback && !_delegate.booleanPerform("adaptorContextShouldRollback", this))
+                {
+/* 446*/            return;
+                }
+/* 451*/        try
+                {
+/* 451*/            if (_connectionSupportTransaction)
+                    {
+/* 451*/                _jdbcConnection.rollback();
+                    }
+                }
+/* 452*/        catch (SQLException sqlexception)
+                {
+/* 453*/            throw new JDBCAdaptorException(sqlexception);
+                }
+/* 455*/        transactionDidRollback();
+/* 460*/        if (_delegateRespondsTo_didRollback)
+                {
+/* 461*/            _delegate.perform("adaptorContextDidRollback", this);
+                }
+            }
+
+            void _channelWillOpen()
+            {
+/* 467*/        if (_openChannelCount == 0)
+                {
+/* 468*/            _tryConnect();
+                }
+/* 470*/        _openChannelCount++;
+            }
+
+            void _channelDidClose()
+            {
+/* 474*/        if (_openChannelCount > 0)
+                {
+/* 475*/            _openChannelCount--;
+                }
+/* 477*/        if (_openChannelCount == 0)
+                {
+/* 478*/            disconnect();
+                }
+            }
+
+            void _channelWillBeginFetching()
+            {
+/* 483*/        _fetchesInProgress++;
+            }
+
+            void _channelDidEndFetching()
+            {
+/* 487*/        _fetchesInProgress--;
+            }
+
+            public Connection connection()
+            {
+/* 491*/        return _jdbcConnection;
+            }
+
+            void _setJdbcConnection(Connection connection1)
+            {
+/* 495*/        _jdbcConnection = connection1;
+            }
+
+            String _externalTypeInModel(int i)
+            {
+/* 506*/        String s = null;
+/* 507*/        String s1 = JDBCAdaptor.stringRepresentationForJDBCType(i);
+/* 508*/        NSDictionary nsdictionary = ((JDBCAdaptor)adaptor()).typeInfo();
+/* 509*/        if (nsdictionary != null)
+                {
+/* 515*/            NSArray nsarray = nsdictionary.allKeys();
+/* 516*/            int l = nsarray.count();
+/* 517*/label0:
+/* 517*/            for (int k = 0; k < l; k++)
+                    {
+/* 518*/                String s2 = (String)nsarray.objectAtIndex(k);
+/* 519*/                NSDictionary nsdictionary1 = (NSDictionary)nsdictionary.objectForKey(s2);
+/* 520*/                NSArray nsarray1 = (NSArray)nsdictionary1.objectForKey("defaultJDBCType");
+/* 521*/                int j1 = nsarray1.count();
+/* 522*/                int i1 = 0;
+/* 522*/                do
+                        {
+/* 522*/                    if (i1 >= j1)
+                            {
+/* 523*/                        continue label0;
+                            }
+/* 523*/                    String s3 = (String)nsarray1.objectAtIndex(i1);
+/* 524*/                    if (s3.equals(s1))
+                            {
+/* 525*/                        s = s2;
+/* 526*/                        continue label0;
+                            }
+/* 522*/                    i1++;
+                        } while (true);
+                    }
+
+                }
+/* 531*/        if (s == null)
+                {
+/* 534*/            try
+                    {
+/* 534*/                ResultSet resultset = _jdbcConnection.getMetaData().getTypeInfo();
+/* 535*/                do
+                        {
+/* 535*/                    if (s != null || !resultset.next())
+                            {
+/* 536*/                        break;
+                            }
+/* 536*/                    int j = resultset.getInt(2);
+/* 537*/                    if (j == i)
+                            {
+/* 538*/                        s = resultset.getString(1);
+                            }
+                        } while (true);
+                    }
+/* 541*/            catch (SQLException sqlexception) { }
+                }
+/* 546*/        return s;
+            }
+
+            NSDictionary _fetchJDBCInfo()
+                throws JDBCAdaptorException
+            {
+/* 552*/        NSMutableDictionary nsmutabledictionary = new NSMutableDictionary();
+/* 553*/        NSMutableDictionary nsmutabledictionary1 = new NSMutableDictionary();
+/* 554*/        if (NSLog.debugLoggingAllowedForLevelAndGroups(2, 0x10000L))
+                {
+/* 555*/            NSLog.debug.appendln("fetching JDBC Info with " + _NSUtilities.shortClassName(this) + "@" + System.identityHashCode(this));
+                }
+/* 558*/        _tryConnect();
+/* 564*/        try
+                {
+/* 564*/            DatabaseMetaData databasemetadata = _jdbcConnection.getMetaData();
+/* 565*/            String s1 = databasemetadata.getDatabaseProductName();
+/* 566*/            if (s1 != null)
+                    {
+/* 567*/                nsmutabledictionary.setObjectForKey(s1, "DBMS_NAME");
+                    }
+/* 568*/            s1 = databasemetadata.getDriverName();
+/* 569*/            if (s1 != null)
+                    {
+/* 570*/                nsmutabledictionary.setObjectForKey(s1, "DRIVER_NAME");
+                    }
+/* 571*/            s1 = databasemetadata.getDriverVersion();
+/* 572*/            if (s1 != null)
+                    {
+/* 573*/                nsmutabledictionary.setObjectForKey(s1, "DRIVER_VER");
+                    }
+/* 574*/            if (databasemetadata.supportsANSI92FullSQL())
+                    {
+/* 575*/                nsmutabledictionary.setObjectForKey("ANSI92Full", "ANSI92_CONFORMANCE");
+                    } else
+/* 576*/            if (databasemetadata.supportsANSI92IntermediateSQL())
+                    {
+/* 577*/                nsmutabledictionary.setObjectForKey("ANSI92Intermediate", "ANSI92_CONFORMANCE");
+                    } else
+                    {
+/* 578*/                nsmutabledictionary.setObjectForKey("ANSI92EntryLevel", "ANSI92_CONFORMANCE");
+                    }
+/* 579*/            s1 = databasemetadata.getIdentifierQuoteString();
+/* 580*/            if (s1 != null)
+                    {
+/* 581*/                nsmutabledictionary.setObjectForKey(s1, "IDENTIFIER_QUOTE_STRING");
+                    }
+/* 582*/            s1 = databasemetadata.getStringFunctions();
+/* 583*/            if (s1 != null)
+                    {
+/* 584*/                nsmutabledictionary.setObjectForKey(s1, "STRING_FUNCTIONS");
+                    }
+/* 586*/            if (databasemetadata.supportsNonNullableColumns())
+                    {
+/* 587*/                nsmutabledictionary.setObjectForKey("T", "NON_NULLABLE_COLUMNS");
+                    }
+/* 590*/            ResultSet resultset = databasemetadata.getTypeInfo();
+/* 592*/            do
+                    {
+/* 592*/                if (!resultset.next())
+                        {
+/* 593*/                    break;
+                        }
+/* 593*/                String s = resultset.getString(1).trim();
+/* 594*/                NSMutableDictionary nsmutabledictionary2 = new NSMutableDictionary();
+/* 597*/                short word0 = resultset.getShort(2);
+/* 599*/                String s2 = JDBCAdaptor.stringRepresentationForJDBCType(word0);
+/* 600*/                nsmutabledictionary2.setObjectForKey(new NSMutableArray(s2), "defaultJDBCType");
+/* 602*/                long l = resultset.getLong(3);
+/* 603*/                if (!resultset.wasNull())
+                        {
+/* 605*/                    if (l > 0x7fffffffL)
+                            {
+/* 606*/                        l = 0x7fffffffL;
+                            }
+/* 608*/                    nsmutabledictionary2.setObjectForKey(String.valueOf(l), "precision");
+                        }
+/* 610*/                short word1 = resultset.getShort(14);
+/* 611*/                if (!resultset.wasNull())
+                        {
+/* 612*/                    nsmutabledictionary2.setObjectForKey(String.valueOf(word1), "minScale");
+                        }
+/* 614*/                short word2 = resultset.getShort(15);
+/* 615*/                if (!resultset.wasNull())
+                        {
+/* 616*/                    nsmutabledictionary2.setObjectForKey(String.valueOf(word2), "maxScale");
+                        }
+/* 618*/                int i = resultset.getInt(7);
+/* 619*/                if (!resultset.wasNull())
+                        {
+/* 620*/                    nsmutabledictionary2.setObjectForKey(i != 1 ? "F" : "T", "isNullable");
+                        }
+/* 622*/                short word3 = resultset.getShort(9);
+/* 628*/                if (!resultset.wasNull())
+                        {
+/* 629*/                    nsmutabledictionary2.setObjectForKey(word3 != 3 && word3 != 2 ? "F" : "T", "isSearchable");
+                        }
+/* 631*/                String s3 = resultset.getString(6);
+/* 632*/                int j = s3 != null ? NSArray.componentsSeparatedByString(s3, ",").count() : 0;
+/* 634*/                switch (word0)
+                        {
+/* 552*/                default:
+                            break;
+
+/* 637*/                case 1: // '\001'
+/* 637*/                case 12: // '\f'
+/* 637*/                    if (j != 1)
+                            {
+/* 638*/                        j = 1;
+                            }
+/* 639*/                    break;
+
+/* 643*/                case 2: // '\002'
+/* 643*/                case 3: // '\003'
+/* 643*/                    if (j != 2)
+                            {
+/* 644*/                        j = 2;
+                            }
+                            break;
+                        }
+/* 649*/                nsmutabledictionary2.setObjectForKey(String.valueOf(j), "createParams");
+/* 652*/                NSMutableDictionary nsmutabledictionary3 = (NSMutableDictionary)nsmutabledictionary1.objectForKey(s);
+/* 653*/                if (nsmutabledictionary3 == null)
+                        {
+/* 654*/                    nsmutabledictionary1.setObjectForKey(nsmutabledictionary2, s);
+                        } else
+                        {
+/* 656*/                    ((NSMutableArray)nsmutabledictionary3.objectForKey("defaultJDBCType")).addObject(s2);
+                            int k;
+/* 659*/                    try
+                            {
+/* 659*/                        k = Integer.parseInt((String)nsmutabledictionary3.objectForKey("createParams"));
+                            }
+/* 661*/                    catch (NumberFormatException numberformatexception)
+                            {
+/* 662*/                        k = 0;
+                            }
+/* 664*/                    if (j > k)
+                            {
+/* 665*/                        nsmutabledictionary3.setObjectForKey(String.valueOf(j), "createParams");
+                            }
+                            int i1;
+/* 669*/                    try
+                            {
+/* 669*/                        i1 = Integer.parseInt((String)nsmutabledictionary3.objectForKey("precision"));
+                            }
+/* 670*/                    catch (NumberFormatException numberformatexception1)
+                            {
+/* 671*/                        i1 = 0;
+                            }
+/* 673*/                    if (l > (long)i1)
+                            {
+/* 674*/                        nsmutabledictionary3.setObjectForKey(String.valueOf(l), "precision");
+                            }
+                        }
+                    } while (true);
+/* 678*/            resultset.close();
+                }
+/* 679*/        catch (SQLException sqlexception)
+                {
+/* 680*/            throw new JDBCAdaptorException(sqlexception);
+                }
+/* 682*/        nsmutabledictionary.setObjectForKey(nsmutabledictionary1, "typeInfo");
+/* 683*/        return nsmutabledictionary;
+            }
+
+            public void handleDroppedConnection()
+            {
+/* 690*/        try
+                {
+/* 690*/            disconnect();
+                }
+/* 691*/        catch (JDBCAdaptorException jdbcadaptorexception) { }
+/* 694*/        _jdbcConnection = null;
+            }
+
+            public static final String DBMSNameKey = "DBMS_NAME";
+            public static final String DriverNameKey = "DRIVER_NAME";
+            public static final String DriverVersionKey = "DRIVER_VER";
+            public static final String StringFunctionsKey = "STRING_FUNCTIONS";
+            public static final String IdentifierQuoteStringKey = "IDENTIFIER_QUOTE_STRING";
+            public static final String NonNullableColumnsKey = "NON_NULLABLE_COLUMNS";
+            public static final String ANSI92ConformanceKey = "ANSI92_CONFORMANCE";
+            public static final String ANSIFullConformance = "ANSI92Full";
+            public static final String ANSIIntermediateConformance = "ANSI92Intermediate";
+            public static final String ANSIEntryConformance = "ANSI92EntryLevel";
+            public static final String DefaultJDBCTypeKey = "defaultJDBCType";
+            public static final String PrecisionKey = "precision";
+            public static final String MinScaleKey = "minScale";
+            public static final String MaxScaleKey = "maxScale";
+            public static final String NullableKey = "isNullable";
+            public static final String SearchableKey = "isSearchable";
+            public static final String CreateParamsKey = "createParams";
+            public static final String InternalTypeKey = "internalType";
+            static final String _DBAccess = "ACCESS";
+            static final String _DBMSSQLserver = "Microsoft SQL Server";
+            static final String _DBJDBC_ODBC_Bridge = "JDBC-ODBC Bridge (odbcjt32.dll)";
+            protected Connection _jdbcConnection;
+            protected JDBCChannel _cachedChannel;
+            private int _fetchesInProgress;
+            private int _openChannelCount;
+            private NSArray _statementsToExecute;
+            protected boolean _connectionSupportTransaction;
+            private String _dataSourceJndiName;
+
+            static 
+            {
+/*  71*/        boolean flag = NSLog.debugLoggingAllowedForLevelAndGroups(3, 0x10000L);
+/*  75*/        try
+                {
+/*  75*/            if (flag)
+                    {
+/*  76*/                if (NSLog.debug instanceof com.webobjects.foundation.NSLog.PrintStreamLogger)
+                        {
+/*  77*/                    com.webobjects.foundation.NSLog.PrintStreamLogger printstreamlogger = (com.webobjects.foundation.NSLog.PrintStreamLogger)NSLog.debug;
+/*  78*/                    DriverManager.setLogStream(printstreamlogger.printStream());
+                        } else
+                        {
+/*  80*/                    DriverManager.setLogStream(System.out);
+                        }
+                    } else
+                    {
+/*  86*/                DriverManager.setLogStream(null);
+                    }
+                }
+/*  89*/        catch (Throwable throwable)
+                {
+/*  91*/            if (flag)
+                    {
+/*  92*/                NSLog.err.appendln("JDBCContext: unable to set log stream of driver");
+/*  93*/                NSLog.err.appendln(throwable);
+                    }
+                }
+            }
+}

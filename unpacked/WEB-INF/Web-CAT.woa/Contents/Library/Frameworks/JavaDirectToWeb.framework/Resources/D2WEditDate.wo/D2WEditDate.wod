@@ -1,0 +1,11 @@
+DateFormatDescription: WOString {
+	_unroll = YES;
+	value = dateFormatDescription;
+}
+
+EditDate: WOTextField {
+	dateformat = formatter;
+	size = length;
+	value = value;
+}
+

@@ -1,0 +1,18 @@
+#This file is automatically rewritten by ANT, so all formatting will be trashed.
+#Thu Nov 06 23:09:16 EST 2008
+subsystem.ANTForPlugins=net.sf.webcat.antforplugins.ANTForPlugins
+ANTForPlugins.chmodx=Resources/ant/bin/ant, Resources/ant/bin/antRun
+ANTForPlugins.info.url=http\://web-cat.cs.vt.edu/WCWiki/AntForPluginsSubsystem
+ANTForPlugins.copyright=(c) 2006-2008 Virginia Tech Department of Computer Science
+ANTForPlugins.provider.url=http\://web-cat.cs.vt.edu/updates
+ANTForPlugins.provides=env, pluginProperties
+ANTForPlugins.provider=Virginia Tech Computer Science
+ANTForPlugins.version.revision=2
+ANTForPlugins.requires=Core
+ANTForPlugins.history.url=http\://web-cat.cs.vt.edu/WCWiki/AntForPluginsSubsystem/ChangeHistory
+ANTForPlugins.license=GNU Affero General Public License v.3
+ANTForPlugins.version.minor=1
+ANTForPlugins.description=This subsystem provides <a href\="http\://ant.apache.org/">ANT</a> to support grading plug-ins that use ANT to manage building, executing, and testing student work.
+ANTForPlugins.license.url=http\://www.gnu.org/licenses/agpl.html
+ANTForPlugins.version.major=1
+ANTForPlugins.version.date=20081106

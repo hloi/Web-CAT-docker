@@ -1,0 +1,47 @@
+<webobject name="PageWrapper">
+   <webobject name="QueryForm">
+      <webobject name="MainTable">
+         <tr valign="top">
+            <td valign="top" align="right"><webobject name="QueryTable"><WEBOBJECT NAME="BannerConditional">
+                     <tr>
+                        <td align="center">
+                           <table border="0">
+                              <tr>
+                                 <td><webobject name="Banner"></webobject></td>
+                              </tr>
+                              <webobject name="QueryTableHeaderRow">
+                                 <td align="left"><b><webobject name="FontContainer"><webobject name="EntityName"></webobject><webobject name="FetchLimitConditional">
+                                          (<webobject name="FetchLimit"></webobject>
+                                          max)</webobject></webobject></b></td>
+                              </webobject>
+                           </table>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>&nbsp;</td>
+                     </tr>
+                  </webobject>
+                  <tr>
+                     <td align="left" valign="top">
+                        <table border="0" cellpadding="2" cellspacing="2">
+                           <webobject name="ResourceRepetition">
+                              <webobject name="QueryTableRow">
+                                 <td align="right" valign="middle"><b><webobject name="ResourceLabel"></webobject>
+                                    &nbsp; </b></td>
+                                 <td align="left" valign="middle">&nbsp;
+                                    <webobject name="ResourceInputRepresentation"></webobject>
+                                 </td>
+                              </webobject>
+                           </webobject>
+                        </table>
+                     </td>
+                  </tr>
+               </webobject></td>
+         </tr>
+         <tr>
+            <td align="center">
+               <webobject name="QuerySubmitButton"></webobject>&nbsp; </td>
+         </tr>
+      </webobject>
+   </webobject>
+</webobject>

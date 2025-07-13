@@ -1,0 +1,43 @@
+BatchNavigator: net.sf.webcat.core.WCBatchNavigator {
+    displayGroup = generatedReportsDisplayGroup;
+    persistentKey = "PickReportToViewPage.generatedReportBatchSize";
+}
+
+BatchNavigatorQueue: net.sf.webcat.core.WCBatchNavigator {
+    displayGroup = enqueuedReportsDisplayGroup;
+    persistentKey = "PickReportToViewPage.enqueuedReportBatchSize";
+}
+
+WCSortOrderTitle: net.sf.webcat.core.WCSortOrder {
+	displayGroup = generatedReportsDisplayGroup;
+	displayKey = "Report Title";
+	key = "name";
+}
+
+WCSortOrderDate: net.sf.webcat.core.WCSortOrder {
+	displayGroup = generatedReportsDisplayGroup;
+	displayKey = "Date Generated";
+	key = "generatedTime";
+}
+
+WCSortOrderTitleQueue: net.sf.webcat.core.WCSortOrder {
+	displayGroup = enqueuedReportsDisplayGroup;
+	displayKey = "Report Title";
+	key = "reportName";
+}
+
+WCSortOrderDateQueue: net.sf.webcat.core.WCSortOrder {
+	displayGroup = enqueuedReportsDisplayGroup;
+	displayKey = "Date Requested";
+	key = "queueTime";
+}
+
+EnqueuedReportTime: WOString {
+	value = enqueuedReport.queueTime;
+	formatter = session.timeFormatter;
+}
+
+GeneratedReportTime: WOString {
+	value = generatedReport.generatedTime;
+	formatter = session.timeFormatter;
+}

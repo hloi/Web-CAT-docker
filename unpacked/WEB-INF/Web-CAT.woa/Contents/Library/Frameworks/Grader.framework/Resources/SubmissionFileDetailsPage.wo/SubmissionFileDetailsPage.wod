@@ -1,0 +1,53 @@
+AssignmentName: WOString {
+    value = thisFile.submissionResult.submission.assignmentOffering.assignment.name;
+}
+
+AvailablePoints: WOString {
+	value = thisFile.submissionResult.submission.assignmentOffering.assignment.submissionProfile.availablePoints;
+}
+
+DeptNumber: WOString {
+    value = thisFile.submissionResult.submission.assignmentOffering.courseOffering.compactName;
+}
+
+FileDetails: WOString {
+	value = codeWithComments;
+	escapeHTML = false;
+}
+
+FileList: WOPopUpButton {
+    list              = filesDisplayGroup.displayedObjects;
+    item              = file;
+    displayString     = file.sourceFileName;
+    selection         = selectedFile;
+    noSelectionString = "Overall summary of results";
+}
+
+FinalScore: WOString {
+	numberformat = "0.0";
+	value        = thisFile.submissionResult.finalScore;
+}
+
+Form: WOForm {
+}
+
+Go: WOActiveImage {
+	action = viewNextFile;
+	filename  = "icons/go.gif";
+	framework = "Core";
+	width     = "40";
+	height    = "19";
+	alt       = "Switch to another file";
+	title     = "Switch to another file";
+	style     = "vertical-align:middle;";
+}
+
+Page: net.sf.webcat.core.PageWithNavigation {
+    title      = thisFile.sourceFileName;
+    stylesheet = "Grader.framework/WebServerResources/wc-code.css";
+    hideSteps  = true;
+}
+
+SubmitNumber: WOString {
+    value = thisFile.submissionResult.submission.submitNumber;
+}

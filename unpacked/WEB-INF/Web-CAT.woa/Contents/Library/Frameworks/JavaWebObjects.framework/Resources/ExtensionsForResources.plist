@@ -1,0 +1,63 @@
+(
+    "aif",
+    "aifc",
+    "aiff",
+    "api",
+    "au",
+    "avi",
+
+    "class",
+    "css",
+
+    "d2wmodel",
+    "dict",
+
+    "gif",
+
+    "htm",
+    "html",
+
+    "ief",
+
+    "jar",
+    "jpe",
+    "jpeg",
+    "jpg",
+    "js",
+
+    "kar",
+
+    "map",
+    "mid",
+    "midi",
+    "mov",
+    "movie",
+    "mp2",
+    "mpe",
+    "mpeg",
+    "mpg",
+    "mpga",
+
+    "plist",
+    "png",
+
+    "ra",
+    "ram",
+    "rpm",
+    "rtx",
+
+    "qt",
+
+
+    "sgm",
+    "sgml",
+    "snd",
+    "strings",
+
+    "tif",
+    "tiff",
+    "txt",
+
+    "wav",
+    "wo"
+)

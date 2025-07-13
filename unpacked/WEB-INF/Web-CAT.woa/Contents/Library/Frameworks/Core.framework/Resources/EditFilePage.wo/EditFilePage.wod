@@ -1,0 +1,45 @@
+Cancel: WOSubmitButton {
+    value  = "Cancel";
+    action = cancelEdit;
+}
+
+FileContents: WOText {
+    value = fileContents;
+    rows  = "30";
+    cols  = "80";
+}
+
+Filename: WOString {
+    value = fileName;
+}
+
+Page: net.sf.webcat.core.PageWithNavigation {
+    sideStepTitle = sideStepTitle;
+}
+
+SaveAndContinue: WOSubmitButton {
+    value  = "Save and Keep Editing";
+    action = saveAndContinue;
+}
+
+SaveAndDone: WOSubmitButton {
+    value  = "Save and Close File";
+    action = saveAndDone;
+}
+
+Time: WOString {
+    value     = lastModified;
+    formatter = session.timeFormatter;
+}
+
+WizardForm: WOForm {
+    multipleSubmit = true;
+    action         = saveAndDone;
+
+    // This works stand-alone, but not in a servlet
+    enctype        = "multipart/form-data";
+    name           = "WizardForm";
+
+    // So use this instead.
+//    otherTagString = "enctype=\"multipart/form-data\" name=\"WizardForm\"";
+}

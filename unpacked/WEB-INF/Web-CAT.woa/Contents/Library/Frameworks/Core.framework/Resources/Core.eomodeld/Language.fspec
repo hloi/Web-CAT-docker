@@ -1,0 +1,9 @@
+
+{
+    FetchAll = 
+    {
+        class = EOFetchSpecification;
+        entityName = Language;
+        fetchLimit = 0;
+    };
+}

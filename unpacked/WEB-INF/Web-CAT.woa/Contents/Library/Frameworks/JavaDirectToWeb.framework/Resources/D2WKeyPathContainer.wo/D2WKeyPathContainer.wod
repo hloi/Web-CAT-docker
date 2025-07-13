@@ -1,0 +1,49 @@
+BoldContainer: WOGenericContainer {
+	_unroll = YES;
+	elementName = "b";
+	omitTags = isNotBoldAsBoolean;
+}
+
+CollapseContainer: D2WCollapsibleComponentContent {
+	_unroll = YES;
+	allowCollapsing = d2wContext.allowCollapsing;
+	closedLabel = listDescription;
+	submitActionName = submitActionName;
+}
+
+ColorContainer: WOGenericContainer {
+	_unroll = YES;
+	color = d2wContext.color;
+	elementName = "font";
+	omitTags = hasNoColor;
+}
+
+InspectLink: WOHyperlink {
+	action = inspectEO;
+	disabled = d2wContext.disabled;
+	target = target;
+}
+
+ItalicContainer: WOGenericContainer {
+	_unroll = YES;
+	elementName = "i";
+	omitTags = isNotItalicAsBoolean;
+}
+
+Repetition: WOTable {
+	border = d2wContext.componentBorder;
+	cellpadding = 2;
+	cellspacing = 0;
+	item = listEo;
+	list = list;
+	maxColumns = d2wContext.columnCount;
+}
+
+SingleItem: WOSwitchComponent {
+	WOComponentName = subContext.componentName;
+	_componentUnroll = YES;
+	_unroll = YES;
+	object = listEo;
+	localContext = subContext;
+}
+

@@ -1,0 +1,189 @@
+ApplyChanges: WOSubmitButton {
+	action = apply;
+	value  = " Apply ";
+}
+
+ApplyTimeFormats: WOSubmitButton {
+	action = applyTimeFormats;
+	value  = " Apply ";
+}
+
+BlueJLinkInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "BlueJ Submission URL";
+    message = "Web-CAT uses this URL to publish assignment definitions for use with the <a href=&quot;http://www.bluej.org/extensions/submitter/submitter.html&quot;>BlueJ submitter extension</a>. See the &quot;Configure BlueJ&quot; section of the <a href=&quot;http://web-cat.cs.vt.edu/WCWiki/ConfigureBlueJsSubmitter&quot;>ConfigureBlueJsSubmitter</a> recipe in the Web-CAT Cookbook.";
+}
+
+CanChangePassword: WOConditional {
+    condition = user.canChangePassword;
+}
+
+CanTA: WOConditional {
+	condition = user.hasTAPrivileges;
+}
+
+CanTeach: WOConditional {
+	condition = user.hasFacultyPrivileges;
+}
+
+CompactName: WOString {
+	value = courseOffering.compactName;
+}
+
+CourseName: WOString {
+	value = courseOffering.course.name;
+}
+
+DateFormat: WOPopUpButton {
+    list		  = user.authenticationDomain.dateFormats;
+    item   		  = aFormat;
+    selection     = user.dateFormat;
+    displayString = formattedCurrentTime;
+}
+
+DomainName: WOString {
+    value = user.authenticationDomain.displayableName;
+}
+
+EclipseLinkInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Eclipse Submission URL";
+    message = "Web-CAT uses this URL to publish assignment definitions for use with the <a href=&quot;http://web-cat.cs.vt.edu/WCWiki/EclipsePlugins/SubmissionPlugin&quot;>Eclipse submitter plug-in</a>. See the &quot;Configure Eclipse&quot; section of the <a href=&quot;http://web-cat.cs.vt.edu/WCWiki/ConfigureEclipseSubmitter&quot>ConfigureEclipseSubmitter</a> recipe in the Web-CAT Cookbook.";
+}
+
+Email: WOTextField {
+    value = user.email;
+    size = 40;
+}
+
+EnrolledInCourses: WOConditional {
+    condition = user.enrolledIn.count;
+}
+
+EnrollmentRepetition: WORepetition {
+	item  = courseOffering;
+	list  = enrolledInDisplayGroup.displayedObjects;
+	index = index;
+}
+
+FirstName: WOTextField {
+    value = user.firstName;
+    size = 40;
+}
+
+Form1: WOForm {
+	action = apply;
+}
+
+Form2: WOForm {
+	action = applyTimeFormats;
+}
+
+iCal: WOImage {
+	filename  = "icons/cal.gif";
+	framework = "Grader";
+	width     = 16;
+	height    = 16;
+	alt       = "Subscribe to your ical dates";
+	title     = "Subscribe to your ical dates";
+	border    = 0;
+}
+
+iCalLinkInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "iCalendar Export URL";
+    message = "Web-CAT uses this URL to publish assignment due date information for use by iCal-capable calendaring programs.  You can copy-and-paste this link into your calendar program to subscribe.  Alternately, if your browser and/or operating system supports the webcal protocol, use the subscription link below.";
+}
+
+InstructorName: WOHyperlink {
+	href   = instructor.url;
+    string = instructor.shortName;
+}
+
+InstructorRepetition: WORepetition {
+    item = instructor;
+    list = courseOffering.instructors;
+}
+
+LastName: WOTextField {
+    value = user.lastName;
+    size = 40;
+}
+
+NewPassword1: WOPasswordField {
+    value = newPassword1;
+	size  = 40;
+}
+
+NewPassword2: WOPasswordField {
+    value = newPassword2;
+	size  = 40;
+}
+
+NotEnrolledInCourses: WOConditional {
+    condition = user.enrolledIn.count;
+    negate    = true;
+}
+
+NotTAInCourses: WOConditional {
+    condition = user.TAFor.count;
+    negate    = true;
+}
+
+NotTeachingCourses: WOConditional {
+    condition = user.teaching.count;
+    negate    = true;
+}
+
+Page : net.sf.webcat.core.PageWithNavigation {
+	title = "Manage Your Profile";
+}
+
+TAInCourses: WOConditional {
+    condition = user.TAFor.count;
+}
+
+TARepetition: WORepetition {
+	item  = courseOffering;
+	list  = TADisplayGroup.displayedObjects;
+	index = index;
+}
+
+TeachingCourses: WOConditional {
+    condition = user.teaching.count;
+}
+
+TeachingRepetition: WORepetition {
+	item  = courseOffering;
+	list  = teachingDisplayGroup.displayedObjects;
+	index = index;
+}
+
+TimeFormat: WOPopUpButton {
+    list		  = user.authenticationDomain.timeFormats;
+    item   		  = aFormat;
+    selection     = user.timeFormat;
+    displayString = formattedCurrentTime;
+}
+
+TimeZone: WOPopUpButton {
+    list		  = user.authenticationDomain.timeZones;
+    item   		  = zone;
+    selection     = selectedZone;
+    displayString = zone.printableName;
+}
+
+TR: net.sf.webcat.core.TableRow {
+    index = index;
+}
+
+URL: WOTextField {
+    value = user.url;
+    size = 40;
+}
+
+UserName: WOString {
+    value = user.userName;
+}
+
+WebcalLinkInfo: net.sf.webcat.core.PopUpInfo {
+    title   = "Webcal Subscription";
+    message = "If your browser and/or operating system supports the webcal protocol, click this link to subscribe to the calendar events for your courses.";
+}

@@ -1,0 +1,86 @@
+Banner: WOImage {
+	alt = "Find";
+	border = "0";
+	filename = "find-ban.gif";
+	framework = "JavaDirectToWeb";
+	height = "34";
+	name = "Find";
+	width = "550";
+}
+
+BannerConditional: WOConditional {
+	_unroll = YES;
+	condition = showBanner;
+}
+
+EntitiesRepetition: WORepetition {
+	_unroll = YES;
+	item = entityName;
+	list = d2wContext.visibleEntityNames;
+}
+
+EntityName: WOString {
+	_unroll = YES;
+	value = entity.name;
+}
+
+KeyName: WOString {
+	value = d2wContext.displayNameForProperty;
+}
+
+MoreOptionsImage: WOImage {
+	alt = "More options for this entity";
+	border = "0";
+	filename = "rt-arw.gif";
+	framework = "JavaDirectToWeb";
+	height = "14";
+	name = "More options for this entity";
+	width = "14";
+}
+
+PageWrapper: WOSwitchComponent {
+	WOComponentName = pageWrapperName;
+	_componentUnroll = YES;
+	_unroll = YES;
+}
+
+QueryAnyField: D2WQueryAnyField {
+	_unroll = YES;
+	displayGroup = displayGroup;
+	localContext = localContext;
+}
+
+QueryForm: WOForm {
+	action = queryAction;
+	multipleSubmit = YES;
+}
+
+QueryTableHeaderRow: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = backgroundColorForHeaderRow;
+	elementName = "tr";
+}
+
+RegularQueryHyperlink: WOHyperlink {
+	action = showRegularQueryAction;
+}
+
+RowSpanningCell: WOGenericContainer {
+	_unroll = YES;
+	bgcolor = "#909090";
+	elementName = "td";
+	rowspan = d2wContextVisibleEntityNamesCountPlus1;
+	width = 1;
+}
+
+SearchButtonImage: WOActiveImage {
+	action = queryAction;
+	alt = "Find objects matching the query";
+	border = "0";
+	filename = "magglass-btn.gif";
+	framework = "JavaDirectToWeb";
+	height = "16";
+	name = "Find objects matching the query";
+	width = "16";
+}
+

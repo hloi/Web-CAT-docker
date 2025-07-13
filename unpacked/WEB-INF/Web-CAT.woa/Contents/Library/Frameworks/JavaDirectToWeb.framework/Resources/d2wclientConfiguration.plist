@@ -1,0 +1,610 @@
+{
+
+    editors = {
+        disabled = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title=disabled;
+                    editingFor=property;
+                    type=boolean;
+                };
+        readOnly = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title="Read Only";
+                    editingFor=page;
+                    type=boolean;
+                };
+        isDeep = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title="Is Deep";
+                    editingFor=page;
+                    type=boolean;
+                };
+        usesDistinct = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title="Fetches distinct objects";
+                    editingFor=page;
+                    type=boolean;
+                };
+        refreshRefetchedObjects = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title="Refresh refetched objects";
+                    editingFor=page;
+                    type=boolean;
+                };
+        color = {
+                    class=com.apple.client.directtoweb.ColorComponentConfigurationPanel;
+                    title=Color;
+                    inputSize=8;
+                    editingFor=property;
+                };
+        formatter = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title=Formatter;
+                        inputSize=13;
+                        editingFor=property;
+                        type=stringEmptyIsNull;
+                    };
+        bold = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title=Bold;
+                    editingFor=property;
+                    type=boolean;
+                };
+        italic = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title=Italic;
+                    editingFor=property;
+                    type=boolean;
+                };
+        backgroundColorForTable = {
+                    class=com.apple.client.directtoweb.ColorComponentConfigurationPanel;
+                    title="Background Color for Table";
+                    editingFor=page;
+                    inputSize=8;
+                };
+        showBanner = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title="Show Banner";
+                    editingFor=page;
+                    type=boolean;
+        };
+        threshold = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title=Threshold;
+                        editingFor=property;
+                        inputSize=10;
+                    };
+        customComponentName = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title="Component";
+                        editingFor=property;
+                        inputSize=20;
+                    };
+        framework = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title=Framework;
+                        editingFor=property;
+                        inputSize=10;
+                    };
+        fetchLimit = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title="Max # of objects fetched";
+                        editingFor=page;
+                        inputSize=3;
+                    };
+        batchSize = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title="Batch Size";
+                        editingFor=page;
+                        inputSize=3;
+                    };
+        tableWidth = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title="Table Width";
+                        editingFor=page;
+                        inputSize=3;
+                    };
+        allowCollapsing = {
+                            class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                            title="Allow Collapsing";
+                            editingFor=property;
+                            inputSize=13;
+                            type=boolean;
+                        };
+        keyWhenRelationship = {
+                                class = com.apple.client.directtoweb.DisplayKeyComponentConfigurationPanel;
+                            };
+        columnCount = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title="Maximum number of columns";
+                        editingFor=page;
+                        inputSize=2;
+                    };
+        justification = {
+                        class=com.apple.client.directtoweb.ChoiceComponentConfigurationPanel;
+                        title="Alignment";
+                        editingFor=property;
+                        choices = ( left, center, right );
+                     };
+        inspectIcon = {
+                        class=com.apple.client.directtoweb.ChoiceComponentConfigurationPanel;
+                        title="Icons";
+                        editingFor=property;
+                        choices = ( "magglass-btn.gif", "ButtonSmallInspect.gif", "bino-btn.gif", "eye.gif" );
+                     };
+        editIcons = {
+                        class=com.apple.client.directtoweb.ChoiceComponentConfigurationPanel;
+                        title="Icons";
+                        editingFor=property;
+                        choices = ( "ButtonSmallEdit.gif", "write-btn.gif" );
+                     };
+        numCols = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title="Maximum number of columns";
+                        editingFor=property;
+                        inputSize=3;
+                    };
+        border = {
+                        class=com.apple.client.directtoweb.ChoiceComponentConfigurationPanel;
+                        title="Border Size";
+                        editingFor=page;
+                        choices = ( 0, 1, 2, 3, 4, 5 );
+                    };
+        componentBorder = {
+                        class=com.apple.client.directtoweb.ChoiceComponentConfigurationPanel;
+                        title="Border Size";
+                        editingFor=property;
+                        choices = ( 0, 1, 2, 3, 4, 5 );
+                    };
+        alternateRowColor = {
+                    class=com.apple.client.directtoweb.CheckboxComponentConfigurationPanel;
+                    title="Alternate row color";
+                    editingFor=page;
+                    type=boolean;
+                };
+        length = {
+                    class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                    editingFor=property;
+                    title="Text Field size";
+                    inputSize=3;
+                };
+        size = {
+                    class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                    editingFor=property;
+                    title="Browser size";
+                    inputSize=3;
+                };
+        rows = {
+                    class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                    editingFor=property;
+                    title="Rows";
+                    inputSize=3;
+                };
+        toOneUIStyle = {
+                    class=com.apple.client.directtoweb.ChoiceComponentConfigurationPanel;
+                    editingFor=property;
+                    title="UI style";
+                    choices = ( radio, popup, browser, "*default*" );
+                };
+        toManyUIStyle = {
+                    class=com.apple.client.directtoweb.ChoiceComponentConfigurationPanel;
+                    editingFor=property;
+                    title="UI style";
+                    choices = ( checkbox, browser, "*default*" );
+                };
+        tabName = {
+                        class=com.apple.client.directtoweb.TextFieldComponentConfigurationPanel;
+                        title="Tab Name";
+                        inputSize=15;
+                        editingFor=property;
+                    };
+    };
+
+
+    components = {
+
+
+        
+
+
+        D2WDisplayBoolean = {
+            inspectionInformation = "A component capable of displaying a boolean represented as a number on the server side. YES is anything different from 0.";
+        };
+        
+        D2WDisplayImage = {
+            inspectionInformation = "A component capable of displaying an image served from the database; for this component to work, the key that it is bound to must return an image (typically gif or jpeg)";
+        };
+        
+        D2WDisplayImageFromPath = {
+            editors =  ( framework );
+            inspectionInformation = "A component capable of displaying an image from its name; the image must be a resource in your application, or in a framework you specify";
+        };
+        
+        D2WDisplayMailTo = {
+            inspectionInformation = "A component capable of displaying an E-mail address with a <mailto:xxx> hyperlink. Use this component for fields containing an E-mail address";
+        };
+        
+        D2WDisplayHyperlink = {
+            inspectionInformation = "A component capable of displaying a hyperlink. Use this component for fields containing an WWW address. The text values of these fields are automatically prefixed with http:// if they don't already have it";
+        };
+        
+        D2WDisplayMailTo = {
+            inspectionInformation = "A component capable of displaying an E-mail address with a <mailto:xxx> hyperlink";
+        };
+        
+        D2WDisplayNumber = {
+            editors =  ( formatter );
+            inspectionInformation = "A component capable of displaying a number and applying a formatter to it";
+        };
+        
+        D2WDisplayDate = {
+            editors =  ( formatter );
+            inspectionInformation = "A component capable of displaying a date and applying a formatter to it";
+        };
+        
+        D2WDisplayStyledNumber = {
+            editors = ( formatter, bold, italic, color );
+            inspectionInformation = "A component capable of displaying a number and applying a formatter to it. This component supports style information such as color, bold, italic..";
+        };
+        
+        D2WDisplayStyledDate = {
+            editors = ( formatter, bold, italic, color );
+            inspectionInformation = "A component capable of displaying a date and applying a formatter to it. This component supports style information such as color, bold, italic..";
+        };
+        
+        D2WDisplayThresholdColoredNumber = {
+            editors = ( formatter, threshold );
+            inspectionInformation = "A component capable of displaying a number and applying a formatter to it. A threshold can be defined, and the color of the number displayed will depend on the position of the number with respect to that threshold";
+        };
+        
+        D2WDisplayString = {
+            inspectionInformation = "A simple component that just displays a String which is just the description of the object it is bound to";
+        };
+        
+        D2WDisplayLargeString = {
+            editors = ( rows, length );
+            inspectionInformation = "A simple component that just displays a large String in a multi-line text field";
+        };
+        
+        D2WDisplayStyledString = {
+            editors = ( bold, italic, color );
+            inspectionInformation = "A simple component that just displays a String which is just the description of the object it is bound to. This component supports style information such as color, bold, italic..";
+        };
+        
+        D2WDisplayToMany = {
+            editors = ( keyWhenRelationship, allowCollapsing );
+            inspectionInformation = "A component displaying the first few elements the set of objects on the other side of a to-many relationship in a list. Since this component fetches all such objects, it can be expensive depending upon the number of objects linked through the relationship. The displayed elements can optionally be collapsed.";
+        };
+        
+        D2WDisplayToMany2 = {
+            editors = ( keyWhenRelationship, allowCollapsing );
+            inspectionInformation = "A component displaying the set of objects on the other side of a to-many relationship in a table. Since this component fetches all such objects, it can be expensive depending upon the number of objects linked through the relationship. The displayed elements can optionally be collapsed.";
+        };
+        
+        D2WDisplayToManyTable = {
+            editors = ( keyWhenRelationship, allowCollapsing, numCols, componentBorder,disabled );
+            inspectionInformation = "A component displaying the set of objects on the other side of a to-many relationship in a table. Since this component fetches all such objects, it can be expensive depending upon the number of objects linked through the relationship. The displayed elements can optionally be collapsed and the number of columns of the table can be specified.";
+        };
+        
+        D2WCustomComponent = {
+            editors = ( customComponentName );
+            inspectionInformation = "This component lets you embed a regular WebObjects component inside a DirectToWeb based component; you have to specify a component name to embed. This component will be passed two bindings from its D2W parent: 'object', which will contain the EOEnterpriseObject being manipulated, and 'key' which contains the key for which this embedded component was used.";
+        };
+        
+        D2WCustomQueryComponent = {
+            editors = ( customComponentName );
+            inspectionInformation = "This component lets you embed a regular WebObjects component inside a DirectToWeb based component, in the scope of a query; you have to specify a component name to embed. This component will be passed two bindings from its D2W parent: 'diaplayGroup', which will contain the display group, and 'key' which contains the key for which this embedded component was used. Your query component should push keys and values in the query dictionaries (queryMatch, queryMax, queryMin, queryOperator) of the display group.";
+        };
+        
+        D2WKeyPathContainer = {
+            editors = (allowCollapsing, numCols, componentBorder, bold, italic, color, disabled);
+            inspectionInformation = "A component displaying the set of objects on the other side of a key path. The displayed elements can optionally be collapsed and the number of columns of the table can be specified.";
+        };
+        
+        D2WDisplayToManyFault = {
+            inspectionInformation = "A component displaying a hyperlink which will take you to a list page looking at the set of objects linked to your initial object through a to-many relationship. Since this component does not traverse the relationship (only the list page will), it is appropriate when many objects are linked through this relationship";
+            editors = ( inspectIcon );
+        };
+        
+        D2WDisplayToOne = {
+            editors = ( keyWhenRelationship,disabled );
+            inspectionInformation = "A component displaying the object on the other side of a to-one relationship. The displayed elements can optionally be collapsed.";
+        };
+        
+        D2WDisplayToOneFault = {
+            inspectionInformation = "A component displaying a hyperlink which will take you to an inspect page looking at the object linked to your initial object through a one relationship";
+            editors = ( inspectIcon );
+        };
+        
+        D2WDisplayBoolean = {
+            inspectionInformation = "A component capable of displaying a boolean represented as a number on the server side. YES is rendered as a checked checkbox and NO as an unchecked checkbox";
+        };
+        
+        D2WEditDate = {
+            editors = ( formatter, length );
+            inspectionInformation = "A component capable of editing a date and apply a formatter to the read value";
+        };
+        
+        D2WEditNumber = {
+            editors = ( formatter, length );
+            inspectionInformation = "A component capable of editing a number and apply a formatter to the read value";
+        };
+        
+        D2WEditBoolean = {
+            inspectionInformation = "A component capable of editing a boolean represented as a number on the server side. YES is rendered as 1 and NO as 0";
+        };
+        
+        D2WEditString = {
+            editors = ( formatter, length );
+            inspectionInformation = "A simple string-input component";
+        };
+        
+        D2WEditLargeString = {
+            editors = ( rows, length );
+            inspectionInformation = "A string-input component rendered as a multi-line text field (TEXTAREA)";
+        };
+        
+        D2WEditToOneFault = {
+            editors = ( keyWhenRelationship,disabled );
+            inspectionInformation = "A component displaying a hyperlink which will take you to an edit-relationship page for a to-one relationship. Since this component does not traverse the relationship (only the edit relationship page will), it is appropriate when many objects are linked through this relationship";
+        };
+        
+        D2WEditToOneRelationship = {
+            editors = ( keyWhenRelationship, allowCollapsing, toOneUIStyle, numCols, size );
+            inspectionInformation = "A component able to edit the set of objects on the other side of a to-one relationship. Since this component fetches all potential candidates for this relationship (all entities of the type specified for the target of the relationship, it can be expensive if there are many such objects. The displayed element can optionally be collapsed. You can pick the UI style that this component uses (radio buttons, popup or browser). When using radio buttons, you can pick how many columns they use, when using a browser, what the size of the browser is.";
+        };
+        
+        D2WEditToManyFault = {
+            editors = ( keyWhenRelationship, allowCollapsing );
+            inspectionInformation = "A component displaying a hyperlink which will take you to an edit-relationship page for a to-many relationship. Since this component does not traverse the relationship (only the edit relationship page will), it is appropriate when many objects are linked through this relationship";
+        };
+        
+        D2WEditToManyRelationship = {
+            editors = ( keyWhenRelationship, allowCollapsing, toManyUIStyle, numCols, size );
+            inspectionInformation = "A component able to edit the set of objects on the other side of a to-many relationship. Since this component fetches all potential candidates for this relationship (all entities of the type specified for the target of the relationship, it can be expensive if there are many such objects. The displayed elements can optionally be collapsed. You can pick the UI style that this component uses (checkboxes or browser). When using checkboxes, you can pick how many columns they use, when using a browser, what the size of the browser is.";
+        };
+        
+        D2WQueryDateOperator = {
+            editors = ( formatter, length );
+            inspectionInformation = "A component able to build a date query based on one value and one operator (less than, greater than, equal)";
+        };
+        
+        D2WQueryDateRange = {
+            editors = ( formatter, length );
+            inspectionInformation = "A component able to build a date query based on the range between two dates";
+        };
+        
+        D2WQueryNumberOperator = {
+            editors = ( formatter, length );
+            inspectionInformation = "A component able to build a number query based on one value and one operator (less than, greater than, equal)";
+        };
+        
+        D2WQueryNumberRange = {
+            editors = ( formatter, length );
+            inspectionInformation = "A component able to build a number query based on the range between two numbers";
+        };
+        
+        D2WQueryBoolean = {
+            inspectionInformation = "A component able to build a query based on a boolean. YES is rendered as > 0";
+        };
+        
+        D2WQueryToManyField = {
+            editors =  ( keyWhenRelationship );
+            inspectionInformation = "A simple component able to build a query based on a value for a particular key of an object on the other side of a to-many relationship. Since this component does not traverse the relationship, it is appropriate when many objects are linked through this relationship";
+        };
+        
+        D2WQueryToManyRelationship = {
+            editors = ( keyWhenRelationship, toOneUIStyle, numCols, size );
+            inspectionInformation = "A component able to build a query based on the set of objects on the other side of a to-many relationship. Since this component fetches all potential candidates for this relationship (all entities of the type specified for the target of the relationship, it can be expensive if there are many such objects. You can pick the UI style that this component uses (checkboxes or browser). When using checkboxes, you can pick how many columns they use, when using a browser, what the size of the browser is. You can pick the UI style that this component uses (radio buttons, popup or browser). When using radio buttons, you can pick how many columns they use, when using a browser, what the size of the browser is.";
+        };
+        
+        D2WQueryToOneField = {
+            editors = ( keyWhenRelationship );
+            inspectionInformation = "A simple component able to build a query based on a value for a particular key of an object on the other side of a to-one relationship. Since this component does not traverse the relationship, it is appropriate when many objects are linked through this relationship";
+        };
+        
+        D2WQueryToOneRelationship = {
+            editors = ( keyWhenRelationship, toOneUIStyle, numCols, size );
+            inspectionInformation = "A component able to build a query based on the set of objects on the other side of a to-one relationship. Since this component fetches all potential candidates for this relationship (all entities of the type specified for the target of the relationship, it can be expensive if there are many such objects";
+        };
+        
+        D2WQueryAnyField = {
+            inspectionInformation = "A simple component able to build a query based on a value for any attribute key of an object on the other side of a relationship. Since this component does not traverse the relationship, it is appropriate when many objects are linked through this relationship";
+        };
+
+        
+
+        D2WDisplayToManyBrowser = {
+            editors = ( keyWhenRelationship, allowCollapsing );
+            inspectionInformation = "A component displaying the set of objects on the other side of a to-many relationship in an browser. Since this component fetches all such objects, it can be expensive depending upon the number of objects linked through the relationship. The displayed elements can optionally be collapsed.";
+        };
+        
+        D2WQueryUnavailable = {
+            inspectionInformation = "A simple component displaying a 'query unavailable' message";
+        };
+        
+        D2WEditUneditable = {
+            inspectionInformation = "A component displaying a message saying the value can not be edited";
+        };
+        
+        D2WQueryStringComponent = {
+            editors = ( formatter, length );
+            inspectionInformation = "A simple component building a query based on a simple string. The query built uses the default stringMatchFormat (%@*) and the default stringMatchOperator (caseInsensitiveLike) of WODisplayGroup";
+        };
+        D2WQueryStringOperator = {
+            editors = ( length );
+            inspectionInformation = "A component building a query based on a string; a popup containing a choice of operators such as \"starts with\", \"contains\".. is offered to the user.";
+        };
+
+
+
+
+
+        BASConfirmPage = {
+            editors = ( backgroundColorForTable );
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        BASQueryPage = {
+            editors = ( backgroundColorForTable, border, showBanner, fetchLimit, isDeep, usesDistinct, refreshRefetchedObjects );
+            inspectionInformation = "A simple query page.";
+            page=yes;
+        };
+        BASQueryAllEntitiesPage = {
+            editors = ( backgroundColorForTable, border, showBanner );
+            inspectionInformation = "A query page displaying a simple query form for all available entities.";
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        BASListPage = {
+            editors = ( backgroundColorForTable, border, alternateRowColor, readOnly, batchSize );
+            supports = ( justification );
+            inspectionInformation = "A simple list page, listing entries in a table.";
+            page=yes;
+        };
+        BASPlainListPage = {
+            editors = ( backgroundColorForTable, columnCount, border, alternateRowColor, readOnly, batchSize );
+            inspectionInformation = "A simple list page, listing entries one after the other.";
+            page=yes;
+        };
+        BASMasterDetailPage = {
+            inspectionInformation = "A master detail page. To configure it, go into expert mode and:\n - configure select <yourEntity> for the list part\n - configure edit <yourEntity> for the edit part";
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        BASInspectPage = {
+            editors = ( backgroundColorForTable, border, showBanner );
+            inspectionInformation = "A simple inspect page.";
+            page=yes;
+        };
+        BASEditRelationshipPage = {
+            editors = ( backgroundColorForTable );
+            page=yes;
+            supportsPropertyConfiguration=no;
+            inspectionInformation = "A page that allows the editing of to-one or to-many relationship. You can configure the query/list/edit showing up at the bottom of this page by editing the query/list/edit settings for the same entity in expert mode";
+        };
+        BASErrorPage = {
+            editors = ( backgroundColorForTable );
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+
+
+        WOLConfirmPage = {
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        WOLQueryPage = {
+            inspectionInformation = "A simple query page.";
+            editors = ( backgroundColorForTable, showBanner, fetchLimit, isDeep, usesDistinct, refreshRefetchedObjects ) ;
+            page=yes;
+        };
+        WOLQueryAllPage = {
+            inspectionInformation = "A simple query page, for all entities.";
+            editors = ( backgroundColorForTable, showBanner ) ;
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        WOLListPage = {
+            editors = ( backgroundColorForTable, alternateRowColor, showBanner, readOnly, batchSize ) ;
+            supports = ( justification );
+            inspectionInformation = "A simple list page, listing entries in a table.";
+            page=yes;
+        };
+        WOLMasterDetailPage = {
+            inspectionInformation = "A master detail page. To configure it, go into expert mode and:\n - configure select <yourEntity> for the list part\n - configure edit <yourEntity> for the edit part";
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        WOLPlainListPage = {
+            editors = ( backgroundColorForTable, columnCount, showBanner,readOnly, batchSize );
+            inspectionInformation = "A simple list page, listing entries one after the other.";
+            page=yes;
+        };
+        WOLInspectPage = {
+            editors = ( backgroundColorForTable, showBanner );
+            inspectionInformation = "A simple inspect page.";
+            page=yes;
+        };
+        WOLEditRelationshipPage = {
+            editors = ( backgroundColorForTable );
+            page=yes;
+            supportsPropertyConfiguration=no;
+            inspectionInformation = "A page that allows the editing of to-one or to-many relationship. You can configure the query/list/edit showing up at the bottom of this page by editing the query/list/edit settings for the same entity in expert mode";
+        };
+        WOLErrorPage = {
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        WOLTabInspectPage = {
+            editors = ( backgroundColorForTable, showBanner, tableWidth );
+            supports = ( tabName );
+            inspectionInformation = "A tab panel inspect page.";
+            page=yes;
+        };
+
+
+        NEUConfirmPage = {
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        NEUQueryPage = {
+            inspectionInformation = "A simple query page.";
+            editors = ( backgroundColorForTable, showBanner, fetchLimit, isDeep, usesDistinct, refreshRefetchedObjects ) ;
+            page=yes;
+        };
+        NEUQueryAllPage = {
+            inspectionInformation = "A simple query page, for all entities.";
+            editors = ( backgroundColorForTable, showBanner ) ;
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        NEUListPage = {
+            editors = ( backgroundColorForTable, showBanner,readOnly, batchSize ) ;
+            supports = ( justification );
+            inspectionInformation = "A simple list page, listing entries in a table.";
+            page=yes;
+        };
+        NEUMasterDetailPage = {
+            inspectionInformation = "A master detail page. To configure it, go into expert mode and:\n - configure select <yourEntity> for the list part\n - configure edit <yourEntity> for the edit part";
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        NEUPlainListPage = {
+            editors = ( backgroundColorForTable, columnCount, showBanner,readOnly, batchSize );
+            inspectionInformation = "A simple list page, listing entries one after the other.";
+            page=yes;
+        };
+        NEUInspectPage = {
+            editors = ( backgroundColorForTable, showBanner );
+            inspectionInformation = "A simple inspect page.";
+            page=yes;
+        };
+        NEUEditRelationshipPage = {
+            editors = ( backgroundColorForTable );
+            page=yes;
+            supportsPropertyConfiguration=no;
+            inspectionInformation = "A page that allows the editing of to-one or to-many relationship. You can configure the query/list/edit showing up at the bottom of this page by editing the query/list/edit settings for the same entity in expert mode";
+        };
+        NEUErrorPage = {
+            page=yes;
+            supportsPropertyConfiguration=no;
+        };
+        NEUTabInspectPage = {
+            editors = ( backgroundColorForTable, showBanner, tableWidth );
+            supports = ( tabName );
+            inspectionInformation = "A tab panel inspect page.";
+            page=yes;
+        };
+
+
+
+
+
+
+
+    };
+
+
+
+}

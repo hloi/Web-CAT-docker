@@ -1,0 +1,37 @@
+ApplicationPortParam: WOParam {
+	name = "WOKey.applicationport";
+	value = applicationPort;
+}
+
+AssistantActiveConditional: WOConditional {
+	condition = isWebAssistantActive;
+}
+
+AssistantApplet: WOApplet {
+	archive = "JavaDirectToWeb.jar";
+	code = "com.apple.client.directtoweb.RemoteControl.class";
+	codebase = "/WebObjects/Java";
+	height = "2";
+	width = "2";
+}
+
+AssistantPortParam: WOParam {
+	name = "WOKey.assistantport";
+	value = assistantPort;
+}
+
+CurrentUrlParam: WOParam {
+	name = "WOKey.currenturl";
+	value = currentUrl;
+}
+
+ResourcePathURLParam: WOParam {
+	name = "WOKey.resourcepathurl";
+	value = resourcePathURL;
+}
+
+SessionIDParam: WOParam {
+	name = "WOKey.sessionid";
+	value = 0;
+}
+

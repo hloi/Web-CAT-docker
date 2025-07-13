@@ -1,0 +1,19 @@
+ArrayDisplay: WOSimpleArrayDisplay2 {
+	displayItemAction = inspectItemAction;
+	item = item;
+	itemDisplayKey = keyWhenRelationship;
+	list = list;
+	listAction = inspectArrayActionString;
+}
+
+CollapseContainer: D2WCollapsibleComponentContent {
+	_unroll = YES;
+	allowCollapsing = d2wContext.allowCollapsing;
+	closedLabel = listDescription;
+	submitActionName = submitActionName;
+}
+
+ShouldDisplayConditional: WOConditional {
+	condition = shouldDisplay;
+}
+

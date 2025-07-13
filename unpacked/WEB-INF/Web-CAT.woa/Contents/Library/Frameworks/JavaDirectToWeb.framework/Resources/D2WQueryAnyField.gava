@@ -1,0 +1,14 @@
+ {
+    imports = (
+        "import com.webobjects.appserver.*;",
+        "import com.webobjects.eocontrol.*;",
+        "import com.webobjects.eoaccess.*;",
+        "import java.util.*;",
+        "import com.webobjects.foundation.*;"
+    );
+    variables = (
+        "protected NSArray $variableNameForKeyList$ = NSArray.componentsSeparatedByString(\"$componentsForKeyList$\",\" \");",
+        "protected String keyForWOAnyFields;"
+   );
+    methods = ();
+}

@@ -1,0 +1,11 @@
+D2WSwitchComponent: D2WSwitchComponent {
+	_dynamicPage = ^pageConfiguration;
+	_entityName = ^entityName;
+	_settings = ^settings;
+	_task = "inspect";
+	_unroll = YES;
+	displayKeys = ^displayKeys;
+	nextPage = ^nextPage;
+	nextPageDelegate = actionPageDelegate;
+	object = ^object;
+}

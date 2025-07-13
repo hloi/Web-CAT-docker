@@ -1,0 +1,91 @@
+<webobject name="PageWrapper">
+    <webobject name="ListNotEmpty">
+      <div align="center">
+         <table>
+            <webobject name="BannerConditional">
+               <tr>
+                  <td align="center"><webobject name="Banner"></webobject></td>
+               </tr>
+            </webobject>
+            <tr>
+               <td align="center"><webobject name="NavBar"></webobject></td>
+            </tr>
+         </table>
+         <br>
+         <table cellpadding="3" border="0" _unroll="yes" cellspacing="0">
+            <tr _unroll="yes">
+               <th></th>
+               <webobject name="ColumnLabelRepetition">
+                  <th nowrap valign="bottom">
+                     <table>
+                        <tr>
+                           <th><font color="#ff0000"><webobject name="PropertyName"></webobject></font></th>
+                           <th><webobject name="IsPropertySortable"><webobject name="AttributeSorter"></webobject></webobject></th>
+                        </tr>
+                     </table>
+                  </th>
+               </webobject>
+               <td></td>
+            </tr>
+            <webobject name="EntityRepetition"><webobject name="ListTableRow"><td>
+                     <table>
+                        <tr>
+                           <td>
+                              <webobject name="IsSelecting">
+                                 <webobject name="SelectEO"><webobject name="SelectImage"></webobject></webobject>
+                              </webobject>
+                              <webobject name="IsListing">
+                                 <webobject name="IsEntityWritable">
+                                    <webobject name="EditEO"><webobject name="EditImage"></webobject></webobject>
+                                 </webobject>
+                                 <webobject name="IsEntityNotWritable">
+                                    <webobject name="InspectEO"><webobject name="InspectImage"></webobject></webobject></webobject>
+                              </webobject>
+                           </td>
+                           <td> </td>
+                        </tr>
+                     </table>
+                  </td>
+                  <webobject name="AttributeRepetition">
+                     <webobject name="AttributeCell">
+                        <webobject name="AttributeDisplay"></webobject>
+                     </webobject>
+                  </webobject>
+                  <td>
+                     <table>
+                        <tr>
+                           <td><webobject name="IsListing2"><webobject name="IsEntityWritable2">
+                                    <table><tr><td><webobject name="DeleteEO2"><webobject name="DeleteImage2"></webobject></webobject></tr></table></webobject></webobject></td>
+                        </tr>
+                     </table>
+                  </td></webobject></webobject>
+         </table>
+         <br>
+         <webobject name="HideReturnOnSelect1">
+            <webobject name="ShowCancel"><webobject name="BackLink"><webobject name="ReturnButton"></webobject></webobject></webobject>
+         </webobject>
+      </div>
+   </webobject><webobject name="ListEmpty">
+      <webobject name="BannerConditional2"><webobject name="Banner2"></webobject></webobject>
+      <br>
+      <table>
+         <tr>
+            <td>&nbsp</td>
+         </tr>
+         <tr>
+            <td><webobject name="ExclamationImage"></webobject></td>
+            <td>
+               <div align="center">
+                  <font color="#ff0000"><b>No matching <webobject name="EntityName"></webobject>
+                  records found.</b></font>
+               </div>
+            </td>
+         </tr>
+      </table>
+      <br>
+      <br>
+      <webobject name="HideReturnOnSelect2">
+         <webobject name="ShowCancel2"><webobject name="BackLink2"><webobject name="ReturnButton2"></webobject></webobject></webobject>
+      </webobject>
+   </webobject>
+</webobject>

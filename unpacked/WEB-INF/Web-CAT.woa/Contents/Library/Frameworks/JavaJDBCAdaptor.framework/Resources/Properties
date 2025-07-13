@@ -1,0 +1,51 @@
+#  These Properties are listed here mostly for documentation.  Don't modify
+#  this file unless you know what you are doing.
+
+#  Colon-separated list of subprotocols that might have designated plugins
+#jdbcadaptor.plugin.subprotocols=oracle:openbase:mysql:microsoft:merant
+
+#  For each subprotocol SUB in the list above, there might be a property
+#  of the form 'jdbcadaptor.SUB.plugin' that defines the class name of the
+#  default plugin.
+#jdbcadaptor.oracle.plugin=com.webobjects.jdbcadaptor.OraclePlugIn
+#jdbcadaptor.openbase.plugin=com.webobjects.jdbcadaptor.OpenBasePlugIn
+#jdbcadaptor.mysql.plugin=com.webobjects.jdbcadaptor.MySQLPlugIn
+#jdbcadaptor.microsoft.plugin=com.webobjects.jdbcadaptor.MicrosoftPlugIn
+#jdbcadaptor.merant.plugin=com.webobjects.jdbcadaptor.MerantPlugIn
+
+
+#  These properties control reverse engineering in EOModeler for the
+#  OraclePlugIn They are listed here to allow customization.  All of
+#  these properties are normally left unset, and the OraclePlugIn will
+#  use its own default values which are described in comments below.
+#  Note that "null" below is somewhat misleading since the property
+#  should not actually be set to null to get the default behavior.
+#  Just leave the property unset and the line commented out.
+
+#  Oracle will not reverse engineer SYNONYM tables correctly unless
+#  this property is true.  However, doing the right thing incurs a
+#  large performance penalty so Oracle has it off by default, and the
+#  adaptor leaves it off unless this property is set to true.
+#jdbcadaptor.oracle.includeSynonyms=false
+
+#  The default is not to filter based on attributes
+#jdbcadaptor.oracle.wildcardPatternForAttributes=null
+
+#  The default is to get all tables
+#jdbcadaptor.oracle.wildcardPatternForTables=%
+
+#  The default is to use the USER's schema
+#jdbcadaptor.oracle.wildcardPatternForSchema=null
+
+#  The default is not to consider the catalog
+#jdbcadaptor.oracle.storedProcedureCatalogPattern=null
+
+#  The default is to use the USER's schema
+#jdbcadaptor.oracle.storedProcedureSchemaPattern=null
+
+#  The default is to use JDBC API instead of executing a SQL statement
+#jdbcadaptor.oracle.sqlStatementForGettingProcedureNames=null
+
+#  The default is to use JDBC API instead of executing a SQL statement.
+#jdbcadaptor.oracle.sqlStatementForGettingTableNames=null
+

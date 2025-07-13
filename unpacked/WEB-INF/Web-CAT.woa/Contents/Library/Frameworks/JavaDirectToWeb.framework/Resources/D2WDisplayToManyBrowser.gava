@@ -1,0 +1,6 @@
+{
+    includeSuperClass = {};
+    variables = (
+        "public EOEnterpriseObject $ivarNameForBrowserItem$;"
+    );
+}

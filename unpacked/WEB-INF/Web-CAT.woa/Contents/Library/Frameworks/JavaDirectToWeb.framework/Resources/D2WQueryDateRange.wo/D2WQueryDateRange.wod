@@ -1,0 +1,17 @@
+DateMaxField: WOTextField {
+	dateformat = formatter;
+	size = length;
+	value = maxValue;
+}
+
+DateMinField: WOTextField {
+	dateformat = formatter;
+	size = length;
+	value = minValue;
+}
+
+DateReadableDescription: WOString {
+	_unroll = YES;
+	value = dateReadableDescription;
+}
+

@@ -1,0 +1,23 @@
+InspectImage: WOImage {
+	align = "ABSMIDDLE";
+	alt = helpString;
+	border = "0";
+	filename = d2wContext.inspectIcon;
+	framework = "JavaDirectToWeb";
+	name = helpString;
+}
+
+Link: WOHyperlink {
+	action = toOneAction;
+	target = target;
+}
+
+NothingDisplayed: WOConditional {
+	condition = shouldDisplay;
+	negate = YES;
+}
+
+ShouldDisplay: WOConditional {
+	condition = shouldDisplay;
+}
+

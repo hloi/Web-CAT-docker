@@ -1,0 +1,6 @@
+Image : WOImage {
+	filename = imageFileName ;
+		// imageFileName strips the path;
+	framework = d2wContext.framework;
+} 
+

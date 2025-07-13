@@ -1,0 +1,5 @@
+{
+	EOEventGroupName = "WOAssociation Event";
+	valueForKeyPath = "valueForKeyPath";
+	takeValueForKeyPath = "takeValueForKeyPath";
+}

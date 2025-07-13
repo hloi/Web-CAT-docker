@@ -1,0 +1,69 @@
+AssignmentHasSuspendedSubs: WOConditional {
+    condition = assignmentHasSuspendedSubs;
+}
+
+AssignmentIsUnpublished: WOConditional {
+    condition = anAssignmentOffering.publish;
+    negate = true;
+}
+
+AssignmentRepetition: WORepetition {
+    item  = anAssignmentOffering;
+    list  = assignmentDisplayGroup.displayedObjects;
+    index = index;
+}
+
+CourseName: WOString {
+    value = coreSelections.courseOffering.deptNumberAndName;
+}
+
+Deadline: WOString {
+    formatter = session.timeFormatter;
+    value     = anAssignmentOffering.dueDate;
+}
+
+Graph: net.sf.webcat.grader.graphs.MiniBarGraph {
+    graphSummary = anAssignmentOffering.graphSummary;
+}
+
+HasAssignments: WOConditional {
+    condition = assignmentDisplayGroup.displayedObjects.count;
+}
+
+HasNoAssignments: WOConditional {
+    condition = assignmentDisplayGroup.displayedObjects.count;
+    negate    = true;
+}
+
+Name: WOHyperlink {
+	href   = anAssignmentOffering.assignment.url;
+	target = "_new";
+    string = anAssignmentOffering.assignment.titleString;
+}
+
+Page : net.sf.webcat.core.WizardPage {
+    finishEnabled = false;
+}
+
+RadioButton: WORadioButton {
+    name      = "Group";
+    selection = selectedIndex;
+    value     = index;
+}
+
+ShowHaltedMessage: WOConditional {
+	condition = showHaltedMessage;
+}
+
+SuspendedCount: WOString {
+    value = anAssignmentOffering.getSuspendedSubs.count;
+}
+
+TR: net.sf.webcat.core.TableRow {
+    index = index;
+    showError = gradingIsHalted;
+    // showError does not use the raw attribute, since we're using this
+    // method to calculate additional derived info for display via
+    // ShowHaltedMessage.
+    showCaution = anAssignmentOffering.isLate;
+}

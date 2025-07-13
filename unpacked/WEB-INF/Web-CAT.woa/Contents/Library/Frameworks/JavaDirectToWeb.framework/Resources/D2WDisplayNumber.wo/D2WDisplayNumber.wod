@@ -1,0 +1,6 @@
+Number: WOString {
+    valueWhenEmpty="&nbsp;";
+    numberformat = formatter;
+    value = objectPropertyValue;
+}
+
