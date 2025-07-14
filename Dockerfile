@@ -1,7 +1,7 @@
 
 FROM tomcat:9.0-jdk8-openjdk
 # Copy MySQL driver
-COPY mysql-connector-java-5.1.49.jar /usr/local/tomcat/lib/
+# COPY mysql-connector-java-5.1.39.jar /usr/local/tomcat/lib/
 COPY icu4j-4_4_2.jar /usr/local/tomcat/lib/
 
 # Copy BIRT libs

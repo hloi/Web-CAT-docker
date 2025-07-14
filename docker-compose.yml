@@ -1,7 +1,7 @@
 
 services:
   db:
-    image: mysql:5.7
+    image: mysql:5.6
     container_name: webcat-db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -15,7 +15,7 @@ services:
 
   webcat:
     build: .
-    container_name: webcat
+    container_name: webcat2
     depends_on:
       - db
     ports:
